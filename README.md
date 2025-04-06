@@ -11,24 +11,24 @@ Este proyecto es una aplicación web desarrollada con **React** y **Vite**, cuyo
 
 ## 📁 Estructura del proyecto
 . 
-├── .vs/ # Configuración de entorno (Visual Studio Code) 
-├── node_modules/ # Dependencias del proyecto 
-├── public/ # Archivos públicos 
-├── src/ # Código fuente principal 
-│ ├── assets/ # Recursos estáticos (imágenes, íconos, etc.) 
-│ ├── Contenedores/ # Componentes contenedores principales (páginas o vistas) 
-│ ├── recursos/ # Funciones, hooks o servicios reutilizables 
-│ ├── App.css # Estilos generales de la aplicación 
-│ ├── App.jsx # Componente principal de la aplicación 
-│ ├── index.css # Estilos globales 
-│ └── main.jsx # Punto de entrada de React 
-├── .gitignore # Archivos y carpetas ignoradas por Git 
-├── eslint.config.js # Configuración de linting 
-├── index.html # Archivo HTML principal 
-├── package.json # Información del proyecto y dependencias 
-├── package-lock.json # Versión fija de dependencias 
-├── README.md # Documentación del proyecto 
-└── vite.config.js # Configuración de Vite
+├── .vs/ # Configuración de entorno (Visual Studio Code) <br>
+├── node_modules/ # Dependencias del proyecto <br>
+├── public/ # Archivos públicos <br>
+├── src/ # Código fuente principal <br>
+│ ├── assets/ # Recursos estáticos (imágenes, íconos, etc.)  <br>
+│ ├── Contenedores/ # Componentes contenedores principales (páginas o vistas)  <br>
+│ ├── recursos/ # Funciones, hooks o servicios reutilizables <br>
+│ ├── App.css # Estilos generales de la aplicación <br>
+│ ├── App.jsx # Componente principal de la aplicación <br>
+│ ├── index.css # Estilos globales <br>
+│ └── main.jsx # Punto de entrada de React <br>
+├── .gitignore # Archivos y carpetas ignoradas por Git <br>
+├── eslint.config.js # Configuración de linting <br>
+├── index.html # Archivo HTML principal <br>
+├── package.json # Información del proyecto y dependencias <br>
+├── package-lock.json # Versión fija de dependencias <br>
+├── README.md # Documentación del proyecto <br>
+└── vite.config.js # Configuración de Vite<br>
 
 ## ⚙️ Instalación y ejecución
 
@@ -40,15 +40,15 @@ Este proyecto es una aplicación web desarrollada con **React** y **Vite**, cuyo
 
 2. **Instalar dependencias:**
 
-  npm install
+  ```npm install```
 
 3. **Ejecutar en modo desarrollo:**
 
-  npm run dev
+ ``` npm run dev```
 
 4. **Compilar para producción:**
 
-   npm run build
+  ``` npm run build```
 
 ## PD
 VictorMeGa
