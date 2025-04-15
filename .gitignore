@@ -1,0 +1,24 @@
+# Node
+node_modules/
+dist/
+.env
+
+# Java / Spring Boot
+*.class
+*.jar
+*.war
+*.log
+build/
+target/
+.gradle/
+out/
+
+# Eclipse / IntelliJ / VSCode
+*.iml
+.idea/
+.vscode/
+*.swp
+
+# OS
+.DS_Store
+Thumbs.db
