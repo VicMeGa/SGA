@@ -1,5 +1,5 @@
-import { useState } from "react"
-import user from "../recursos/user.png"
+import { useState } from "react";
+import user from "../recursos/user.png";
 import { useNavigate } from "react-router-dom";
 
 const Login = () => {
@@ -7,29 +7,46 @@ const Login = () => {
     const [password, setPassword] = useState("");
     const navigate = useNavigate();
 
-    const logeo = (e) => {
+    const logeo = async (e) => {
         e.preventDefault();
-            if (email === "correo@gmail.com" && password === "123"){
-                alert("Exito");
+
+        try {
+            const response = await fetch("http://localhost:8080/api/auth/login", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    correo: email,
+                    contrasena: password,
+                }),
+            });
+
+            if (response.ok) {
+                const data = await response.json(); // Usa .json() si devuelves un objeto como LoginResponse
+                alert("✅ Éxito: " + data.mensaje);
                 navigate("/next");
-            }else{
-            alert("Error: " + e.message);
+            } else {
+                const errorText = await response.text();
+                alert("❌ Error: " + errorText);
+            }
+        } catch (err) {
+            alert("⚠️ Error en la conexión con el servidor: " + err.message);
         }
     };
 
-
     return (
-        <>  
-            <div className='login'>
-                <form className="formulario" onSubmit={logeo}>
-                    <img className='icon-login' src={user} width="25%" />
-                <br/>
+        <div className="login">
+            <form className="formulario" onSubmit={logeo}>
+                <img className="icon-login" src={user} width="25%" alt="User Icon" />
+                <br />
                 <input
-                    type='email'
-                    placeholder='Correo'
+                    type="email"
+                    placeholder="Correo"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    />
+                    required
+                />
                 <br />
                 <input
                     type="password"
@@ -40,9 +57,9 @@ const Login = () => {
                 />
                 <br />
                 <button type="submit">Iniciar Sesión</button>
-                </form>
-            </div>
-        </>
+            </form>
+        </div>
     );
 };
+
 export default Login;
