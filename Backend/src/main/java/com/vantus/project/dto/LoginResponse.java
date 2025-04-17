@@ -1,4 +1,4 @@
-package com.vantus.project.model;
+package com.vantus.project.dto;
 
 public class LoginResponse {
     private String mensaje;
@@ -13,7 +13,17 @@ public class LoginResponse {
         return mensaje;
     }
 
+    public void setMensaje(String mensaje) {
+        this.mensaje = mensaje;
+    }
+
     public boolean isExito() {
         return exito;
     }
+
+    public void setExito(boolean exito) {
+        this.exito = exito;
+    }
+
+    // Getters y setters
 }

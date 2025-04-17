@@ -4,36 +4,35 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "Administrativo")
-public class Admin {
+public class Administrativo {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_administrativo")
-    private Long id;
+    private Integer idAdministrativo;
 
     @Column(name = "numero_empleado", nullable = false)
     private String numeroEmpleado;
 
-    @Column(name = "area", nullable = false)
+    @Column(nullable = false)
     private String area;
 
-    @Column(name = "cargo", nullable = false)
+    @Column(nullable = false)
     private String cargo;
 
-    @Column(name = "contrasena", nullable = false)
+    @Column(nullable = false)
     private String contrasena;
 
-    @OneToOne
-    @JoinColumn(name = "id_usuario", referencedColumnName = "id_usuario")
+    @ManyToOne
+    @JoinColumn(name = "id_usuario", nullable = false)
     private Usuario usuario;
 
-    // Getters y setters
-    public Long getId() {
-        return id;
+    public Integer getIdAdministrativo() {
+        return idAdministrativo;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setIdAdministrativo(Integer idAdministrativo) {
+        this.idAdministrativo = idAdministrativo;
     }
 
     public String getNumeroEmpleado() {
@@ -75,4 +74,8 @@ public class Admin {
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
     }
+
+    // Aquí van setters y getters
+
+    
 }

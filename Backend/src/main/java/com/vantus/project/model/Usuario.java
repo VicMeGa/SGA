@@ -3,32 +3,56 @@ package com.vantus.project.model;
 import jakarta.persistence.*;
 
 @Entity
+@Table(name = "Usuario")
+
 public class Usuario {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id_usuario;
+    @Column(name = "id_usuario")
+    private Integer idUsuario;
 
+    @Column(nullable = false)
     private String nombre;
+
+    @Column(name = "apellidoPaterno", nullable = false)
     private String apellidoPaterno;
+
+    @Column(name = "apellidoMaterno", nullable = false)
     private String apellidoMaterno;
+
+    @Column(nullable = false, unique = true)
     private String correo;
-    private String numero_telefono;
-    private String programa_educativo;
 
+    @Column(name = "numero_telefono")
+    private String numeroTelefono;
+
+    @Column(name = "programa_educativo")
+    private String programaEducativo;
+
+    @Column(name = "tipo_usuario")
     @Enumerated(EnumType.STRING)
-    private TipoUsuario tipo_usuario;
+    private TipoUsuario tipoUsuario;
 
-    @Lob
-    private byte[] huellad_dactilar;
+    @Column(name = "huellad_dactilar")
+    private byte[] huellaDactilar;
 
+    @Column(name = "codigoQR")
     private String codigoQR;
 
-    public Long getId_usuario() {
-        return id_usuario;
+    // Enum personalizado para tipo_usuario
+    public enum TipoUsuario {
+        Administrativo,
+        Alumno,
+        Invitado
     }
 
-    public void setId_usuario(Long id_usuario) {
-        this.id_usuario = id_usuario;
+    public Integer getIdUsuario() {
+        return idUsuario;
+    }
+
+    public void setIdUsuario(Integer idUsuario) {
+        this.idUsuario = idUsuario;
     }
 
     public String getNombre() {
@@ -63,36 +87,36 @@ public class Usuario {
         this.correo = correo;
     }
 
-    public String getNumero_telefono() {
-        return numero_telefono;
+    public String getNumeroTelefono() {
+        return numeroTelefono;
     }
 
-    public void setNumero_telefono(String numero_telefono) {
-        this.numero_telefono = numero_telefono;
+    public void setNumeroTelefono(String numeroTelefono) {
+        this.numeroTelefono = numeroTelefono;
     }
 
-    public String getPrograma_educativo() {
-        return programa_educativo;
+    public String getProgramaEducativo() {
+        return programaEducativo;
     }
 
-    public void setPrograma_educativo(String programa_educativo) {
-        this.programa_educativo = programa_educativo;
+    public void setProgramaEducativo(String programaEducativo) {
+        this.programaEducativo = programaEducativo;
     }
 
-    public TipoUsuario getTipo_usuario() {
-        return tipo_usuario;
+    public TipoUsuario getTipoUsuario() {
+        return tipoUsuario;
     }
 
-    public void setTipo_usuario(TipoUsuario tipo_usuario) {
-        this.tipo_usuario = tipo_usuario;
+    public void setTipoUsuario(TipoUsuario tipoUsuario) {
+        this.tipoUsuario = tipoUsuario;
     }
 
-    public byte[] getHuellad_dactilar() {
-        return huellad_dactilar;
+    public byte[] getHuellaDactilar() {
+        return huellaDactilar;
     }
 
-    public void setHuellad_dactilar(byte[] huellad_dactilar) {
-        this.huellad_dactilar = huellad_dactilar;
+    public void setHuellaDactilar(byte[] huellaDactilar) {
+        this.huellaDactilar = huellaDactilar;
     }
 
     public String getCodigoQR() {
@@ -102,8 +126,4 @@ public class Usuario {
     public void setCodigoQR(String codigoQR) {
         this.codigoQR = codigoQR;
     }
-
-    // Getters y setters
-
-    
 }
