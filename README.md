@@ -57,9 +57,10 @@ Esto ejecutará:
 
 ## 👥 Equipo de desarrollo
 
-- 💻 TonoH. (Back)
-- 💻 VicMega. (Front)
-- 🙌 Saul, Ulises (Coolaboradores)
+- 💻 TonoH. 
+- 💻 Arcade_MG. 
+- 💻 Sassech.
+- 💻 ulissvzzmx
 
 ## 📌 Notas
 
