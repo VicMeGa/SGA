@@ -15,11 +15,11 @@ public class Usuario {
     @Column(nullable = false)
     private String nombre;
 
-    @Column(name = "apellidoPaterno", nullable = false)
-    private String apellidoPaterno;
+    @Column(name = "apellido_paterno", nullable = false)
+    private String apellido_paterno;
 
-    @Column(name = "apellidoMaterno", nullable = false)
-    private String apellidoMaterno;
+    @Column(name = "apellido_materno", nullable = false)
+    private String apellido_materno;
 
     @Column(nullable = false, unique = true)
     private String correo;
@@ -63,20 +63,20 @@ public class Usuario {
         this.nombre = nombre;
     }
 
-    public String getApellidoPaterno() {
-        return apellidoPaterno;
+    public String getApellido_paterno() {
+        return apellido_paterno;
     }
 
-    public void setApellidoPaterno(String apellidoPaterno) {
-        this.apellidoPaterno = apellidoPaterno;
+    public void setApellido_paterno(String apellido_paterno) {
+        this.apellido_paterno = apellido_paterno;
     }
 
-    public String getApellidoMaterno() {
-        return apellidoMaterno;
+    public String getApellido_materno() {
+        return apellido_materno;
     }
 
-    public void setApellidoMaterno(String apellidoMaterno) {
-        this.apellidoMaterno = apellidoMaterno;
+    public void setApellido_materno(String apellido_materno) {
+        this.apellido_materno = apellido_materno;
     }
 
     public String getCorreo() {
