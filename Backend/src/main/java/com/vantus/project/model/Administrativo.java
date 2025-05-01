@@ -27,6 +27,8 @@ public class Administrativo {
     @JoinColumn(name = "id_usuario", nullable = false)
     private Usuario usuario;
 
+    // Setters y Getters
+    
     public Integer getIdAdministrativo() {
         return idAdministrativo;
     }

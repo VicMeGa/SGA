@@ -47,6 +47,8 @@ public class Usuario {
         Invitado
     }
 
+    // Setters y Getters
+    
     public Integer getIdUsuario() {
         return idUsuario;
     }

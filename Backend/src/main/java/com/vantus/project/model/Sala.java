@@ -17,6 +17,8 @@ public class Sala {
     @Column(name = "capacidad_maxima", nullable = false)
     private Integer capacidadSala;
 
+    // Setters y Getters
+
     public Integer getIdSala() {
         return idSala;
     }
