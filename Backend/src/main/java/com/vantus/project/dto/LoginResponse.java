@@ -13,17 +13,7 @@ public class LoginResponse {
         return mensaje;
     }
 
-    public void setMensaje(String mensaje) {
-        this.mensaje = mensaje;
-    }
-
     public boolean isExito() {
         return exito;
     }
-
-    public void setExito(boolean exito) {
-        this.exito = exito;
-    }
-
-    // Getters y setters
 }

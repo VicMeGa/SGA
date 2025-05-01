@@ -73,9 +73,5 @@ public class Administrativo {
 
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
-    }
-
-    // Aquí van setters y getters
-
-    
+    }  
 }
