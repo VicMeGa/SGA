@@ -21,9 +21,9 @@ public class Alumno {
     @Column(name = "grupo", nullable = false)
     private String grupo;
 
-//    @ManyToOne
-//    @JoinColumn(name = "id_horario")
-//    private Horario_Sala horario;
+    @ManyToOne
+    @JoinColumn(name = "id_horario")
+    private Horario_Sala horario;
 
     @ManyToOne
     @JoinColumn(name = "id_usuario")
