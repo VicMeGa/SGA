@@ -38,9 +38,15 @@ cd SGA
 ### 3. Instalar dependencias del frontend
 
 ```bash
-cd frontend
+cd Frontend
 npm install
 cd ..
+
+###  3.1 Linux ejecutable
+
+```bash
+cd Backend
+chmod +x gradlew
 ```
 
 ### 4. Ejecutar todo (backend + frontend)
