@@ -1,13 +1,13 @@
 {
   "name": "sga-root",
   "version": "1.0.0",
+  "private": true,
   "scripts": {
-    "start": "concurrently \"npm run start:Frontend\" \"npm run start:Backend\"",
-    "start:frontend": "cd Frontend && npm run dev",
-    "start:backend": "cd Backend && ./gradlew bootRun"
-
+    "start": "concurrently \"npm run start:frontend\" \"npm run start:backend\"",
+    "start:backend": "node backend-start.js",
+    "start:frontend": "cd Frontend && npm run dev"
   },
   "devDependencies": {
-    "concurrently": "^8.2.0"
+    "concurrently": "^8.0.0"
   }
 }
