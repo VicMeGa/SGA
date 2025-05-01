@@ -2,9 +2,9 @@
   "name": "sga-root",
   "version": "1.0.0",
   "scripts": {
-    "start": "concurrently \"npm run start:frontend\" \"npm run start:backend\"",
-    "start:frontend": "cd frontend && npm run dev",
-    "start:backend": "cd backend && gradlew.bat bootRun"
+    "start": "concurrently \"npm run start:Frontend\" \"npm run start:Backend\"",
+    "start:frontend": "cd Frontend && npm run dev",
+    "start:backend": "cd Backend && ./gradlew bootRun"
 
   },
   "devDependencies": {
