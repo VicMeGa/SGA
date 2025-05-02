@@ -7,6 +7,7 @@ import Registrar from './Contenedores/Registar/Registrar'
 import RegAdminis from './Contenedores/Registar/RegAdminis';
 import RegInvitado from './Contenedores/Registar/RegInvitado';
 import Modificar from './Contenedores/Modificar/Modificar';
+import Articulos from './Contenedores/Articulos/Articulos';
 
 function App() {
     
@@ -21,6 +22,7 @@ function App() {
             <Route path="/RegistrarAdmin" element={<RegAdminis />} />
             <Route path="/RegistrarInvitado" element={<RegInvitado />} />
             <Route path="/ModificarUsuario" element={<Modificar />} />
+            <Route path="/Articulos" element={<Articulos />} />
           </Routes>
     </Router>
     </>

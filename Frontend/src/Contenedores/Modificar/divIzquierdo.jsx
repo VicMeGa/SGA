@@ -83,7 +83,7 @@ const divIzquierdo = () => {
                     readOnly
                 />
             </div>
-            <div>
+            <div className="botonesMod"> 
                 <button
                     type="button"
                     className='borrarButton'

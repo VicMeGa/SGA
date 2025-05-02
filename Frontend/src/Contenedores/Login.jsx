@@ -35,6 +35,10 @@ const Login = () => {
         }
     };
 
+    function testeo (){
+        navigate("/next")
+    }
+
     return (
         <div className="login">
             <form className="formulario" onSubmit={logeo}>

@@ -5,7 +5,7 @@ const Menu = () =>{
 return(
     <>
     <div className="MEnu">
-    <Link to="/Registrar">
+    <Link to="/Registrar" className='oopci'>
         <span className="Opci" >Registrar Usuarios</span>
         <UserPlus size={70} />
       </Link>
@@ -15,7 +15,7 @@ return(
         <Users size={70} />
       </Link>
 
-      <Link to="">
+      <Link to="/Articulos">
         <span className="Opci" >Articulos del laboratorio</span>
         <FileSpreadsheet size={70} />
       </Link>
@@ -29,7 +29,7 @@ return(
         <span className="Opci" >Generar reportes</span>
         <FileText size={70} />
       </Link>
-      
+      <br />
     </div>
     </>
 );

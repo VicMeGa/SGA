@@ -1,4 +1,3 @@
-import React from 'react';
 import { Users, UserPlus, Edit, Wallet, FileText } from 'lucide-react';
 import Regresar from './Regresar'
 import { useNavigate } from 'react-router-dom';
@@ -22,7 +21,8 @@ function Nav (){
           </button>
         </li>
         <li>
-          <button className="nav-item">
+          <button className="nav-item"
+          onClick={() => navigate('/Articulos')}>
             <Edit className="nav-logo" />
           </button>
         </li>

@@ -6,6 +6,9 @@
 
 body{
   background-image: url('./recursos/fondo1.jpg');
+  background-attachment: fixed;
+  background-position: center;
+  background-size: cover;
   background-size: 100%;
   display:flex;
   align-items: center;
@@ -20,8 +23,6 @@ body{
   position: relative;
   z-index: 1;
 }
-
-
 
 /*--------->Login<-------------*/
 .login {
@@ -104,9 +105,16 @@ button {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  text-decoration: none;
+
 }
 
+.oopci{
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  text-decoration: none;
+}
 .Opci {
   background-color: #6C8196;
   color: white;
@@ -115,16 +123,15 @@ button {
   font-size: 3.5vh;
   width: 60%;
   margin-right: 24px;
-  margin-left: 20px;
-  margin-top:15px;
-  margin-bottom: 15px;
+  margin-left:5%;
+  margin-top:3%;
 }
 
 .MEnu svg {
   position: absolute;
-  right: 7%;
-  margin-top:12%;
-  transform: translateY(-50%);
+  right: 10%;
+  margin-top:15%;
+  transform: translateY(-60%);
   color: black;
 }
 
@@ -133,19 +140,14 @@ button {
 .div-registro{
   background-color:rgba(255,255,255,0.9);
   position:relative;
-  max-width: 60%;
+  min-width: 600px;
+  max-width: 700px;
   margin: auto;
-  margin-top: 7%;
+  margin-top: 12%;
   display: flex;
   margin-bottom: 20px;
   padding: 8px 16px;
   text-align: center;
-}
-
-.div-registro.cancelButton{
-  position: fixed;
-bottom: 0;
-left: 0;
 }
 
 .regis{
@@ -162,15 +164,22 @@ left: 0;
   font-size: 3.5vh;
 }
 
-.regis button{
-  font-size:2vh;
-  width: 20vh;
-  padding-right: 10px; 
+.formas button{
+  font-size:3vh;
+  width: 30%;
 }
 
+.botonesre{
+  margin:auto;
+  justify-content: space-between;
+  display: flex;
+  align-items: center;
+  width: 85%;
+}
 .cancelButton{
   background-color: #B0CCEB;
   color:black;
+  position: relative;
 }
 .okButton{
 background-color: #0B1E33;
@@ -199,7 +208,7 @@ background-color: #0B1E33;
 }
 
 .nav-item {
-  width: 90%;
+  width: 100%;
   padding: 0.5rem;
   border-radius: 0.5rem;
   transition: background-color 0.2s;
@@ -284,13 +293,12 @@ background-color: #0B1E33;
 .divmod{
   background-color:rgba(255,255,255,0.8);
   position:relative;
-  min-height: 70vh;
-  padding: 1rem;
-  max-width: 100%;
+  padding: 2.5rem;
+  max-width: auto;
   margin: auto;
   margin-top: 7%;
   display: flex;
-  gap: 2.25rem;
+  gap: 3rem;
 }
 
 .busquedatab{
@@ -364,6 +372,7 @@ background-color: #0B1E33;
 
 /* --------------->modIzquierdo<----------------*/
 .formMod{
+  width: auto;
   space-y-4 > * + *{
     margin-top: 1rem;
   }
@@ -371,7 +380,7 @@ background-color: #0B1E33;
 
 .imputnorm{
   color:black;
-  width: 90vh;
+  width: 70vh;
   height: 5vh;
   margin-top: 30px;
   margin-bottom: 10px;
@@ -384,25 +393,16 @@ background-color: #0B1E33;
   gap: 1rem;
 }
 
-.div2mod{
-  width: calc(1/2 * 100%);
-}
-
 .twoinput{
   color:black;
   height: 5vh;
+  width: 32vh;
   margin-top: 30px;
   margin-bottom: 10px;
   background-color:rgba(168, 179, 191, .3);
   font-size: 3.5vh;
 }
 
-.formMod button{
-  padding-left: 1rem;
-  padding-right:1rem;
-  font-size:2vh;
-
-}
 
 .cancelButton2{
   background-color: #B0CCEB;
@@ -415,4 +415,88 @@ background-color: #0B1E33;
 
 .borrarButton{
   background-color: #3B526B;
+}
+
+.botonesMod{
+  justify-content: space-between;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.botonesMod button{
+  width: auto;
+  font-size: 3vh;
+}
+
+/*-------------------Articulos Lista -------------------*/
+.ArticulosContenedor{
+  background-color:rgba(255,255,255,0.9);
+  position:relative;
+  min-width: 600px;
+  max-width: 700px;
+  margin: auto;
+  margin-top: 12%;
+  display: flex;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.tarjetaArticulo img{
+  width: 8rem;
+  height: 5.6rem;
+  margin: 1.5rem;
+}
+
+.listaArticulos{
+  width: 800px;
+}
+
+.tarjetaArticulo{
+  background-color: #B0B9C4;
+  justify-content: space-between;
+  display: flex;
+  margin: 10px;
+  gap: 20px;
+  border-radius: 10px;
+}
+
+.descrip{
+  padding: 1rem;
+}
+
+.status-indicator {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 16px;
+  justify-content: center;
+  margin-right: 20px;
+}
+
+.status-indicator span {
+  font-weight: 500;
+}
+
+.status-indicator .available {
+  color: #4CAF50;
+}
+
+.status-indicator .unavailable {
+  color: #f44336;
+}
+
+.status-indicator .status-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  box-shadow: inset 0 0 4px rgba(0, 0, 0, 0.2);
+}
+
+.status-indicator .available .status-dot {
+  background-color: #E8F5E9;
+}
+
+.status-indicator .unavailable .status-dot {
+  background-color: #ffebee;
 }
