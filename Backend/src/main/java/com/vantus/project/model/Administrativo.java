@@ -27,6 +27,8 @@ public class Administrativo {
     @JoinColumn(name = "id_usuario", nullable = false)
     private Usuario usuario;
 
+    // Setters y Getters
+    
     public Integer getIdAdministrativo() {
         return idAdministrativo;
     }
@@ -73,5 +75,9 @@ public class Administrativo {
 
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
+<<<<<<< HEAD
     }   
+=======
+    }  
+>>>>>>> develop-tono
 }

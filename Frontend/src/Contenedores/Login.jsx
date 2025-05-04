@@ -9,7 +9,7 @@ const Login = () => {
 
     const logeo = async (e) => {
         e.preventDefault();
-
+    
         try {
             const response = await fetch("http://localhost:8080/sga/login", {
                 method: "POST",
@@ -21,19 +21,19 @@ const Login = () => {
                     contrasena: password,
                 }),
             });
-
-            if (response.ok) {
-                const data = await response.json(); // Usa .json() si devuelves un objeto como LoginResponse
+    
+            const data = await response.json();
+    
+            if (data.exito) {
                 alert("✅ Éxito: " + data.mensaje);
                 navigate("/next");
             } else {
-                const errorText = await response.text();
-                alert("❌ Error: " + errorText);
+                alert("❌ Error: " + data.mensaje);
             }
         } catch (err) {
             alert("⚠️ Error en la conexión con el servidor: " + err.message);
         }
-    };
+    };    
 
     function testeo (){
         navigate("/next")
