@@ -29,11 +29,6 @@ public class Alumno {
     @JoinColumn(name = "id_usuario")
     private Usuario usuario;
 
-<<<<<<< HEAD
-    //Falta tabla Horario_sala
-
-}
-=======
     // Setters y Getters
     
     public Integer getIdAlumno() {
@@ -83,8 +78,4 @@ public class Alumno {
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
     }
-
-    
 }
-
->>>>>>> develop-tono

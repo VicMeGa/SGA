@@ -25,9 +25,6 @@ public class Horario_Sala {
     @Column(name = "grupo", nullable = false)
     private String grupo;
 
-<<<<<<< HEAD
-
-=======
     //Faltan agregar 1 relacion, ademas de revisar la que ya esta
 
     @ManyToOne
@@ -93,7 +90,4 @@ public class Horario_Sala {
     public void setAdministrativo(Administrativo administrativo) {
         this.administrativo = administrativo;
     }
-
-    
->>>>>>> develop-tono
 }
