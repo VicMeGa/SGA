@@ -1,6 +1,7 @@
 import Item from './Item'
 
-const ItemList = ({items}) => {
+const ItemList = ({items, onSelect}) => {
+
     return(
         <>
         <div className='listaArticulos'>
@@ -11,6 +12,7 @@ const ItemList = ({items}) => {
                     name = {item.name}
                     description = {item.description}
                     status = {item.status}
+                    onClick={() => onSelect(item.id)}
                 />
             ))}
         </div>

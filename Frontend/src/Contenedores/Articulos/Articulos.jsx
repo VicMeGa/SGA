@@ -2,6 +2,8 @@ import Cabeza from '../Cabeza';
 import Nav from '../Nav';
 import { useEffect, useState } from 'react';
 import ItemList from './ItemList';
+import { useNavigate } from 'react-router-dom';
+import RegisArti from './RegisArti'
 
 const Articulos = () => {
     const [items, setItems] = useState([]);
@@ -29,14 +31,14 @@ const Articulos = () => {
           name: "Bocina_01",
           description: "Descripción de la bocina 01",
           status: "Ocupado",
-          image: "https://images.gamebanana.com/img/ss/mods/6706dcb04b57a.jpg",
+          image: "https://www.pockettactics.com/wp-content/sites/pockettactics/2024/06/genshin-impact-memes-header.jpeg",
         },
         {
           id: 4,
           name: "Bocina_02",
           description: "Descripción de la bocina 02",
           status: "Disponible",
-          image: "https://images.gamebanana.com/img/ss/mods/6706dcb04b57a.jpg",
+          image: "https://images6.alphacoders.com/138/1386707.png",
         },
       ];
       setItems(data);
@@ -45,12 +47,20 @@ const Articulos = () => {
     fetchItems();
   }, []);
 
+    const navigate = useNavigate();
+    
+    const handleSelectItem = (id) => {
+      console.log(`Seleccionaste el ítem con ID: ${id}`); // Depurar el clic
+      navigate(`/prestamo/${id}`); // Redirige a la pantalla de préstamo
+    };
+
     return (
         <>
         <Cabeza />
         <Nav />
+        <RegisArti />
         <div className="ArticulosContenedor">
-            <ItemList items={items}/>
+            <ItemList items={items} onSelect={handleSelectItem}/>
         </div>
         </>
     );

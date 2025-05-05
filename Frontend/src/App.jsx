@@ -8,6 +8,8 @@ import RegAdminis from './Contenedores/Registar/RegAdminis';
 import RegInvitado from './Contenedores/Registar/RegInvitado';
 import Modificar from './Contenedores/Modificar/Modificar';
 import Articulos from './Contenedores/Articulos/Articulos';
+import Prestamo from './Contenedores/Articulos/Prestamo/Prestamo';
+import NewArticulo from './Contenedores/Articulos/añadir/NewArticulo'
 
 function App() {
     
@@ -23,6 +25,8 @@ function App() {
             <Route path="/RegistrarInvitado" element={<RegInvitado />} />
             <Route path="/ModificarUsuario" element={<Modificar />} />
             <Route path="/Articulos" element={<Articulos />} />
+            <Route path="/prestamo/:itemId" element={<Prestamo />} />
+            <Route path="/NewArticulo" element={<NewArticulo />} /> 
           </Routes>
     </Router>
     </>

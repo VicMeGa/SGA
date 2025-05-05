@@ -63,7 +63,7 @@ function Registrar (){
                                 />
                                 <br />
                 </div>
-                <div className='botonesre'>
+                <div className='botonesArt'>
                         <button className="cancelButton" type="submit">Cancelar</button>
                         <button className="okButton" type="submit">Registrar</button>
                 </div>
