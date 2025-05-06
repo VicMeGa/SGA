@@ -13,7 +13,7 @@ public class Articulos_Laboratorio {
     @Column(name = "id_articulo")
     private Integer idArticulo;
 
-    public enum TipoAcceso {
+    public enum TipoArticulo {
         Proyector,
         Microfono,
         Grabadora,
