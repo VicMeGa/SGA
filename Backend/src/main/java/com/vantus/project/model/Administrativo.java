@@ -23,7 +23,7 @@ public class Administrativo {
     @Column(nullable = false)
     private String contrasena;
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "id_usuario", nullable = false)
     private Usuario usuario;
 
