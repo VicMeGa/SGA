@@ -13,16 +13,6 @@ public class Articulos_Laboratorio {
     @Column(name = "id_articulo")
     private Integer idArticulo;
 
-    public enum TipoArticulo {
-        Proyector,
-        Microfono,
-        Grabadora,
-        Laptop,
-        Bocina,
-        Cable,
-        Convertidor
-    }
-
     @Column(name = "numero_articulo", nullable = false)
     private String numeroArticulo;
 
@@ -89,4 +79,6 @@ public class Articulos_Laboratorio {
     public void setAdministrativo(Administrativo administrativo) {
         this.administrativo = administrativo;
     }    
+
+
 }

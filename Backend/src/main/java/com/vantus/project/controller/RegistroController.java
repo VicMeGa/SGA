@@ -12,9 +12,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.vantus.project.dto.RegistroAdministrativoRequest;
 import com.vantus.project.dto.RegistroAlumnoRequest;
+import com.vantus.project.dto.RegistroArticuloRequest;
 import com.vantus.project.dto.RegistroInvitadoRequest;
 import com.vantus.project.model.Administrativo;
 import com.vantus.project.model.Alumno;
+import com.vantus.project.model.Articulos_Laboratorio;
 import com.vantus.project.model.Horario_Sala;
 import com.vantus.project.model.Invitado;
 import com.vantus.project.model.Usuario;
@@ -125,5 +127,15 @@ public class RegistroController {
         inviRepo.save(invi);
 
         return ResponseEntity.ok("Invitado registrado exitosamente");
+    }
+
+    @PostMapping("/articulo")
+    public ResponseEntity<?> registrarArticulo(@RequestBody RegistroArticuloRequest request) {
+
+        Articulos_Laboratorio lab = new Articulos_Laboratorio();
+        lab.setTipoArticulo
+
+
+        return ResponseEntity.ok("Articulo registrado exitosamente");
     }
 }

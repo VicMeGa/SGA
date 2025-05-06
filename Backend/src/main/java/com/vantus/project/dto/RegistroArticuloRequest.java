@@ -7,6 +7,7 @@ public class RegistroArticuloRequest {
     private String numeroArticulo;
     private String descripcion;
     private String urlFotografia;
+    
     public String getNombre() {
         return nombre;
     }
