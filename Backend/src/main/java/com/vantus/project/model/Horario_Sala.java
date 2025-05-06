@@ -1,5 +1,5 @@
 package com.vantus.project.model;
-import java.time.DateTimeException;
+import java.time.LocalDateTime;
 
 import jakarta.persistence.*;
 
@@ -14,10 +14,10 @@ public class Horario_Sala {
     private Integer idHorario;
 
     @Column(name = "fecha_hora_inicio", nullable = false)
-    private DateTimeException fechaHoraInicio; //Revisar el tipo de dato
+    private LocalDateTime fechaHoraInicio; //Revisar el tipo de dato
 
     @Column(name = "fecha_hora_fin", nullable = false)
-    private DateTimeException fechaHoraFin; //Revisar el tipo de dato
+    private LocalDateTime fechaHoraFin; //Revisar el tipo de dato
 
     @Column(name = "materia", nullable = false)
     private String materia;
@@ -43,19 +43,19 @@ public class Horario_Sala {
         this.idHorario = idHorario;
     }
 
-    public DateTimeException getFechaHoraInicio() {
+    public LocalDateTime getFechaHoraInicio() {
         return fechaHoraInicio;
     }
 
-    public void setFechaHoraInicio(DateTimeException fechaHoraInicio) {
+    public void setFechaHoraInicio(LocalDateTime fechaHoraInicio) {
         this.fechaHoraInicio = fechaHoraInicio;
     }
 
-    public DateTimeException getFechaHoraFin() {
+    public LocalDateTime getFechaHoraFin() {
         return fechaHoraFin;
     }
 
-    public void setFechaHoraFin(DateTimeException fechaHoraFin) {
+    public void setFechaHoraFin(LocalDateTime fechaHoraFin) {
         this.fechaHoraFin = fechaHoraFin;
     }
 

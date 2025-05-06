@@ -1,5 +1,5 @@
 package com.vantus.project.model;
-import java.sql.Date;
+import java.time.LocalDate;
 
 import jakarta.persistence.*;
 
@@ -15,7 +15,12 @@ public class Invitado {
     private Integer idInvitado;
 
     @Column(name = "fecha_registro", nullable = false)
-    private Date fechaRegistro;
+    private LocalDate fechaRegistro;
+    
+    @PrePersist
+    protected void onCreate() {
+        this.fechaRegistro = LocalDate.now();
+    }
 
     @ManyToOne
     @JoinColumn(name = "id_usuario", nullable = false)
@@ -31,19 +36,19 @@ public class Invitado {
         this.idInvitado = idInvitado;
     }
 
-    public Date getFechaRegistro() {
-        return fechaRegistro;
-    }
-
-    public void setFechaRegistro(Date fechaRegistro) {
-        this.fechaRegistro = fechaRegistro;
-    }
-
     public Usuario getUsuario() {
         return usuario;
     }
 
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
+    }
+
+    public LocalDate getFechaRegistro() {
+        return fechaRegistro;
+    }
+
+    public void setFechaRegistro(LocalDate fechaRegistro) {
+        this.fechaRegistro = fechaRegistro;
     }
 }
