@@ -13,7 +13,11 @@ public class Articulos_Laboratorio {
     @Column(name = "id_articulo")
     private Integer idArticulo;
 
-    public enum TipoAcceso {
+    @Column(name = "tipo")
+    @Enumerated(EnumType.STRING)
+    private TipoArticulo tipoArticulo;
+
+    public enum TipoArticulo {
         Proyector,
         Microfono,
         Grabadora,
@@ -88,5 +92,14 @@ public class Articulos_Laboratorio {
 
     public void setAdministrativo(Administrativo administrativo) {
         this.administrativo = administrativo;
-    }    
+    }
+
+    public TipoArticulo getTipoArticulo() {
+        return tipoArticulo;
+    }
+
+    public void setTipoArticulo(TipoArticulo tipoArticulo) {
+        this.tipoArticulo = tipoArticulo;
+    }  
+
 }
