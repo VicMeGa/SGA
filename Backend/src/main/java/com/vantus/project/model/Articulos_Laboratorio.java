@@ -92,6 +92,7 @@ public class Articulos_Laboratorio {
 
     public void setAdministrativo(Administrativo administrativo) {
         this.administrativo = administrativo;
+
     }
 
     public TipoArticulo getTipoArticulo() {

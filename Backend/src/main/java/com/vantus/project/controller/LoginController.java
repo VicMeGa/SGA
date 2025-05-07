@@ -18,6 +18,11 @@ public class LoginController {
     @Autowired
     private AdministrativoRepository adminRepo;
 
+    @GetMapping("/Hello")
+    public String Hello(){
+        return "Hello SGA";
+    }
+
     @PostMapping("/login")
     public LoginResponse login(@RequestBody LoginRequest request) {
         return usuarioRepo.findByCorreo(request.getCorreo())

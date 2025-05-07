@@ -63,7 +63,6 @@ public class RegistroAlumnoRequest {
     public void setMatricula(String matricula) {
         this.matricula = matricula;
     }
-
     public String getGrupo() {
         return grupo;
     }

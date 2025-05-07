@@ -443,8 +443,8 @@ background-color: #0B1E33;
 }
 
 .tarjetaArticulo img{
-  width: 8rem;
-  height: 5.6rem;
+  aspect-ratio: 16/9;
+ width: 11rem;
   margin: 1.5rem;
 }
 
@@ -499,4 +499,100 @@ background-color: #0B1E33;
 
 .status-indicator .unavailable .status-dot {
   background-color: #ffebee;
+}
+
+/*------------------Prestamos---------------------------*/
+.presMain{
+  background-color:rgba(255,255,255,0.8);
+  max-width: 90%;
+  margin: auto;
+  margin-top: 7%;
+  display: flex;
+  justify-content: center;
+  border-radius: 8px;
+}
+.contenedor{
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  background-color:rgba(168, 179, 191,0.9);
+  max-width: 80%;
+  display: flex;
+  gap: 3rem;
+  border-radius: 8px;
+}
+/*izquierda*/
+.itemDatos{
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  width:45%;
+  border-radius: 0.5rem;
+  padding: 16px;
+  text-align: center;
+  align-items: center;
+}
+
+.itemDatos img{
+  width: 60vh;
+  aspect-ratio: 16/9;
+  border-radius: 8px;
+}
+
+/*derecha*/
+.itemPrestamo{
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  background-color:rgba(255,255,255,1);
+  width:40%;
+  border-radius: 0.5rem;
+}
+
+.itemPrestamo input{
+  color:black;
+  margin-top: .5rem;
+  background-color:rgba(168, 179, 191, .3);
+  font-size: 3vh;
+}
+
+
+/*-------------------------Registrar Articulo------------------------------------------*/
+.regisArMain{
+  position: relative;
+  background-color:rgba(255,255,255,0.8);
+  max-width: 70%;
+  min-width: 600px;
+  margin: auto;
+  margin-top: 7%;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.regisArMain input{
+  color:black;
+  width: 90vh;
+  height: 5vh;
+  margin-top: 30px;
+  margin-bottom: 10px;
+  background-color:rgba(168, 179, 191, .3);
+  font-size: 3.5vh;
+}
+
+.formArti button{
+  font-size:3vh;
+  width: auto;
+}
+
+.botonesArt{
+  margin:auto;
+  justify-content: space-between;
+  display: flex;
+  align-items: center;
+  width: 70%;
+}
+.CanButton{
+  background-color: #B0CCEB;
+  color:black;
+  position: relative;
+}
+.regisButton{
+  background-color: #0B1E33;
 }
