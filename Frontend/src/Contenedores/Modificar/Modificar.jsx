@@ -9,34 +9,6 @@ function Modificar() {
   const [students, setStudents] = useState([]);
   const [selectedStudent, setSelectedStudent] = useState(null);
 
-  // Cargar los primeros 5 usuarios al cargar el componente
-  useEffect(() => {
-    const fetchInitialUsers = async () => {
-      try {
-        const res = await fetch('http://localhost:8080/sga/buscar/usuarios5?limit=5'); // Ajusta el endpoint si es necesario
-        const data = await res.json();
-        if (Array.isArray(data)) {
-          setStudents(data);
-        } else {
-          setStudents([]);
-        }
-      } catch (error) {
-        console.error('Error al obtener los usuarios iniciales:', error);
-        setStudents([]);
-      }
-    };
-
-    fetchInitialUsers();
-  }, []);
-
-  const handleSearch = (e) => {
-    setSearchQuery(e.target.value);
-  };
-
-  const handleSelectStudent = (student) => {
-    setSelectedStudent(student);
-  };
-
   return (
     <>
       <Cabeza />

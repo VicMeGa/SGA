@@ -1,6 +1,5 @@
 import React from 'react';
 import { Search } from 'lucide-react';
-//import { useState, useEffect } from 'react';
 
 
 const DivDerecho = ({
@@ -34,8 +33,36 @@ const DivDerecho = ({
     }
   };
 
-  const handleRowClick = (student) => {
-    setSelectedStudent(student);
+  const obtenerDetalleUsuario = async (identificador) => {
+    try {
+      const res = await fetch(`http://localhost:8080/sga/buscar/usuario/detalle/${identificador}`);
+      if (!res.ok) throw new Error("No se encontró el usuario.");
+      
+      const data = await res.json();
+      setSelectedStudent(data);  // ← Aquí se actualiza el estado con todos los datos
+    } catch (error) {
+      console.error("Error al obtener detalles:", error);
+      alert("No se pudo obtener la información completa del usuario.");
+    }
+  };
+  
+
+  const handleRowClick = async (student) => {
+    try {
+      const identificador = student.matricula || student.numeroEmpleado;
+      const res = await fetch(`http://localhost:8080/sga/usuarios/${identificador}`);
+      const data = await res.json();
+  
+      if (!res.ok || !data) {
+        alert("No se pudo obtener la información completa del usuario.");
+        return;
+      }
+  
+      setSelectedStudent(data);
+    } catch (error) {
+      console.error("Error al obtener el usuario:", error);
+      alert("Error al obtener los datos completos del usuario.");
+    }
   };
 
   return (
@@ -63,7 +90,7 @@ const DivDerecho = ({
           </thead>
           <tbody>
             {students.map((student, index) => (
-              <tr key={index} onClick={() => handleRowClick(student)}>
+              <tr key={index} onClick={() => obtenerDetalleUsuario(student.identificador)}>
                  <td className="tdd">{student.identificador || student.matricula || student.numeroEmpleado}</td>
                  <td className="tdd">{student.nombre}</td>
               </tr>

@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -36,7 +35,7 @@ public class BusquedaController {
     public ResponseEntity<?> buscar(@RequestParam String query) {
         List<BusquedaRequest> resultados = new ArrayList<>();
 
-        // Buscar por matrícula (9 dígitos)
+        // Buscar por matrícula (8 dígitos)
         if (query.matches("\\d{8}")) {
             alumnoRepo.findByMatricula(query).ifPresent(alumno -> {
                 String nombre = alumno.getUsuario().getNombre();
@@ -78,9 +77,21 @@ public class BusquedaController {
         return ResponseEntity.ok(resultados);
     }
 
-    @GetMapping("/usuarios5")
-    public List<Usuario> getUsuarios(@RequestParam(defaultValue = "5") int limit) {
-        return usuarioRepo.findAll(PageRequest.of(0, limit)).getContent();
-    }
+    @GetMapping("/usuario/detalle/{identificador}")
+    public ResponseEntity<?> obtenerDetalleUsuario(@PathVariable String identificador) {
+        if (identificador.matches("\\d{8}")) {
+            Optional<Alumno> alumno = alumnoRepo.findByMatricula(identificador);
+            if (alumno.isPresent()) {
+                return ResponseEntity.ok(alumno.get());
+            }
+        }
+        else if (identificador.matches("\\d{6}")) {
+            Optional<Administrativo> admin = adminRepo.findByNumeroEmpleado(identificador);
+            if (admin.isPresent()) {
+                return ResponseEntity.ok(admin.get());
+            }
+        }
 
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuario no encontrado.");
+    }
 }
