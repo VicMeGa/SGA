@@ -3,9 +3,9 @@ import vantus from "../recursos/vantus.png"
 function Cabeza (){
     return(
         <>
-        <heater className='arriba'>
+        <header className='arriba'>
             <img className="logo" src={vantus}/>
-        </heater>
+        </header>
         <br/>
         <br />
         </>

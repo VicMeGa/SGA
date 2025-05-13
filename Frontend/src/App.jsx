@@ -9,7 +9,8 @@ import RegInvitado from './Contenedores/Registar/RegInvitado';
 import Modificar from './Contenedores/Modificar/Modificar';
 import Articulos from './Contenedores/Articulos/Articulos';
 import Prestamo from './Contenedores/Articulos/Prestamo/Prestamo';
-import NewArticulo from './Contenedores/Articulos/añadir/NewArticulo'
+import NewArticulo from './Contenedores/Articulos/añadir/NewArticulo';
+import Horario from './Contenedores/Horarios/Horario'
 
 function App() {
     
@@ -27,6 +28,7 @@ function App() {
             <Route path="/Articulos" element={<Articulos />} />
             <Route path="/prestamo/:itemId" element={<Prestamo />} />
             <Route path="/NewArticulo" element={<NewArticulo />} /> 
+            <Route path="/Horario" element={<Horario />} /> 
           </Routes>
     </Router>
     </>

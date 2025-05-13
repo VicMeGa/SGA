@@ -12,14 +12,17 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.vantus.project.dto.RegistroAdministrativoRequest;
 import com.vantus.project.dto.RegistroAlumnoRequest;
+import com.vantus.project.dto.RegistroArticuloRequest;
 import com.vantus.project.dto.RegistroInvitadoRequest;
 import com.vantus.project.model.Administrativo;
 import com.vantus.project.model.Alumno;
+import com.vantus.project.model.Articulos_Laboratorio;
 import com.vantus.project.model.Horario_Sala;
 import com.vantus.project.model.Invitado;
 import com.vantus.project.model.Usuario;
 import com.vantus.project.repository.AdministrativoRepository;
 import com.vantus.project.repository.AlumnoRepository;
+import com.vantus.project.repository.ArticulosRepository;
 import com.vantus.project.repository.HorarioSalaRepository;
 import com.vantus.project.repository.InvitadoRepository;
 import com.vantus.project.repository.UsuarioRepository;
@@ -43,6 +46,9 @@ public class RegistroController {
 
     @Autowired
     private InvitadoRepository inviRepo; 
+
+    @Autowired
+    private ArticulosRepository artiRepo; 
 
     @PostMapping("/administrativo")
     public ResponseEntity<?> registrarAdministrativo(@RequestBody RegistroAdministrativoRequest request) {
@@ -126,4 +132,24 @@ public class RegistroController {
 
         return ResponseEntity.ok("Invitado registrado exitosamente");
     }
+
+    @PostMapping("/articulo")
+    public ResponseEntity<?> registrarArticulo(@RequestBody RegistroArticuloRequest request) {
+    
+        Administrativo administrativo = adminRepo.findById(7)
+            .orElseThrow(() -> new RuntimeException("Administrativo no encontrado"));
+    
+        Articulos_Laboratorio arti = new Articulos_Laboratorio();
+        arti.setTipoArticulo(Articulos_Laboratorio.TipoArticulo.Bocina);
+        arti.setNombre(request.getNombre());
+        arti.setNumeroArticulo(request.getNumeroArticulo());
+        arti.setDescripcion(request.getDescripcion());
+        arti.setUrlFotografia(request.getUrlFotografia());
+        arti.setAdministrativo(administrativo); // Aquí ya se usa el administrativo con ID 7
+    
+        artiRepo.save(arti);
+    
+        return ResponseEntity.ok("Artículo registrado exitosamente");
+    }
+    
 }

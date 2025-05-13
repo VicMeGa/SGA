@@ -104,15 +104,7 @@ public class Usuario {
     public void setProgramaEducativo(String programaEducativo) {
         this.programaEducativo = programaEducativo;
     }
-
-    public TipoUsuario getTipoUsuario() {
-        return tipoUsuario;
-    }
-
-    public void setTipoUsuario(TipoUsuario tipoUsuario) {
-        this.tipoUsuario = tipoUsuario;
-    }
-
+    
     public byte[] getHuellaDactilar() {
         return huellaDactilar;
     }
@@ -127,5 +119,13 @@ public class Usuario {
 
     public void setCodigoQR(String codigoQR) {
         this.codigoQR = codigoQR;
+    }
+
+    public TipoUsuario getTipoUsuario() {
+        return tipoUsuario;
+    }
+
+    public void setTipoUsuario(TipoUsuario tipoUsuario) {
+        this.tipoUsuario = tipoUsuario;
     }
 }

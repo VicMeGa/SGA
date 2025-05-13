@@ -20,7 +20,7 @@ return(
         <FileSpreadsheet size={70} />
       </Link>
 
-      <Link to="">
+      <Link to="/Horario">
         <span className="Opci" >Horario salas</span>
         <Calendar size={70} />
       </Link>
