@@ -27,7 +27,8 @@ function Nav (){
           </button>
         </li>
         <li>
-          <button className="nav-item">
+          <button className="nav-item"
+          onClick={() => navigate('/Horario')}>
             <Wallet className="nav-logo" />
           </button>
         </li>
