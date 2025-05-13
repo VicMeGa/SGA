@@ -84,8 +84,7 @@ public class BusquedaController {
             if (alumno.isPresent()) {
                 return ResponseEntity.ok(alumno.get());
             }
-        }
-        else if (identificador.matches("\\d{6}")) {
+        } else if (identificador.matches("\\d{6}")) {
             Optional<Administrativo> admin = adminRepo.findByNumeroEmpleado(identificador);
             if (admin.isPresent()) {
                 return ResponseEntity.ok(admin.get());
@@ -94,4 +93,28 @@ public class BusquedaController {
 
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuario no encontrado.");
     }
+
+    @DeleteMapping("/usuarios/{identificador}")
+    public ResponseEntity<?> eliminarUsuario(@PathVariable String identificador) {
+        // Buscar si es Alumno
+        Optional<Alumno> alumnoOpt = alumnoRepo.findByMatricula(identificador);
+        if (alumnoOpt.isPresent()) {
+            Usuario usuario = alumnoOpt.get().getUsuario(); // Obtener usuario antes de borrar
+            alumnoRepo.delete(alumnoOpt.get());
+            usuarioRepo.delete(usuario); // Eliminar el usuario también
+            return ResponseEntity.ok("Alumno y usuario eliminados.");
+        }
+    
+        // Buscar si es Administrativo
+        Optional<Administrativo> adminOpt = adminRepo.findByNumeroEmpleado(identificador);
+        if (adminOpt.isPresent()) {
+            Usuario usuario = adminOpt.get().getUsuario();
+            adminRepo.delete(adminOpt.get());
+            usuarioRepo.delete(usuario);
+            return ResponseEntity.ok("Administrativo y usuario eliminados.");
+        }
+    
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuario no encontrado.");
+    }
+    
 }

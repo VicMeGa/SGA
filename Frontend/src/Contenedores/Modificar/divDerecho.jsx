@@ -46,25 +46,6 @@ const DivDerecho = ({
     }
   };
   
-
-  const handleRowClick = async (student) => {
-    try {
-      const identificador = student.matricula || student.numeroEmpleado;
-      const res = await fetch(`http://localhost:8080/sga/usuarios/${identificador}`);
-      const data = await res.json();
-  
-      if (!res.ok || !data) {
-        alert("No se pudo obtener la información completa del usuario.");
-        return;
-      }
-  
-      setSelectedStudent(data);
-    } catch (error) {
-      console.error("Error al obtener el usuario:", error);
-      alert("Error al obtener los datos completos del usuario.");
-    }
-  };
-
   return (
     <div className="divDerecho">
       <div className="busqueda">
