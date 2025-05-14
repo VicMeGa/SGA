@@ -30,6 +30,30 @@ const DivIzquierdo = ({ selectedStudent }) => {
     }
   };
 
+  const handleEliminar = async () => {
+  const confirm = window.confirm('¿Estás seguro de que deseas eliminar este usuario?');
+
+  if (!confirm) return;
+
+  try {
+    const response = await fetch(`http://localhost:8080/sga/eliminar/usuario/${formData.usuario.idUsuario}`, {
+      method: 'DELETE',
+    });
+
+    if (response.ok) {
+      alert('Usuario eliminado correctamente');
+      setFormData(null); // Limpia el formulario
+      // Aquí puedes agregar lógica adicional como notificar al componente padre que recargue la lista
+    } else {
+      alert('Error al eliminar el usuario');
+    }
+  } catch (error) {
+    console.error('Error al eliminar:', error);
+    alert('Error de conexión con el servidor');
+  }
+};
+
+
   const handleModificar = async () => {
     const payload = {
       tipo: formData.matricula ? 'alumno' : 'administrativo',
@@ -114,19 +138,9 @@ const DivIzquierdo = ({ selectedStudent }) => {
         )}
 
         <div className="botonesMod">
-          <button type="button" className="borrarButton">
-            Eliminar
-          </button>
-          <button type="button" className="cancelButton2">
-            Cancelar
-          </button>
-          <button
-            type="button"
-            className="modButton"
-            onClick={handleModificar}
-          >
-            Modificar
-          </button>
+          <button type="button" className="borrarButton" onClick={handleEliminar}>Eliminar</button>
+          <button type="button" className="cancelButton2">Cancelar</button>
+          <button type="button" className="modButton" onClick={handleModificar}>Modificar</button>
         </div>
       </form>
     </div>

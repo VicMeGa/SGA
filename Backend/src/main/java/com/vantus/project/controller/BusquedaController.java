@@ -94,7 +94,7 @@ public class BusquedaController {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuario no encontrado.");
     }
 
-    @DeleteMapping("/usuarios/{identificador}")
+    @DeleteMapping("/eliminar/usuarios/{identificador}")
     public ResponseEntity<?> eliminarUsuario(@PathVariable String identificador) {
         // Buscar si es Alumno
         Optional<Alumno> alumnoOpt = alumnoRepo.findByMatricula(identificador);
