@@ -116,5 +116,4 @@ public class BusquedaController {
     
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuario no encontrado.");
     }
-    
 }
