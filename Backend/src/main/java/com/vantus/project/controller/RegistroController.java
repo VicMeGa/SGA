@@ -73,7 +73,6 @@ public class RegistroController {
         Administrativo admin = new Administrativo();
         admin.setNumeroEmpleado(request.getNumeroEmpleado());
         admin.setContrasena(request.getContrasena());
-        admin.setArea(request.getArea());
         admin.setCargo(request.getCargo());
         admin.setUsuario(usuario);
 

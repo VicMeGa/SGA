@@ -9,28 +9,27 @@ const DivIzquierdo = ({ selectedStudent }) => {
     <div className="divIzquierdo">
       <form>
         <h3>Datos del Usuario</h3>
-        <input type="text" readOnly value={selectedStudent.usuario.nombre || ''} placeholder="Nombre" />
-        <input type="text" readOnly value={selectedStudent.usuario.apellido_paterno || ''} placeholder="Apellido Paterno" />
-        <input type="text" readOnly value={selectedStudent.usuario.apellido_materno || ''} placeholder="Apellido Materno" />
-        <input type="text" readOnly value={selectedStudent.usuario.correo || ''} placeholder="Correo" />
-        <input type="text" readOnly value={selectedStudent.usuario.numeroTelefono || ''} placeholder="Número Teléfono" />
-        <input type="text" readOnly value={selectedStudent.usuario.programaEducativo || ''} placeholder="Programa Educativo" />
+        <input type="text"  value={selectedStudent.usuario.nombre || ''} placeholder="Nombre" />
+        <input type="text"  value={selectedStudent.usuario.apellido_paterno || ''} placeholder="Apellido Paterno" />
+        <input type="text"  value={selectedStudent.usuario.apellido_materno || ''} placeholder="Apellido Materno" />
+        <input type="text"  value={selectedStudent.usuario.correo || ''} placeholder="Correo" />
+        <input type="text"  value={selectedStudent.usuario.numeroTelefono || ''} placeholder="Número Teléfono" />
+        <input type="text"  value={selectedStudent.usuario.programaEducativo || ''} placeholder="Programa Educativo" />
 
         {selectedStudent.matricula && (
           <>
-            <input type="text" readOnly value={selectedStudent.matricula} placeholder="Matrícula" />
-            <input type="text" readOnly value={selectedStudent.semestre} placeholder="Semestre" />
-            <input type="text" readOnly value={selectedStudent.grupo} placeholder="Grupo" />
-            <input type="text" readOnly value={selectedStudent.horario.idHorario} placeholder="ID Horario" />
+            <input type="text"  value={selectedStudent.matricula} placeholder="Matrícula" />
+            <input type="text"  value={selectedStudent.semestre} placeholder="Semestre" />
+            <input type="text"  value={selectedStudent.grupo} placeholder="Grupo" />
+            <input type="text"  value={selectedStudent.horario.idHorario} placeholder="ID Horario" />
           </>
         )}
 
         {selectedStudent.numeroEmpleado && (
           <>
-            <input type="text" readOnly value={selectedStudent.numeroEmpleado} placeholder="N° Empleado" />
-            <input type="text" readOnly value={selectedStudent.cargo} placeholder="Cargo" />
-            <input type="text" readOnly value={selectedStudent.area} placeholder="Área" />
-            <input type="password" readOnly value={selectedStudent.contrasena} placeholder="Contraseña" />
+            <input type="text"  value={selectedStudent.numeroEmpleado} placeholder="N° Empleado" />
+            <input type="text"  value={selectedStudent.cargo} placeholder="Cargo" />
+            <input type="password"  value={selectedStudent.contrasena} placeholder="Contraseña" />
           </>
         )}
                     <div className="botonesMod"> 

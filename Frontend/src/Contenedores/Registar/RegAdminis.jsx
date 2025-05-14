@@ -11,7 +11,6 @@ function RegAdminis() {
     const [correo, setCorreo] = useState("");
     const [cargo, setCargo] = useState("");
     const [numeroTelefono, setNumeroTelefono] = useState("");
-    const [area, setArea] = useState("");
     const [contrasena, setContrasena] = useState("");
     const [programaEducativo, setProgramaEducativo] = useState("");
 
@@ -26,7 +25,6 @@ function RegAdminis() {
             numeroTelefono,
             numeroEmpleado,
             contrasena,
-            area,
             cargo,
             programaEducativo
         };
@@ -63,7 +61,6 @@ function RegAdminis() {
                         <input type='email' placeholder='Correo Electrónico' value={correo} onChange={(e) => setCorreo(e.target.value)} required />
                         <input type='text' placeholder='Cargo' value={cargo} onChange={(e) => setCargo(e.target.value)} />
                         <input type='text' placeholder='Teléfono' value={numeroTelefono} onChange={(e) => setNumeroTelefono(e.target.value)} />
-                        <input type='text' placeholder='Área' value={area} onChange={(e) => setArea(e.target.value)} />
                         <input type='text' placeholder='Programa Educativo' value={programaEducativo} onChange={(e) => setProgramaEducativo(e.target.value)} />
                         <input type='password' placeholder='Contraseña' value={contrasena} onChange={(e) => setContrasena(e.target.value)} required />
                     </div>
