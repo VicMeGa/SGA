@@ -24,14 +24,14 @@ const Articulos = () => {
           name: "Proyector_02",
           description: "Descripción del proyector 02",
           status: "Ocupado",
-          image: "https://images.gamebanana.com/img/ss/mods/6706dcb04b57a.jpg",
+          image: "http://localhost:8080/uploads/be6ceb2f-1d56-463b-8e80-366411f3bb34_Proyector1.jpg"
         },
         {
           id: 3,
           name: "Bocina_01",
           description: "Descripción de la bocina 01",
           status: "Ocupado",
-          image: "https://www.pockettactics.com/wp-content/sites/pockettactics/2024/06/genshin-impact-memes-header.jpeg",
+          image: "http://localhost:8080/uploads/f63a52f7-9b38-4183-9287-6b0a1e54272c_bocina1.jpg",
         },
         {
           id: 4,
