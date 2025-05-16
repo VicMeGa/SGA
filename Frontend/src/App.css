@@ -601,10 +601,49 @@ background-color: #0B1E33;
 .divHorario{
   position: relative;
   background-color:rgba(255,255,255,0.8);
-  max-width: 70%;
-  min-width: 600px;
+  max-width: 80%;
+  min-width: 800px;
   margin: auto;
   margin-top: 7%;
   margin-bottom: 20px;
   text-align: center;
+}
+
+.botonesHorario{
+  justify-content: space-between;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.botonesHorario button{
+  background-color: #3B526B;
+  width: 10rem;
+  font-size: 4vh;
+  border-radius: 20px;
+  margin-left: 1rem;
+  margin-right: 1rem;
+  margin-top:2rem;
+}
+
+
+.botonesHorarioB{
+  margin:auto;
+  justify-content: space-between;
+  display: flex;
+  align-items: center;
+  width: 85%;
+}
+
+.botonesHorarioB button{
+  background-color: #3B526B;
+  width: 10rem;
+  font-size: 3vh;
+  border-radius: 20px;
+  margin-bottom: 1rem;
+}
+
+.divTabla{
+  margin: 3rem;
+  margin-bottom: 1rem;
 }
