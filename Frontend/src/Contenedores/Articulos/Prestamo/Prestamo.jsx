@@ -8,7 +8,7 @@ import DivDerecho from './DivDerecho';
 const Prestamo =()=> {
     const { itemId } = useParams();
     const [item, setItem] = useState(null);
-
+  
     // Simula la carga de datos desde la base de datos
   useEffect(() => {
     const fetchItem = async () => {

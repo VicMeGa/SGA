@@ -45,7 +45,7 @@ const DivDerecho = ({
       alert("No se pudo obtener la información completa del usuario.");
     }
   };
-  
+
   return (
     <div className="divDerecho">
       <div className="busqueda">

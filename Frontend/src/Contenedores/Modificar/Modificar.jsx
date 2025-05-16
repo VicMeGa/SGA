@@ -8,7 +8,7 @@ function Modificar() {
   const [searchQuery, setSearchQuery] = useState('');
   const [students, setStudents] = useState([]);
   const [selectedStudent, setSelectedStudent] = useState(null);
-
+  
   return (
     <>
       <Cabeza />
