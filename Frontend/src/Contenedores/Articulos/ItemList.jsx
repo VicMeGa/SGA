@@ -7,7 +7,7 @@ const ItemList = ({items, onSelect}) => {
         <div className='listaArticulos'>
             {items.map((item) => (
                 <Item 
-                    key = {item.id}
+                    key = {item.idArticulo}
                     image = {item.image}
                     name = {item.name}
                     description = {item.description}

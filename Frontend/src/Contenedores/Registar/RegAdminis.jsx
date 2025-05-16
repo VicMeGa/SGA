@@ -11,9 +11,18 @@ function RegAdminis() {
     const [correo, setCorreo] = useState("");
     const [cargo, setCargo] = useState("");
     const [numeroTelefono, setNumeroTelefono] = useState("");
-    const [area, setArea] = useState("");
     const [contrasena, setContrasena] = useState("");
     const [programaEducativo, setProgramaEducativo] = useState("");
+
+    const opciones = [
+        { value: 'Licenciatura en Ingeniería Mecánica', label: 'Licenciatura en Ingeniería Mecánica' },
+        { value: 'Licenciatura en Ingeniería en Computación', label: 'Licenciatura en Ingeniería en Computación' },
+        { value: 'Licenciatura en Matemáticas Aplicadas', label: 'Licenciatura en Matemáticas Aplicadas' },
+        { value: 'Licenciatura en Ingeniería Química', label: 'Licenciatura en Ingeniería Química' },
+        { value: 'Licenciatura en Química Industrial', label: 'Licenciatura en Química Industrial' },
+        { value: 'Ingeniería en Sistemas Electrónicos', label: 'Ingeniería en Sistemas Electrónicos' },
+        { value: 'Licenciatura en Ingeniería en Inteligencia Artificial', label: 'Licenciatura en Ingeniería en Inteligencia Artificial' },
+    ];
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -26,7 +35,6 @@ function RegAdminis() {
             numeroTelefono,
             numeroEmpleado,
             contrasena,
-            area,
             cargo,
             programaEducativo
         };
@@ -63,8 +71,17 @@ function RegAdminis() {
                         <input type='email' placeholder='Correo Electrónico' value={correo} onChange={(e) => setCorreo(e.target.value)} required />
                         <input type='text' placeholder='Cargo' value={cargo} onChange={(e) => setCargo(e.target.value)} />
                         <input type='text' placeholder='Teléfono' value={numeroTelefono} onChange={(e) => setNumeroTelefono(e.target.value)} />
-                        <input type='text' placeholder='Área' value={area} onChange={(e) => setArea(e.target.value)} />
-                        <input type='text' placeholder='Programa Educativo' value={programaEducativo} onChange={(e) => setProgramaEducativo(e.target.value)} />
+                        <select
+                            value={programaEducativo}
+                            onChange={(e) => setProgramaEducativo(e.target.value)}
+                        >
+                            <option value="" disabled>Selecciona un programa educativo</option>
+                            {opciones.map((opcion) => (
+                                <option key={opcion.value} value={opcion.value}>
+                                    {opcion.label}
+                                </option>
+                            ))}
+                        </select>
                         <input type='password' placeholder='Contraseña' value={contrasena} onChange={(e) => setContrasena(e.target.value)} required />
                     </div>
 

@@ -15,9 +15,6 @@ public class Administrativo {
     private String numeroEmpleado;
 
     @Column(nullable = false)
-    private String area;
-
-    @Column(nullable = false)
     private String cargo;
 
     @Column(nullable = false)
@@ -43,14 +40,6 @@ public class Administrativo {
 
     public void setNumeroEmpleado(String numeroEmpleado) {
         this.numeroEmpleado = numeroEmpleado;
-    }
-
-    public String getArea() {
-        return area;
-    }
-
-    public void setArea(String area) {
-        this.area = area;
     }
 
     public String getCargo() {

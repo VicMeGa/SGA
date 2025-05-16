@@ -15,7 +15,6 @@ public class RegistroAdministrativoRequest {
 
     //Datos de tabla Administrativo
     private String numeroEmpleado;
-    private String area;
     private String cargo;
     private String contrasena;
     public String getNombre() {
@@ -59,12 +58,6 @@ public class RegistroAdministrativoRequest {
     }
     public void setNumeroEmpleado(String numeroEmpleado) {
         this.numeroEmpleado = numeroEmpleado;
-    }
-    public String getArea() {
-        return area;
-    }
-    public void setArea(String area) {
-        this.area = area;
     }
     public String getCargo() {
         return cargo;

@@ -6,7 +6,14 @@ public class RegistroArticuloRequest {
     private String nombre;
     private String numeroArticulo;
     private String descripcion;
-    private String urlFotografia;
+    
+    public String getTipoArticulo() {
+        return tipoArticulo;
+    }
+    public void setTipoArticulo(String tipoArticulo) {
+        this.tipoArticulo = tipoArticulo;
+    }
+    private String tipoArticulo;
     
     public String getNombre() {
         return nombre;
@@ -26,12 +33,4 @@ public class RegistroArticuloRequest {
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }
-    public String getUrlFotografia() {
-        return urlFotografia;
-    }
-    public void setUrlFotografia(String urlFotografia) {
-        this.urlFotografia = urlFotografia;
-    }
-
-    
 }

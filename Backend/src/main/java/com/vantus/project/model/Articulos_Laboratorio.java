@@ -19,7 +19,7 @@ public class Articulos_Laboratorio {
 
     public enum TipoArticulo {
         Proyector,
-        Microfono,
+        Micrófono,
         Grabadora,
         Laptop,
         Bocina,
@@ -38,10 +38,6 @@ public class Articulos_Laboratorio {
 
     @Column(name = "url_fotografia", nullable = false)
     private String urlFotografia;
-
-    @ManyToOne
-    @JoinColumn(name = "id_responsable_asignado")
-    private Administrativo administrativo;
 
     //Revisar esta relacion
     // @OneToMany(mappedBy = "articulo")
@@ -84,15 +80,6 @@ public class Articulos_Laboratorio {
 
     public void setUrlFotografia(String urlFotografia) {
         this.urlFotografia = urlFotografia;
-    }
-
-    public Administrativo getAdministrativo() {
-        return administrativo;
-    }
-
-    public void setAdministrativo(Administrativo administrativo) {
-        this.administrativo = administrativo;
-
     }
 
     public TipoArticulo getTipoArticulo() {
