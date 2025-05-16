@@ -12,9 +12,11 @@ import org.springframework.web.bind.annotation.*;
 import com.vantus.project.dto.BusquedaRequest;
 import com.vantus.project.model.Administrativo;
 import com.vantus.project.model.Alumno;
+import com.vantus.project.model.Articulos_Laboratorio;
 import com.vantus.project.model.Usuario;
 import com.vantus.project.repository.AdministrativoRepository;
 import com.vantus.project.repository.AlumnoRepository;
+import com.vantus.project.repository.ArticulosRepository;
 import com.vantus.project.repository.UsuarioRepository;
 
 //@CrossOrigin(origins = "http://localhost:5173")
@@ -30,6 +32,9 @@ public class BusquedaController {
 
     @Autowired
     private UsuarioRepository usuarioRepo;
+
+    @Autowired
+    private ArticulosRepository artiRepo;
 
     @GetMapping("/usuarios")
     public ResponseEntity<?> buscar(@RequestParam String query) {
@@ -104,7 +109,7 @@ public class BusquedaController {
             usuarioRepo.delete(usuario); // Eliminar el usuario también
             return ResponseEntity.ok("Alumno y usuario eliminados.");
         }
-    
+
         // Buscar si es Administrativo
         Optional<Administrativo> adminOpt = adminRepo.findByNumeroEmpleado(identificador);
         if (adminOpt.isPresent()) {
@@ -113,7 +118,21 @@ public class BusquedaController {
             usuarioRepo.delete(usuario);
             return ResponseEntity.ok("Administrativo y usuario eliminados.");
         }
-    
+
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuario no encontrado.");
     }
+
+    @GetMapping("/articulos")
+    public ResponseEntity<List<Articulos_Laboratorio>> obtenerArticulos() {
+        List<Articulos_Laboratorio> articulos = artiRepo.findAll();
+        return ResponseEntity.ok(articulos);
+    }
+
+    @GetMapping("/articulos/{id}")
+    public ResponseEntity<Articulos_Laboratorio> obtenerArticuloPorId(@PathVariable Integer id) {
+        Optional<Articulos_Laboratorio> articulo = artiRepo.findById(id);
+        return articulo.map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
 }

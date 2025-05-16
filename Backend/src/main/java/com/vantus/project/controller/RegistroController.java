@@ -151,9 +151,6 @@ public class RegistroController {
             @RequestPart("datos") RegistroArticuloRequest request,
             @RequestPart("imagen") MultipartFile imagen) throws IOException {
 
-        Administrativo administrativo = adminRepo.findById(7)
-                .orElseThrow(() -> new RuntimeException("Administrativo no encontrado"));
-
         Articulos_Laboratorio arti = new Articulos_Laboratorio();
 
         // Convertir el string del request al enum (asegura que coincida exactamente)
@@ -179,7 +176,6 @@ public class RegistroController {
 
         // Guarda solo la ruta relativa que se usará desde frontend (opcional)
         arti.setUrlFotografia("/uploads/" + nombreArchivo);
-        arti.setAdministrativo(administrativo);
         artiRepo.save(arti);
 
         return ResponseEntity.ok("Artículo registrado exitosamente");
