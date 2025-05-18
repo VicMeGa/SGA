@@ -11,6 +11,7 @@ import Articulos from './Contenedores/Articulos/Articulos';
 import Prestamo from './Contenedores/Articulos/Prestamo/Prestamo';
 import NewArticulo from './Contenedores/Articulos/añadir/NewArticulo';
 import Horario from './Contenedores/Horarios/Horario'
+import RegistrarSala from './Contenedores/Horarios/RegistrarSala/RegistrarSala'
 
 function App() {
     
@@ -29,6 +30,7 @@ function App() {
             <Route path="/prestamo/:itemId" element={<Prestamo />} />
             <Route path="/NewArticulo" element={<NewArticulo />} /> 
             <Route path="/Horario" element={<Horario />} /> 
+            <Route path="/RegistrarSala" element={<RegistrarSala />} />
           </Routes>
     </Router>
     </>

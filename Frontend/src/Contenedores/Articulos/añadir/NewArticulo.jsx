@@ -58,7 +58,7 @@ const NewArticulo = () => {
                         {tiposArticulos.map((tipo) => (
                             <option key={tipo.value} value={tipo.value}>{tipo.label}</option>
                         ))}
-                    </select>
+                    </select><br></br>
                     <input type="text" placeholder="Nombre del artículo" value={nombre} onChange={(e) => setNombre(e.target.value)} />
                     <input type="text" placeholder="Número de serie" value={noSerie} onChange={(e) => setNoSerie(e.target.value)} />
                     <input type="text" placeholder="Descripción" value={descripcion} onChange={(e) => setDescripcion(e.target.value)} />
@@ -71,7 +71,7 @@ const NewArticulo = () => {
                             setNombre("");
                             setNoSerie("");
                             setDescripcion("");
-                            setFoto("");
+                            setImagenFile("");
                         }}>Cancelar</button>
                         <button className="regisButton" type="submit">Registrar</button>
                     </div>

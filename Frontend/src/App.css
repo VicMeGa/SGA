@@ -164,6 +164,16 @@ button {
   font-size: 3.5vh;
 }
 
+.regis select{
+  color:grey;
+  width: 90vh;
+  height: 5vh;
+  margin-top: 30px;
+  margin-bottom: 10px;
+  background-color:rgba(168, 179, 191, .3);
+  font-size: 3.5vh;
+}
+
 .formas button{
   font-size:3vh;
   width: 30%;
@@ -576,6 +586,18 @@ background-color: #0B1E33;
   font-size: 3.5vh;
 }
 
+.regisArMain select{
+    color:black;
+  width: 90vh;
+  height: 5vh;
+  margin-top: 30px;
+  margin-bottom: 10px;
+  background-color:rgba(168, 179, 191, .3);
+  font-size: 3.5vh;
+  
+  
+}
+
 .formArti button{
   font-size:3vh;
   width: auto;
@@ -646,4 +668,75 @@ background-color: #0B1E33;
 .divTabla{
   margin: 3rem;
   margin-bottom: 1rem;
+  background-color: white;
+}
+
+/*------------------------>Registrar Sala<------------------------------------*/
+.divReSa{
+  position: relative;
+  background-color:rgba(255,255,255,0.8);
+  max-width: 80%;
+  min-width: 700px;
+  margin: auto;
+  margin-top: 7%;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.divReSa h1{
+  margin-top: 2rem;
+}
+
+.divReSa img{
+  width: 128px;
+}
+
+.unoinput input{
+  color:black;
+  width: 90vh;
+  height: 5vh;
+  margin-top: 30px;
+  margin-bottom: 10px;
+  background-color:rgba(168, 179, 191, .3);
+  font-size: 3.5vh;
+}
+
+.botonesreS{
+  margin:auto;
+  justify-content: space-between;
+  display: flex;
+  align-items: center;
+  width: 65%;
+}
+
+.botonesreS button{
+  width: auto;
+  font-size: 4vh;
+  margin-bottom: 2rem;
+}
+
+.cancelButtonS{
+  background-color: #B0CCEB;
+  color:black;
+  position: relative;
+}
+.okButtonS{
+background-color: #0B1E33;
+}
+
+.dowInput{
+  align-items: center;
+  gap: 5px;
+  justify-content: space-between;
+}
+
+.dowInput input{
+  gap: 80px;
+  color:black;
+  height: 5vh;
+  width: 40vh;
+  margin-top: 30px;
+  margin-bottom: 10px;
+  background-color:rgba(168, 179, 191, .3);
+  font-size: 3.5vh;
 }
