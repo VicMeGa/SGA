@@ -10,8 +10,9 @@ import Modificar from './Contenedores/Modificar/Modificar';
 import Articulos from './Contenedores/Articulos/Articulos';
 import Prestamo from './Contenedores/Articulos/Prestamo/Prestamo';
 import NewArticulo from './Contenedores/Articulos/añadir/NewArticulo';
-import Horario from './Contenedores/Horarios/Horario'
-import RegistrarSala from './Contenedores/Horarios/RegistrarSala/RegistrarSala'
+import Horario from './Contenedores/Horarios/Horario';
+import RegistrarSala from './Contenedores/Horarios/RegistrarSala/RegistrarSala';
+import ControlAsistencias from './Contenedores/Horarios/ControlAsistencias/ControlAsistencias';
 
 function App() {
     
@@ -31,6 +32,7 @@ function App() {
             <Route path="/NewArticulo" element={<NewArticulo />} /> 
             <Route path="/Horario" element={<Horario />} /> 
             <Route path="/RegistrarSala" element={<RegistrarSala />} />
+            <Route path="/ControlAsistencias" element={<ControlAsistencias />} />
           </Routes>
     </Router>
     </>
