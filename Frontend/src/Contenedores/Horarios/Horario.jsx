@@ -1,9 +1,10 @@
 import Cabeza from "../Cabeza"
 import Nav from "../Nav"
 import Tabla from './Tabla'
+import { useNavigate } from 'react-router-dom';
 
 const Horario =()=>{
-
+    const navigate = useNavigate();
     
     return (
         <>
@@ -19,7 +20,7 @@ const Horario =()=>{
                 <Tabla />
             </div>
             <div className="botonesHorarioB">
-                <button type="button" >Registrar Sala</button>
+                <button type="button" onClick={() => navigate('/RegistrarSala')}>Registrar Sala</button>
                 <button type="button">Apartar</button>
             </div>
         </div>
