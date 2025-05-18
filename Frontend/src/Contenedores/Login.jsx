@@ -41,7 +41,7 @@ const Login = () => {
 
     return (
         <div className="login">
-            <form className="formulario" onSubmit={testeo}>
+            <form className="formulario" onSubmit={logeo}>
                 <img className="icon-login" src={user} width="25%" alt="User Icon" />
                 <br />
                 <input

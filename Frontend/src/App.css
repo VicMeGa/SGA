@@ -587,15 +587,13 @@ background-color: #0B1E33;
 }
 
 .regisArMain select{
-    color:black;
+  color:black;
   width: 90vh;
   height: 5vh;
   margin-top: 30px;
   margin-bottom: 10px;
   background-color:rgba(168, 179, 191, .3);
   font-size: 3.5vh;
-  
-  
 }
 
 .formArti button{
@@ -648,6 +646,17 @@ background-color: #0B1E33;
   margin-top:2rem;
 }
 
+.botonesHorario select{
+  margin-top: 30px;
+  border-color: #0B1E33 2px;
+  background-color: white;
+  margin-left: 3rem;
+  margin-top: 2rem;
+  width: 30rem;
+  font-size: 4vh;
+  color: grey;
+  border-radius: 8px;
+}
 
 .botonesHorarioB{
   margin:auto;
@@ -739,4 +748,70 @@ background-color: #0B1E33;
   margin-bottom: 10px;
   background-color:rgba(168, 179, 191, .3);
   font-size: 3.5vh;
+}
+
+/*----------------------> Control Asistencias <-----------------------*/
+
+.controlMain{
+  position: relative;
+  background-color:rgba(255,255,255,0.8);
+  max-width: 80%;
+  min-width: 700px;
+  margin: auto;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.upControl{
+  display: flex;
+  justify-content: space-between;
+  margin: 20px;
+  align-items: center;
+}
+
+.upControl select{
+  margin-top: 30px;
+  border-color: #0B1E33 2px;
+  background-color: white;
+  margin: 1rem;
+  width: 20rem;
+  font-size: 3vh;
+  color: grey;
+  border-radius: 8px;
+}
+
+.upControl button{
+  background-color: #3B526B;
+  width: auto;
+  height: 3rem;
+  font-size: 3vh;
+}
+
+.downControl {
+  columns: 2;
+}
+
+.downControl input{
+  background-color: white;
+  font-size: 3vh;
+  border-color: #0B1E33;
+  border-radius: 8px;
+  color: black;
+  width: 20rem;
+}
+
+.downControl input ::placeholder{
+  color: #0B1E33;
+}
+
+.controlTab{
+  margin: 2rem;
+}
+
+.controlTab table{
+  background-color: white;
+  border: 4px;
+  border-color: black 2px;
+  width: 100%;
+  border-collapse: collapse;
 }
