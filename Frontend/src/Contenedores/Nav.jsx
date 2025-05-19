@@ -33,7 +33,8 @@ function Nav (){
           </button>
         </li>
         <li>
-          <button className="nav-item">
+          <button className="nav-item"
+          onClick={() => navigate('/Reportes')}>
             <FileText className="nav-logo" />
           </button>
         </li>
