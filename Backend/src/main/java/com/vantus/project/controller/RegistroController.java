@@ -23,17 +23,20 @@ import com.vantus.project.dto.RegistroAdministrativoRequest;
 import com.vantus.project.dto.RegistroAlumnoRequest;
 import com.vantus.project.dto.RegistroArticuloRequest;
 import com.vantus.project.dto.RegistroInvitadoRequest;
+import com.vantus.project.dto.RegistroSalaRequest;
 import com.vantus.project.model.Administrativo;
 import com.vantus.project.model.Alumno;
 import com.vantus.project.model.Articulos_Laboratorio;
 import com.vantus.project.model.Horario_Sala;
 import com.vantus.project.model.Invitado;
+import com.vantus.project.model.Sala;
 import com.vantus.project.model.Usuario;
 import com.vantus.project.repository.AdministrativoRepository;
 import com.vantus.project.repository.AlumnoRepository;
 import com.vantus.project.repository.ArticulosRepository;
 import com.vantus.project.repository.HorarioSalaRepository;
 import com.vantus.project.repository.InvitadoRepository;
+import com.vantus.project.repository.SalaRepository;
 import com.vantus.project.repository.UsuarioRepository;
 
 //import jakarta.persistence.criteria.Path;
@@ -63,6 +66,9 @@ public class RegistroController {
 
     @Autowired
     private ArticulosRepository artiRepo;
+
+    @Autowired
+    private SalaRepository salaRepo;
 
     @PostMapping("/administrativo")
     public ResponseEntity<?> registrarAdministrativo(@RequestBody RegistroAdministrativoRequest request) {
@@ -181,4 +187,17 @@ public class RegistroController {
         return ResponseEntity.ok("Artículo registrado exitosamente");
     }
 
+    @PostMapping("/sala")
+    public ResponseEntity<?> registrarSala(@RequestBody RegistroSalaRequest request) {
+        Sala sala = new Sala();
+
+        sala.setNombreSala(request.getNombreSala());
+        sala.setCapacidadSala(request.getCapacidadSala());
+        sala.setNumeroEquipos(request.getNumeroEquipos());
+
+
+        salaRepo.save(sala);
+
+        return ResponseEntity.ok("Sala registrada exitosamente");
+    }
 }
