@@ -13,6 +13,7 @@ import NewArticulo from './Contenedores/Articulos/añadir/NewArticulo';
 import Horario from './Contenedores/Horarios/Horario';
 import RegistrarSala from './Contenedores/Horarios/RegistrarSala/RegistrarSala';
 import ControlAsistencias from './Contenedores/Horarios/ControlAsistencias/ControlAsistencias';
+import Reportes from './Contenedores/Reportes/Reportes'
 
 function App() {
     
@@ -33,6 +34,7 @@ function App() {
             <Route path="/Horario" element={<Horario />} /> 
             <Route path="/RegistrarSala" element={<RegistrarSala />} />
             <Route path="/ControlAsistencias" element={<ControlAsistencias />} />
+            <Route path='/Reportes' element={<Reportes />} />
           </Routes>
     </Router>
     </>

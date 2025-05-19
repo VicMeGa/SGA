@@ -815,3 +815,49 @@ background-color: #0B1E33;
   width: 100%;
   border-collapse: collapse;
 }
+
+/*--------------------------------->Reportes Main<------------------------------------*/
+.divReportes{
+  position: relative;
+  background-color:rgba(255,255,255,0.8);
+  max-width: 100%;
+  min-width: 700px;
+  margin: auto;
+  margin-top: 7%;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.divReportes select{
+  margin-top: 40px;
+  border-color: #0B1E33 2px;
+  background-color: white;
+  margin: 1rem;
+  width: 25rem;
+  font-size: 4vh;
+  color: grey;
+  border-radius: 8px;
+}
+
+.divReportes button{
+  background-color: #B0CCEB;
+  width: auto;
+  font-size: 3vh;
+  color: black;
+}
+
+.upRepor{
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.reportee{
+  width: auto;
+  margin: .5rem;
+}
+
+.reportee iframe{
+  width: 800px;
+  height: 450px;
+}

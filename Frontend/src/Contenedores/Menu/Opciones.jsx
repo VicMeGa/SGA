@@ -25,7 +25,7 @@ return(
         <Calendar size={70} />
       </Link>
 
-      <Link to="">
+      <Link to="/Reportes">
         <span className="Opci" >Generar reportes</span>
         <FileText size={70} />
       </Link>
