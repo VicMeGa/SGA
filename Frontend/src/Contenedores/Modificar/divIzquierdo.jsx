@@ -35,8 +35,9 @@ const DivIzquierdo = ({ selectedStudent }) => {
 
   if (!confirm) return;
 
+  const identificador = formData.matricula ? formData.matricula : formData.numeroEmpleado;
   try {
-    const response = await fetch(`http://localhost:8080/sga/eliminar/usuario/${formData.usuario.idUsuario}`, {
+    const response = await fetch(`http://localhost:8080/sga/buscar/eliminar/usuarios/${identificador}`, {
       method: 'DELETE',
     });
 
@@ -46,6 +47,7 @@ const DivIzquierdo = ({ selectedStudent }) => {
       // Aquí puedes agregar lógica adicional como notificar al componente padre que recargue la lista
     } else {
       alert('Error al eliminar el usuario');
+      console.log(formData.usuario.idUsuario)
     }
   } catch (error) {
     console.error('Error al eliminar:', error);

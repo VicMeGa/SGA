@@ -38,6 +38,8 @@ import com.vantus.project.repository.HorarioSalaRepository;
 import com.vantus.project.repository.InvitadoRepository;
 import com.vantus.project.repository.SalaRepository;
 import com.vantus.project.repository.UsuarioRepository;
+import com.vantus.project.service.EmailService;
+import com.vantus.project.utils.QRGenerator;
 
 //import jakarta.persistence.criteria.Path;
 
@@ -70,6 +72,12 @@ public class RegistroController {
     @Autowired
     private SalaRepository salaRepo;
 
+    @Autowired
+    private QRGenerator qrGenerator;
+
+    @Autowired
+    private EmailService emailService;
+
     @PostMapping("/administrativo")
     public ResponseEntity<?> registrarAdministrativo(@RequestBody RegistroAdministrativoRequest request) {
         // Validaciones básicas
@@ -87,8 +95,6 @@ public class RegistroController {
         usuario.setTipoUsuario(Usuario.TipoUsuario.Administrativo);
         usuario.setProgramaEducativo(request.getProgramaEducativo());
 
-        usuarioRepo.save(usuario);
-
         // Crear administrativo
         Administrativo admin = new Administrativo();
         admin.setNumeroEmpleado(request.getNumeroEmpleado());
@@ -96,7 +102,28 @@ public class RegistroController {
         admin.setCargo(request.getCargo());
         admin.setUsuario(usuario);
 
-        adminRepo.save(admin);
+        // ✅ Generar QR después de guardar el usuario
+        try {
+            String contenidoQR = "ID: " + admin.getNumeroEmpleado() + "\n" +
+                    "Nombre: " + usuario.getNombre() + " " + usuario.getApellido_paterno() + "\n" +
+                    "Correo: " + usuario.getCorreo() + "\n" +
+                    "Programa educativo: " + usuario.getProgramaEducativo();
+
+            String relativePath = "src/main/resources/static/qrcodes/";
+            Files.createDirectories(Paths.get(relativePath)); // Asegura que exista
+
+            String nombreArchivo = "usuario_" + admin.getNumeroEmpleado();
+            String rutaQR = qrGenerator.generateQR(contenidoQR, nombreArchivo);
+
+            System.out.println("QR generado exitosamente en: " + rutaQR);
+            usuario.setCodigoQR("/qrcodes/" + nombreArchivo);
+            usuarioRepo.save(usuario);
+            adminRepo.save(admin);
+            emailService.enviarCorreoConQR(usuario.getCorreo(), usuario.getNombre(), rutaQR);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.internalServerError().body("Usuario creado, pero falló la generación del QR o envio");
+        }
 
         return ResponseEntity.ok("Administrativo registrado exitosamente");
     }
@@ -112,8 +139,6 @@ public class RegistroController {
         usuario.setTipoUsuario(Usuario.TipoUsuario.Alumno);
         usuario.setProgramaEducativo(request.getProgramaEducativo());
 
-        usuarioRepo.save(usuario);
-
         Optional<Horario_Sala> horarioOpt = horarioSalaRepo.findByIdHorario(request.getId_horario());
         if (!horarioOpt.isPresent()) {
             return ResponseEntity.badRequest().body("Horario con ID " + request.getId_horario() + " no encontrado.");
@@ -126,7 +151,28 @@ public class RegistroController {
         alumn.setHorario(horarioOpt.get());
         alumn.setUsuario(usuario);
 
-        alumnRepo.save(alumn);
+        // ✅ Generar QR después de guardar el usuario
+        try {
+            String contenidoQR = "ID: " + alumn.getMatricula() + "\n" +
+                    "Nombre: " + usuario.getNombre() + " " + usuario.getApellido_paterno() + "\n" +
+                    "Correo: " + usuario.getCorreo() + "\n" +
+                    "Programa educativo: " + usuario.getProgramaEducativo();
+
+            String relativePath = "src/main/resources/static/qrcodes/";
+            Files.createDirectories(Paths.get(relativePath)); // Asegura que exista
+
+            String nombreArchivo = "usuario_" + alumn.getMatricula();
+            String rutaQR = qrGenerator.generateQR(contenidoQR, nombreArchivo);
+
+            System.out.println("QR generado exitosamente en: " + rutaQR);
+            usuario.setCodigoQR("/qrcodes/" + nombreArchivo);
+            usuarioRepo.save(usuario);
+            alumnRepo.save(alumn);
+            emailService.enviarCorreoConQR(usuario.getCorreo(), usuario.getNombre(), rutaQR);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.internalServerError().body("Usuario creado, pero falló la generación del QR o envio");
+        }
 
         return ResponseEntity.ok("Alumno registrado exitosamente");
     }
@@ -141,13 +187,32 @@ public class RegistroController {
         usuario.setNumeroTelefono(request.getNumeroTelefono());
         usuario.setTipoUsuario(Usuario.TipoUsuario.Invitado);
 
-        usuarioRepo.save(usuario);
-
         Invitado invi = new Invitado();
         invi.setFechaRegistro(request.getFechaRegistro());
         invi.setUsuario(usuario);
 
-        inviRepo.save(invi);
+        // ✅ Generar QR después de guardar el usuario
+        try {
+            String contenidoQR = "ID: " + usuario.getIdUsuario() + "\n" +
+                    "Nombre: " + usuario.getNombre() + " " + usuario.getApellido_paterno() + "\n" +
+                    "Correo: " + usuario.getCorreo();
+
+            String relativePath = "src/main/resources/static/qrcodes/";
+            Files.createDirectories(Paths.get(relativePath)); // Asegura que exista
+
+            String nombreArchivo = "usuario_" + invi.getIdInvitado();
+            String rutaQR = qrGenerator.generateQR(contenidoQR, nombreArchivo);
+
+            System.out.println("QR generado exitosamente en: " + rutaQR);
+            usuario.setCodigoQR("/qrcodes/" + nombreArchivo);
+            usuarioRepo.save(usuario);
+            inviRepo.save(invi);
+            emailService.enviarCorreoConQR(usuario.getCorreo(), usuario.getNombre(), rutaQR);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.internalServerError().body("Usuario creado, pero falló la generación del QR o envio");
+        }
+
 
         return ResponseEntity.ok("Invitado registrado exitosamente");
     }
@@ -194,7 +259,6 @@ public class RegistroController {
         sala.setNombreSala(request.getNombreSala());
         sala.setCapacidadSala(request.getCapacidadSala());
         sala.setNumeroEquipos(request.getNumeroEquipos());
-
 
         salaRepo.save(sala);
 
