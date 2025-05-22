@@ -64,7 +64,7 @@ const ControlAsistencias =()=>{
                     ))}
             </select>
             <button>
-                aceptar
+                Aceptar
             </button>
             </div>
             <div className="controlTab" >
