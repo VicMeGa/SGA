@@ -9,29 +9,16 @@ const ControlAsistencias =()=>{
         "Sala B",
         "Sala C"
      ];
-     const days = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes"];
-     const hours = [
-    "8:00 - 9:00",
-    "9:00 - 10:00",
-    "10:00 - 11:00",
-    "11:00 - 12:00",
-    "12:00 - 13:00",
-    "13:00 - 14:00",
-    "14:00 - 15:00",
-    "15:00 - 16:00",
-    "16:00 - 17:00",
-    "17:00 - 18:00",
-    "18:00 - 19:00",
-    "19:00 - 20:00",
-  ];
-  const [Sala, setSala] = useState("");
-  const [Dia, setDia] = useState("");
-  const [Hora, setHora] = useState("");
-  
-  const [Profesor, setProfesor] =useState("");
-  const [Materia, setMateria] =useState("");
-  const [Grupo, setGrupo] =useState("");
-  const [Carrera, setCarrera] =useState("");
+    const Materias = ["Algebra Superior 6B", "Sistemas Operativos 3A", "Programación Orientada a Objetos 2B"];
+
+    const [Sala, setSala] = useState("");
+    const [Materiaa, setMateriaa] = useState("");
+    
+    const [Profesor, setProfesor] =useState("");
+    const [Materia, setMateria] =useState("");
+    const [Grupo, setGrupo] =useState("");
+    const [Carrera, setCarrera] =useState("");
+    
     return(
         <>
         <Cabeza />
@@ -47,19 +34,11 @@ const ControlAsistencias =()=>{
                     ))}
             </select>
 
-            <select value={Dia} onChange={(e) => setDia(e.target.value)} >
-                    <option value="" disabled>Selecciona un d&iacute;a</option>
-                    {days.map((day) => (
-                        <option key={day} value={day}>
-                            {day}
-                        </option>
-                    ))}
-            </select>
-            <select value={Hora} onChange={(e) => setHora(e.target.value)} >
-                    <option value="" disabled>Selecciona una hora</option>
-                    {hours.map((hour) => (
-                        <option key={hour} value={hour}>
-                            {hour}
+            <select value={Materiaa} onChange={(e) => setMateriaa(e.target.value)} >
+                    <option value="" disabled>Selecciona una Materia</option>
+                    {Materias.map((mate) => (
+                        <option key={mate} value={mate}>
+                            {mate}
                         </option>
                     ))}
             </select>
@@ -71,10 +50,10 @@ const ControlAsistencias =()=>{
                 <Tabla />
             </div>
             <div className="downControl" >
-                <input type='text' placeholder='Profesor:' value={Profesor} />
-                <input type='text' placeholder='Materia:' value={Materia} />
-                <input type='text' placeholder='Grupo:' value={Grupo} />
-                <input type='text' placeholder='Carrera:' value={Carrera} />
+                <input type='text' placeholder='Profesor:' value={Profesor} readOnly/>
+                <input type='text' placeholder='Materia:' value={Materia}   readOnly/>
+                <input type='text' placeholder='Grupo:' value={Grupo}       readOnly/>
+                <input type='text' placeholder='Carrera:' value={Carrera}   readOnly/>
             </div>
         </div>
         </>
