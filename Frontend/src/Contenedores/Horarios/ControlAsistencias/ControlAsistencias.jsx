@@ -71,10 +71,10 @@ const ControlAsistencias =()=>{
                 <Tabla />
             </div>
             <div className="downControl" >
-                <input type='text' placeholder='Profesor:' value={Profesor} />
-                <input type='text' placeholder='Materia:' value={Materia} />
-                <input type='text' placeholder='Grupo:' value={Grupo} />
-                <input type='text' placeholder='Carrera:' value={Carrera} />
+                <input type='text' onlyRead placeholder='Profesor:' value={Profesor} />
+                <input type='text' onlyRead placeholder='Materia:' value={Materia} />
+                <input type='text' onlyRead placeholder='Grupo:' value={Grupo} />
+                <input type='text' onlyRead placeholder='Carrera:' value={Carrera} />
             </div>
         </div>
         </>

@@ -235,6 +235,7 @@ public class RegistroController {
 
         arti.setNombre(request.getNombre());
         arti.setNumeroArticulo(request.getNumeroArticulo());
+        arti.setEstaPrestado(0);
         arti.setDescripcion(request.getDescripcion());
 
         String relativePath = "src/main/resources/static/uploads/";
