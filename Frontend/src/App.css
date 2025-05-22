@@ -127,6 +127,9 @@ button {
   margin-top:3%;
 }
 
+.Opci:hover{
+  background-color: #0B1E33;
+}
 .MEnu svg {
   position: absolute;
   right: 10%;
@@ -228,7 +231,11 @@ background-color: #0B1E33;
 }
 
 .nav-item:hover {
-  background-color: #f3f4f6;
+  background-color: #0B1E33;
+}
+
+.nav-logo:hover{
+  color: white;
 }
 
 .nav-logo {
@@ -297,6 +304,11 @@ background-color: #0B1E33;
   margin-right: 24px;
   margin-left: 20px;
   margin-top:30px;
+}
+
+.REgresar:hover{
+  background-color: white;
+  color: #0B1E33;
 }
 
 /* ----------> Modificar <-------------------*/

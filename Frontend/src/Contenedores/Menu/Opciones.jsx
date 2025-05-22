@@ -5,7 +5,7 @@ const Menu = () =>{
 return(
     <>
     <div className="MEnu">
-    <Link to="/Registrar" className='oopci'>
+    <Link to="/Registrar">
         <span className="Opci" >Registrar Usuarios</span>
         <UserPlus size={70} />
       </Link>
