@@ -9,7 +9,7 @@ const ControlAsistencias =()=>{
         "Sala B",
         "Sala C"
      ];
-     const days = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes"];
+     const days = ["Lunes", "Martes", "Mi&ecute;rcoles", "Jueves", "Viernes"];
      const hours = [
     "8:00 - 9:00",
     "9:00 - 10:00",
@@ -48,7 +48,7 @@ const ControlAsistencias =()=>{
             </select>
 
             <select value={Dia} onChange={(e) => setDia(e.target.value)} >
-                    <option value="" disabled>Selecciona un dia</option>
+                    <option value="" disabled>Selecciona un d&iacute;a</option>
                     {days.map((day) => (
                         <option key={day} value={day}>
                             {day}
