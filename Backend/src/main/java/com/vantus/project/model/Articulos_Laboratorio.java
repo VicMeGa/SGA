@@ -39,6 +39,9 @@ public class Articulos_Laboratorio {
     @Column(name = "url_fotografia", nullable = false)
     private String urlFotografia;
 
+    @Column(name = "esta_prestado", nullable = false)
+    private Integer estaPrestado;
+
     //Revisar esta relacion
     // @OneToMany(mappedBy = "articulo")
 
@@ -88,6 +91,13 @@ public class Articulos_Laboratorio {
 
     public void setTipoArticulo(TipoArticulo tipoArticulo) {
         this.tipoArticulo = tipoArticulo;
-    }  
+    }
 
+    public Integer getEstaPrestado() {
+        return estaPrestado;
+    }
+
+    public void setEstaPrestado(Integer estaPrestado) {
+        this.estaPrestado = estaPrestado;
+    }
 }

@@ -22,7 +22,7 @@ public class Prestamo {
     @Column(name = "fecha_hora_prestamo", nullable = false)
     private LocalDateTime fechaHoraPrestamo;
 
-    @Column(name = "fecha_hora_devolucion", nullable = false)
+    @Column(name = "fecha_hora_devolucion")
     private LocalDateTime fechaHoraDevolucion;
 
     @ManyToOne

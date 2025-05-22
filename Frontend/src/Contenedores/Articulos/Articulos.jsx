@@ -15,12 +15,13 @@ const Articulos = () => {
         const response = await fetch("http://localhost:8080/sga/buscar/articulos");
         if (response.ok) {
           const data = await response.json();
+
           // Mapea los datos al formato esperado
           const formattedItems = data.map((articulo) => ({
             id: articulo.idArticulo,
             name: articulo.nombre,
             description: articulo.descripcion,
-            status: "Ocupado",
+            status: articulo.estaPrestado === 0 ? "Disponible" : "Ocupado",
             image: `http://localhost:8080/${articulo.urlFotografia}`, // <- Asegúrate que esa URL esté bien
           }));
           setItems(formattedItems);

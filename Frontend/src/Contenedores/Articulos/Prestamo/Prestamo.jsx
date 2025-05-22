@@ -1,3 +1,4 @@
+// Prestamo.jsx
 import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import Nav from '../../Nav';
@@ -8,7 +9,7 @@ import DivDerecho from './DivDerecho';
 const Prestamo = () => {
     const { itemId } = useParams();
     const [item, setItem] = useState(null);
-  
+
     // Simula la carga de datos desde la base de datos
     useEffect(() => {
         const fetchItem = async () => {
@@ -20,7 +21,7 @@ const Prestamo = () => {
                         id: data.id,
                         name: data.nombre,
                         description: data.descripcion,
-                        status: data.estado,
+                        status: data.estaPrestado === 0 ? "Disponible" : "Ocupado",
                         image: `http://localhost:8080${data.urlFotografia}` // Asegúrate de que `urlFotografia` esté bien
                     };
                     setItem(formattedItem);
@@ -31,15 +32,12 @@ const Prestamo = () => {
                 console.error("Error de red:", error);
             }
         };
-
         fetchItem();
     }, [itemId]);
-
 
     if (!item) {
         return <p>Cargando...</p>;
     }
-
 
     return (
         <>
@@ -47,7 +45,7 @@ const Prestamo = () => {
             <Nav />
             <div className="presMain">
                 <div className='contenedor' >
-                    {/* Espacio derecho */}
+                    {/* Espacio izquierdo */}
                     <div className='itemDatos'>
                         <DivIzquierdo
                             key={item.id}
@@ -57,10 +55,11 @@ const Prestamo = () => {
                             status={item.status}
                         />
                     </div>
-                    {/* Espacio izquierdo */}
-                    <div className='itemPrestamo'>
-                        <DivDerecho />
-                    </div>
+                    {/* Espacio derecho */}
+                    <DivDerecho
+                        itemId={parseInt(itemId)}
+                        status={item.status}
+                    />
                 </div>
             </div>
         </>
