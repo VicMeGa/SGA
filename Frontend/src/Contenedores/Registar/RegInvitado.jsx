@@ -44,6 +44,7 @@ function RegInvitado (){
             <MenuReg />
             <Cabeza />
             <div className="div-registro">
+                <h1>Registrar Invitado</h1>
                 <form className='formas' onSubmit={handleSubmit}>
                     <div className='regis'>
                         <input type='text' placeholder='Nombre' value={nombre} onChange={(e) => setNombre(e.target.value)} required />

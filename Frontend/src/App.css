@@ -147,10 +147,13 @@ button {
   max-width: 700px;
   margin: auto;
   margin-top: 12%;
-  display: flex;
   margin-bottom: 20px;
   padding: 8px 16px;
   text-align: center;
+}
+
+.div-registro h1{
+  margin-bottom: .2rem;
 }
 
 .regis{
@@ -194,10 +197,20 @@ button {
   color:black;
   position: relative;
 }
+
+.cancelButton:hover{
+  background-color: black;
+  color:#B0CCEB;
+}
+
 .okButton{
 background-color: #0B1E33;
 }
 
+.okButton:hover{
+  background-color:white ;
+  color: #0B1E33;
+}
 
 /* ----------------> Nav <-----------------*/
 .nav {
@@ -658,6 +671,11 @@ background-color: #0B1E33;
   margin-top:2rem;
 }
 
+.botonesHorario button:hover{
+  background-color: white;
+  color: #3B526B;
+}
+
 .botonesHorario select{
   margin-top: 30px;
   border-color: #0B1E33 2px;
@@ -684,6 +702,11 @@ background-color: #0B1E33;
   font-size: 3vh;
   border-radius: 20px;
   margin-bottom: 1rem;
+}
+
+.botonesHorarioB button:hover{
+    background-color: white;
+  color: #3B526B;
 }
 
 .divTabla{
@@ -741,6 +764,12 @@ background-color: #0B1E33;
   color:black;
   position: relative;
 }
+
+.cancelButtonS:hover{
+    background-color: black;
+  color: #B0CCEB;
+}
+
 .okButtonS{
 background-color: #0B1E33;
 }
@@ -799,6 +828,11 @@ background-color: #0B1E33;
   font-size: 3vh;
 }
 
+.upControl button:hover{
+  background-color: white;
+  color: #3B526B;
+}
+
 .downControl {
   columns: 2;
 }
@@ -832,23 +866,28 @@ background-color: #0B1E33;
 .divReportes{
   position: relative;
   background-color:rgba(255,255,255,0.8);
-  max-width: 100%;
+  max-width: 80%;
   min-width: 700px;
   margin: auto;
-  margin-top: 7%;
+  margin-top: 6%;
   margin-bottom: 20px;
   text-align: center;
 }
 
-.divReportes select{
+.divReportes input{
   margin-top: 40px;
   border-color: #0B1E33 2px;
   background-color: white;
   margin: 1rem;
-  width: 25rem;
-  font-size: 4vh;
+  width: 20rem;
+  font-size: 3vh;
   color: grey;
   border-radius: 8px;
+}
+
+.divReportes label{
+  font-size: 3vh;
+  margin-top: 20px;
 }
 
 .divReportes button{
@@ -856,6 +895,11 @@ background-color: #0B1E33;
   width: auto;
   font-size: 3vh;
   color: black;
+}
+
+.divReportes button:hover{
+  background-color: black ;
+  color: #B0CCEB;
 }
 
 .upRepor{

@@ -64,6 +64,7 @@ function Registrar() {
             <MenuReg />
             <Cabeza />
             <div className="div-registro">
+                <h1>Registrar Alumno</h1>
                 <form className='formas' onSubmit={handleSubmit}>
                     <div className='regis'>
                         <input type='text' placeholder='Nombre' value={nombre} onChange={(e) => setNombre(e.target.value)} required />
