@@ -11,10 +11,8 @@
     "concurrently": "^8.0.0"
   },
   "dependencies": {
-<<<<<<< HEAD
+
     "react-router-dom": "^7.6.0"
-=======
-    "axios": "^1.9.0"
->>>>>>> develop-tono
+
   }
 }
