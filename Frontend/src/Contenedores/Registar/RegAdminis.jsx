@@ -62,6 +62,7 @@ function RegAdminis() {
             <MenuReg />
             <Cabeza />
             <div className="div-registro">
+                <h1>Registrar Administrativo</h1>
                 <form className='formas' onSubmit={handleSubmit}>
                     <div className='regis'>
                         <input type='text' placeholder='Nombre' value={nombre} onChange={(e) => setNombre(e.target.value)} required />
