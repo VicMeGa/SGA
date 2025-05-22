@@ -9,7 +9,7 @@ const ControlAsistencias =()=>{
         "Sala B",
         "Sala C"
      ];
-     const days = ["Lunes", "Martes", "Mi&ecute;rcoles", "Jueves", "Viernes"];
+     const days = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes"];
      const hours = [
     "8:00 - 9:00",
     "9:00 - 10:00",
