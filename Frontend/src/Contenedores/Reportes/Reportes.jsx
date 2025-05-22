@@ -4,12 +4,8 @@ import Nav from "../Nav";
 import Reporte from "./Reporte";
 
 const Reportes =()=>{
-    const [Criterio,setCriterio] = useState("");
-    const criterios =[
-        "Fecha",
-        "Materia",
-        "Alguna otra chingada"
-     ];
+    const [FechaInicio, setFechaInicio] = useState("");
+    const [FechaFin, setFechaFin] = useState("");
 
 
     return (
@@ -18,15 +14,10 @@ const Reportes =()=>{
         <Nav />
         <div className="divReportes">
             <div className="upRepor">
-                <select value={Criterio} onChange={(e) => setCriterio(e.target.value)} >
-                    <option value="" disabled>Criterios</option>
-                    {criterios.map((criterioo) => (
-                        <option key={criterioo} value={criterioo}>
-                            {criterioo}
-                        </option>
-                    ))}
-                </select>
-
+                <label>Fecha Inicio</label>
+                <input type='date' placeholder='Fecha Inicio' value={FechaInicio} onChange={(e) => setFechaInicio(e.target.value)} required />
+                <label>Fecha Fin</label>
+                <input type='date' placeholder='Fecha Fin' value={FechaFin} onChange={(e) => setFechaFin(e.target.value)} required />
                 <button type="button" >Generar Reporte</button>
                 <button type="button" >Exportar Reporte</button>
             </div>

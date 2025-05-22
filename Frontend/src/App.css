@@ -866,23 +866,28 @@ background-color: #0B1E33;
 .divReportes{
   position: relative;
   background-color:rgba(255,255,255,0.8);
-  max-width: 100%;
+  max-width: 80%;
   min-width: 700px;
   margin: auto;
-  margin-top: 7%;
+  margin-top: 6%;
   margin-bottom: 20px;
   text-align: center;
 }
 
-.divReportes select{
+.divReportes input{
   margin-top: 40px;
   border-color: #0B1E33 2px;
   background-color: white;
   margin: 1rem;
-  width: 25rem;
-  font-size: 4vh;
+  width: 20rem;
+  font-size: 3vh;
   color: grey;
   border-radius: 8px;
+}
+
+.divReportes label{
+  font-size: 3vh;
+  margin-top: 20px;
 }
 
 .divReportes button{
