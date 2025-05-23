@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import './App.css'
 import  Login  from './Contenedores/Login'
 import { HashRouter as Router, Route, Routes } from "react-router-dom";
@@ -14,6 +13,7 @@ import Horario from './Contenedores/Horarios/Horario';
 import RegistrarSala from './Contenedores/Horarios/RegistrarSala/RegistrarSala';
 import ControlAsistencias from './Contenedores/Horarios/ControlAsistencias/ControlAsistencias';
 import Reportes from './Contenedores/Reportes/Reportes'
+import RegistrarHorario from './Contenedores/Horarios/RegistarHorario/RegistrarHorario'; 
 
 function App() {
     
@@ -35,6 +35,7 @@ function App() {
             <Route path="/RegistrarSala" element={<RegistrarSala />} />
             <Route path="/ControlAsistencias" element={<ControlAsistencias />} />
             <Route path='/Reportes' element={<Reportes />} />
+            <Route path='/RegistrarHorario' element={<RegistrarHorario />} />
           </Routes>
     </Router>
     </>
