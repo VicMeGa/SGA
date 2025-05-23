@@ -46,8 +46,8 @@ const Horario = () => {
                     <select value={Sala} onChange={(e) => setSala(e.target.value)} >
                         <option value="" disabled>Selecciona una sala</option>
                         {salas.map((sala) => (
-                            <option key={sala.id} value={sala.nombre}>
-                                {sala.nombre}
+                            <option key={sala.idSala} value={sala.nombreSala}>
+                                {sala.nombreSala}
                             </option>
                         ))}
                     </select>
