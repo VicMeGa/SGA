@@ -935,4 +935,37 @@ background-color: #0B1E33;
   height: 450px;
 }
 
+/*-------------------------Registrar Horario-----------------------*/
+.divRegistrarHorario{
+  background-color:rgba(255,255,255,0.9);
+  position:relative;
+  min-width: 600px;
+  max-width: 900px;
+  margin: auto;
+  margin-top: 9%;
+  margin-bottom: 20px;
+  padding: 8px 16px;
+  text-align: center;
+  display:grid;
+}
 
+
+.divRegistrarHorario input{
+  color:black;
+  width: 90vh;
+  height: 5vh;
+  margin-top: 30px;
+  margin-bottom: 10px;
+  background-color:rgba(168, 179, 191, .3);
+  font-size: 3.5vh;
+}
+
+.divRegistrarHorario select{
+  color:black;
+  width: 90vh;
+  height: 5vh;
+  margin-top: 30px;
+  margin-bottom: 10px;
+  background-color:rgba(168, 179, 191, .3);
+  font-size: 3.5vh;
+}

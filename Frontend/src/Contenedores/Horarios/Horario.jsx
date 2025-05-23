@@ -3,6 +3,7 @@ import Cabeza from "../Cabeza"
 import Nav from "../Nav"
 import Tabla from './Tabla'
 import { useNavigate } from 'react-router-dom';
+import RegistrarH from "./RegistrarH";
 
 const Horario =()=>{
     const navigate = useNavigate();
@@ -17,6 +18,7 @@ const Horario =()=>{
         <>
         <Cabeza />
         <Nav />
+        <RegistrarH />
         <div className="divHorario">
             <div className="botonesHorario">
                 <select value={Sala} onChange={(e) => setSala(e.target.value)} >
