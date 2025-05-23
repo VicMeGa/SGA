@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 
 const DivIzquierdo = ({ selectedStudent }) => {
   const [formData, setFormData] = useState(null);
@@ -105,20 +105,20 @@ const DivIzquierdo = ({ selectedStudent }) => {
   return (
     <div className="divIzquierdo">
       <form>
-        <h3>Datos del Usuario</h3>
-        <input type="text" name="usuario.nombre" value={formData.usuario.nombre || ''} onChange={handleChange} placeholder="Nombre"/>
-        <input type="text" name="usuario.apellido_paterno" value={formData.usuario.apellido_paterno || ''} onChange={handleChange} placeholder="Apellido Paterno"/>
-        <input type="text" name="usuario.apellido_materno" value={formData.usuario.apellido_materno || ''} onChange={handleChange} placeholder="Apellido Materno"/>
-        <input type="text" name="usuario.correo" value={formData.usuario.correo || ''} onChange={handleChange} placeholder="Correo"/>
-        <input type="text" name="usuario.numeroTelefono" value={formData.usuario.numeroTelefono || ''} onChange={handleChange} placeholder="Número Teléfono"/>
-        <input type="text" name="usuario.programaEducativo" value={formData.usuario.programaEducativo || ''} onChange={handleChange} placeholder="Programa Educativo"/>
+        <h1>Datos del Usuario</h1>
+        <input type="text" className="imputnorm" name="usuario.nombre" value={formData.usuario.nombre || ''} onChange={handleChange} placeholder="Nombre"/>
+        <input type="text" className="imputnorm" name="usuario.apellido_paterno" value={formData.usuario.apellido_paterno || ''} onChange={handleChange} placeholder="Apellido Paterno"/>
+        <input type="text" className="imputnorm" name="usuario.apellido_materno" value={formData.usuario.apellido_materno || ''} onChange={handleChange} placeholder="Apellido Materno"/>
+        <input type="text" className="imputnorm" name="usuario.correo" value={formData.usuario.correo || ''} onChange={handleChange} placeholder="Correo"/>
+        <input type="text" className="imputnorm" name="usuario.numeroTelefono" value={formData.usuario.numeroTelefono || ''} onChange={handleChange} placeholder="Número Teléfono"/>
+        <input type="text" className="imputnorm" name="usuario.programaEducativo" value={formData.usuario.programaEducativo || ''} onChange={handleChange} placeholder="Programa Educativo"/>
 
         {formData.matricula && (
           <>
-            <input type="text" name="matricula" value={formData.matricula} onChange={handleChange} placeholder="Matrícula"/>
-            <input type="text" name="semestre" value={formData.semestre} onChange={handleChange} placeholder="Semestre"/>
-            <input type="text" name="grupo" value={formData.grupo} onChange={handleChange} placeholder="Grupo"/>
-            <input type="text" name="horario.idHorario" value={formData.horario?.idHorario || ''}
+            <input type="text" className="imputnorm" name="matricula" value={formData.matricula} onChange={handleChange} placeholder="Matrícula"/>
+            <input type="text" className="imputnorm" name="semestre" value={formData.semestre} onChange={handleChange} placeholder="Semestre"/>
+            <input type="text" className="imputnorm" name="grupo" value={formData.grupo} onChange={handleChange} placeholder="Grupo"/>
+            <input type="text" className="imputnorm" name="horario.idHorario" value={formData.horario?.idHorario || ''}
               onChange={(e) => setFormData((prev) => ({
                   ...prev,
                   horario: {
@@ -133,9 +133,9 @@ const DivIzquierdo = ({ selectedStudent }) => {
 
         {formData.numeroEmpleado && (
           <>
-            <input type="text" name="numeroEmpleado" value={formData.numeroEmpleado} onChange={handleChange} placeholder="N° Empleado"/>
-            <input type="text" name="cargo" value={formData.cargo} onChange={handleChange} placeholder="Cargo"/>
-            <input type="password" name="contrasena" value={formData.contrasena} onChange={handleChange} placeholder="Contraseña"/>
+            <input type="text"     className="imputnorm" name="numeroEmpleado" value={formData.numeroEmpleado} onChange={handleChange} placeholder="N° Empleado"/>
+            <input type="text"     className="imputnorm" name="cargo" value={formData.cargo} onChange={handleChange} placeholder="Cargo"/>
+            <input type="password" className="imputnorm" name="contrasena" value={formData.contrasena} onChange={handleChange} placeholder="Contraseña"/>
           </>
         )}
 
