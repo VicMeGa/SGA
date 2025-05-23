@@ -14,10 +14,12 @@ const Horario =()=>{
      ];
     const [Sala, setSala] = useState("");
 
+    
     return (
         <>
         <Cabeza />
         <Nav />
+
         <RegistrarH />
         <div className="divHorario">
             <div className="botonesHorario">
