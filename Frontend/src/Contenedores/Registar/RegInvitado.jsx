@@ -2,6 +2,8 @@ import Cabeza from '../Cabeza'
 import { useState } from "react"
 import Nav from '../Nav'
 import MenuReg from './MenuReg'
+import Notificaciones from '../Notificacioness/notificaciones';
+
 
 function RegInvitado (){
     const [nombre, setNombre] = useState("");
@@ -9,6 +11,8 @@ function RegInvitado (){
     const [apellidoMaterno, setApellidoMaterno] = useState("");
     const [correo, setCorreo] = useState("");
     const [numeroTelefono, setNumeroTelefono] = useState("");
+
+    const [notificacion, setNotificaciones] = useState(null);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -31,11 +35,19 @@ function RegInvitado (){
             });
 
             const mensaje = await res.text();
-            alert(mensaje);
+            setNotificaciones({mensaje,tipo:"exito"});
+            
+            setNombre("");
+            setApellidoPaterno("");
+            setApellidoMaterno("");
+            setCorreo("");
+            setNumeroTelefono("");
+
         } catch (error) {
             console.error("Error al registrar invitado:", error);
-            alert("Ocurrió un error al registrar");
+            setNotificaciones({mensaje:"Error al registrar invitado", tipo:"error"});
         }
+        setTimeout(() => setNotificaciones(null), 6000);
     };
 
     return (
@@ -60,6 +72,13 @@ function RegInvitado (){
                     </div>
                 </form>
             </div>
+            [{notificacion && (
+                <Notificaciones
+                    mensaje={notificacion.mensaje}
+                    tipo={notificacion.tipo}
+                    onClose={() => setNotificaciones(null)}
+                />
+            )}]
         </>
     );
 }
