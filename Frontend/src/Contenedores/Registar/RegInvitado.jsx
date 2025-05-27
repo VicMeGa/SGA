@@ -72,13 +72,13 @@ function RegInvitado (){
                     </div>
                 </form>
             </div>
-            [{notificacion && (
+            {notificacion && (
                 <Notificaciones
                     mensaje={notificacion.mensaje}
                     tipo={notificacion.tipo}
                     onClose={() => setNotificaciones(null)}
                 />
-            )}]
+            )}
         </>
     );
 }

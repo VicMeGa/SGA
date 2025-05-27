@@ -2,6 +2,7 @@ import Cabeza from '../Cabeza';
 import { useState } from "react";
 import Nav from '../Nav';
 import MenuReg from './MenuReg';
+import Notificaciones from '../Notificacioness/notificaciones';
 
 function RegAdminis() {
     const [nombre, setNombre] = useState("");
@@ -13,6 +14,8 @@ function RegAdminis() {
     const [numeroTelefono, setNumeroTelefono] = useState("");
     const [contrasena, setContrasena] = useState("");
     const [programaEducativo, setProgramaEducativo] = useState("");
+
+    const [notificacion, setNotificaciones] = useState(null);
 
     const opciones = [
         { value: 'Licenciatura en Ingeniería Mecánica', label: 'Licenciatura en Ingeniería Mecánica' },
@@ -49,11 +52,21 @@ function RegAdminis() {
             });
 
             const mensaje = await res.text();
-            alert(mensaje);
+            setNotificaciones({ mensaje, tipo: "exito" });
+            setNombre("");
+            setApellidoPaterno("");
+            setApellidoMaterno("");
+            setNumeroEmpleado("");
+            setCorreo("");
+            setCargo("");
+            setNumeroTelefono("");
+            setContrasena("");
+            setProgramaEducativo("");
         } catch (error) {
             console.error("Error al registrar administrativo:", error);
-            alert("Ocurrió un error al registrar");
+            setNotificaciones({ mensaje: "Error al registrar administrativo", tipo: "error" });
         }
+        setTimeout(() => setNotificaciones(null), 6000);
     };
 
     return (
@@ -92,6 +105,13 @@ function RegAdminis() {
                     </div>
                 </form>
             </div>
+            {notificacion && (
+                <Notificaciones
+                    mensaje={notificacion.mensaje}
+                    tipo={notificacion.tipo}
+                    onClose={() => setNotificaciones(null)}
+                />
+            )}	
         </>
     );
 }

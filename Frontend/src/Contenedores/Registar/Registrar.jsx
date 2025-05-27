@@ -2,6 +2,7 @@ import Cabeza from '../Cabeza'
 import { useState } from "react"
 import Nav from '../Nav'
 import MenuReg from './MenuReg'
+import Notificaciones from '../Notificacioness/notificaciones';
 
 function Registrar() {
     const [nombre, setNombre] = useState("");
@@ -14,6 +15,8 @@ function Registrar() {
     const [grupo, setGrupo] = useState("");
     const [programaEducativo, setProgramaEducativo] = useState("");
     const [id_horario, setIdHorario] = useState("");
+
+    const [notificacion, setNotificaciones] = useState(null);
 
     const opciones = [
         { value: 'Licenciatura en Ingeniería Mecánica', label: 'Licenciatura en Ingeniería Mecánica' },
@@ -51,11 +54,22 @@ function Registrar() {
             });
 
             const mensaje = await res.text();
-            alert(mensaje);
+            setNotificaciones({ mensaje, tipo: "exito" });
+            setNombre("");
+            setApellidoPaterno("");
+            setApellidoMaterno("");
+            setCorreo("");
+            setNumeroTelefono("");
+            setMatricula("");   
+            setSemestre("");
+            setGrupo("");
+            setProgramaEducativo("");
+            setIdHorario("");
         } catch (error) {
             console.error("Error al registrar alumno:", error);
-            alert("Ocurrió un error al registrar");
+            setNotificaciones({ mensaje: "Error al registrar alumno", tipo: "error" }); 
         }
+        setTimeout(() => setNotificaciones(null), 6000);
     };
 
     return (
@@ -97,6 +111,13 @@ function Registrar() {
                     </div>
                 </form>
             </div>
+            {notificacion && (
+                <Notificaciones
+                    mensaje={notificacion.mensaje}
+                    tipo={notificacion.tipo}
+                    onClose={() => setNotificaciones(null)}
+                />
+            )}
         </>
     );
 }
