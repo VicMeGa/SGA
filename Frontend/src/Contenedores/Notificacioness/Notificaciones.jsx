@@ -2,8 +2,8 @@
 function Notificaciones({ mensaje, tipo, onClose }) {
   const colores ={
     error:"#e53935", //error 
-    exito:"43a047", //exito 
-    info:"1e88e5"  //info 
+    exito:"#43a047", //exito 
+    info:"#1e88e5"  //info 
   };
   const estilo = {
     position: "fixed",
