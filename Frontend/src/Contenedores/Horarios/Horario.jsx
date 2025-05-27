@@ -58,7 +58,7 @@ const Horario = () => {
                     <button type="button">Aceptar</button>
                 </div>
                 <div className="divTabla">
-                    <Tabla />
+                    <Tabla salaSeleccionada={Sala} />
                 </div>
                 <div className="botonesHorarioB">
                     <button type="button" onClick={() => navigate('/RegistrarSala')}>Registrar Sala</button>

@@ -1,5 +1,7 @@
 package com.vantus.project.model;
-import java.time.LocalDateTime;
+
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 
 import jakarta.persistence.*;
 
@@ -13,11 +15,14 @@ public class Horario_Sala {
     @Column(name = "id_horario")
     private Integer idHorario;
 
-    @Column(name = "fecha_hora_inicio", nullable = false)
-    private LocalDateTime fechaHoraInicio; //Revisar el tipo de dato
+    @Column(name = "hora_inicio", nullable = false)
+    private LocalTime horaInicio;
 
-    @Column(name = "fecha_hora_fin", nullable = false)
-    private LocalDateTime fechaHoraFin; //Revisar el tipo de dato
+    @Column(name = "hora_fin", nullable = false)
+    private LocalTime horaFin;
+
+    @Column(name = "dia", nullable = false)
+    private String dia;
 
     @Column(name = "materia", nullable = false)
     private String materia;
@@ -25,7 +30,15 @@ public class Horario_Sala {
     @Column(name = "grupo", nullable = false)
     private String grupo;
 
-    //Faltan agregar 1 relacion, ademas de revisar la que ya esta
+    // Faltan agregar 1 relacion, ademas de revisar la que ya esta
+
+    public String getDia() {
+        return dia;
+    }
+
+    public void setDia(String dia) {
+        this.dia = dia;
+    }
 
     @ManyToOne
     @JoinColumn(name = "id_sala", nullable = false)
@@ -43,24 +56,24 @@ public class Horario_Sala {
         this.idHorario = idHorario;
     }
 
-    public LocalDateTime getFechaHoraInicio() {
-        return fechaHoraInicio;
-    }
-
-    public void setFechaHoraInicio(LocalDateTime fechaHoraInicio) {
-        this.fechaHoraInicio = fechaHoraInicio;
-    }
-
-    public LocalDateTime getFechaHoraFin() {
-        return fechaHoraFin;
-    }
-
-    public void setFechaHoraFin(LocalDateTime fechaHoraFin) {
-        this.fechaHoraFin = fechaHoraFin;
-    }
-
     public String getMateria() {
         return materia;
+    }
+
+    public String getHoraInicioFormateada() {
+        return horaInicio.format(DateTimeFormatter.ofPattern("HH:mm"));
+    }
+
+    public void setHoraInicio(LocalTime horaInicio) {
+        this.horaInicio = horaInicio;
+    }
+
+    public String getHoraFinFormateada() {
+        return horaFin.format(DateTimeFormatter.ofPattern("HH:mm"));
+    }
+
+    public void setHoraFin(LocalTime horaFin) {
+        this.horaFin = horaFin;
     }
 
     public void setMateria(String materia) {
