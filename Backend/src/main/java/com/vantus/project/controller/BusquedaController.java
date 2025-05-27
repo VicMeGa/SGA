@@ -13,10 +13,14 @@ import com.vantus.project.dto.BusquedaRequest;
 import com.vantus.project.model.Administrativo;
 import com.vantus.project.model.Alumno;
 import com.vantus.project.model.Articulos_Laboratorio;
+import com.vantus.project.model.Horario_Sala;
+import com.vantus.project.model.Sala;
 import com.vantus.project.model.Usuario;
 import com.vantus.project.repository.AdministrativoRepository;
 import com.vantus.project.repository.AlumnoRepository;
 import com.vantus.project.repository.ArticulosRepository;
+import com.vantus.project.repository.HorarioSalaRepository;
+import com.vantus.project.repository.SalaRepository;
 import com.vantus.project.repository.UsuarioRepository;
 
 //@CrossOrigin(origins = "http://localhost:5173")
@@ -35,6 +39,12 @@ public class BusquedaController {
 
     @Autowired
     private ArticulosRepository artiRepo;
+
+    @Autowired
+    private SalaRepository salaRepo;
+
+    @Autowired
+    private HorarioSalaRepository horaRepo;
 
     @GetMapping("/usuarios")
     public ResponseEntity<?> buscar(@RequestParam String query) {
@@ -133,6 +143,18 @@ public class BusquedaController {
         Optional<Articulos_Laboratorio> articulo = artiRepo.findById(id);
         return articulo.map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    @GetMapping("/salas")
+    public ResponseEntity<List<Sala>> obtenerSalas() {
+        List<Sala> salas = salaRepo.findAll();
+        return ResponseEntity.ok(salas);
+    }
+
+    @GetMapping("/horarios")
+    public ResponseEntity<List<Horario_Sala>> obtenerHorarios() {
+        List<Horario_Sala> horarios = horaRepo.findAll();
+        return ResponseEntity.ok(horarios);
     }
 
 }

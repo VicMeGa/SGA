@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.time.LocalTime;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -22,6 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.vantus.project.dto.RegistroAdministrativoRequest;
 import com.vantus.project.dto.RegistroAlumnoRequest;
 import com.vantus.project.dto.RegistroArticuloRequest;
+import com.vantus.project.dto.RegistroHorarioRequest;
 import com.vantus.project.dto.RegistroInvitadoRequest;
 import com.vantus.project.dto.RegistroSalaRequest;
 import com.vantus.project.model.Administrativo;
@@ -193,8 +195,7 @@ public class RegistroController {
 
         // ✅ Generar QR después de guardar el usuario
         try {
-            String contenidoQR = "ID: " + usuario.getIdUsuario() + "\n" +
-                    "Nombre: " + usuario.getNombre() + " " + usuario.getApellido_paterno() + "\n" +
+            String contenidoQR = "Nombre: " + usuario.getNombre() + " " + usuario.getApellido_paterno() + "\n" +
                     "Correo: " + usuario.getCorreo();
 
             String relativePath = "src/main/resources/static/qrcodes/";
@@ -212,7 +213,6 @@ public class RegistroController {
             e.printStackTrace();
             return ResponseEntity.internalServerError().body("Usuario creado, pero falló la generación del QR o envio");
         }
-
 
         return ResponseEntity.ok("Invitado registrado exitosamente");
     }
@@ -264,5 +264,34 @@ public class RegistroController {
         salaRepo.save(sala);
 
         return ResponseEntity.ok("Sala registrada exitosamente");
+    }
+
+    @PostMapping("/horario")
+    public ResponseEntity<?> resgistrarHorario(@RequestBody RegistroHorarioRequest request) {
+        Horario_Sala horario = new Horario_Sala();
+
+        horario.setMateria(request.getMateria());
+        horario.setDia(request.getDia());
+        horario.setHoraInicio(LocalTime.parse(request.getHoraInicio()));
+        horario.setHoraFin(LocalTime.parse(request.getHoraFin()));
+        horario.setGrupo(request.getGrupo());
+
+        // Buscar sala por nombre
+        Sala sala = salaRepo.findByNombreSala(request.getNombreSala())
+                .orElseThrow(() -> new RuntimeException("Sala no encontrada: " + request.getNombreSala()));
+        horario.setSala(sala);
+
+        // Buscar administrativo por número de empleado
+        if (request.getNumeroEmpleado() != null) {
+            Administrativo admin = adminRepo.findByNumeroEmpleado(request.getNumeroEmpleado())
+                    .orElseThrow(
+                            () -> new RuntimeException("Administrativo no encontrado: " + request.getNumeroEmpleado()));
+
+            horario.setAdministrativo(admin);
+        }
+
+        horarioSalaRepo.save(horario);
+
+        return ResponseEntity.ok("Horario registrado exitosamente");
     }
 }
