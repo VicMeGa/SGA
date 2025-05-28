@@ -275,6 +275,7 @@ public class RegistroController {
         horario.setHoraInicio(LocalTime.parse(request.getHoraInicio()));
         horario.setHoraFin(LocalTime.parse(request.getHoraFin()));
         horario.setGrupo(request.getGrupo());
+        horario.setSemestre(request.getSemestre());
 
         // Buscar sala por nombre
         Sala sala = salaRepo.findByNombreSala(request.getNombreSala())

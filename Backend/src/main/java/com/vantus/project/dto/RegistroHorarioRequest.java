@@ -9,6 +9,7 @@ public class RegistroHorarioRequest {
     private String nombreSala;
     private String numeroEmpleado;
     private String grupo;
+    private Integer semestre;
     
     public String getGrupo() {
         return grupo;
@@ -18,6 +19,12 @@ public class RegistroHorarioRequest {
     }
     public String getMateria() {
         return materia;
+    }
+    public Integer getSemestre() {
+        return semestre;
+    }
+    public void setSemestre(Integer semestre) {
+        this.semestre = semestre;
     }
     public void setMateria(String materia) {
         this.materia = materia;

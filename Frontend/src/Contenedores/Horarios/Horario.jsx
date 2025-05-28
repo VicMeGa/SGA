@@ -12,6 +12,9 @@ const Horario = () => {
     const [Sala, setSala] = useState('');
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
+    const [selectedCell, setSelectedCell] = useState({ day: "", hour: "" });
+    const [schedule, setSchedule] = useState({});
+
 
     const obtenerSalas = async () => {
         setLoading(true);
@@ -58,12 +61,36 @@ const Horario = () => {
                     <button type="button">Aceptar</button>
                 </div>
                 <div className="divTabla">
-                    <Tabla salaSeleccionada={Sala} />
+                    <Tabla
+                        salaSeleccionada={Sala}
+                        selectedCell={selectedCell}
+                        setSelectedCell={setSelectedCell}
+                        schedule={schedule}
+                        setSchedule={setSchedule}
+                    />
+
                 </div>
                 <div className="botonesHorarioB">
                     <button type="button" onClick={() => navigate('/RegistrarSala')}>Registrar Sala</button>
                     <button type="button" onClick={() => navigate('/ControlAsistencias')}>Control Asistencias</button>
-                    <button type="button">Apartar</button>
+                    <button
+                        type="button"
+                        onClick={() => {
+                            const { day, hour } = selectedCell;
+                            if (day && hour && !schedule[day]?.[hour]) {
+                                setSchedule((prev) => ({
+                                    ...prev,
+                                    [day]: {
+                                        ...prev[day],
+                                        [hour]: "APARTADA",
+                                    },
+                                }));
+                            }
+                        }}
+                    >
+                        Apartar
+                    </button>
+
                 </div>
             </div>
         </>

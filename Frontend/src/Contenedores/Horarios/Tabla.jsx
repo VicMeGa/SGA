@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 
-const Tabla = ({ salaSeleccionada }) => {
-  const [schedule, setSchedule] = useState({});
+const Tabla = ({ salaSeleccionada, selectedCell, setSelectedCell, schedule, setSchedule }) => {
+
   const hours = [
     "08:00 - 09:00",
     "09:00 - 10:00",
@@ -36,6 +36,9 @@ const Tabla = ({ salaSeleccionada }) => {
           const materia = item.materia;
           const start = item.horaInicioFormateada;
           const end = item.horaFinFormateada;
+          const maestro = item.administrativo.usuario.nombre + ' ' + item.administrativo.usuario.apellido_paterno;
+          const semestre = item.semestre;
+          const grupo = item.grupo;
 
           const startHour = parseInt(start.split(":")[0]);
           const endHour = parseInt(end.split(":")[0]);
@@ -43,9 +46,10 @@ const Tabla = ({ salaSeleccionada }) => {
           for (let h = startHour; h < endHour; h++) {
             const block = `${h.toString().padStart(2, "0")}:00 - ${(h + 1).toString().padStart(2, "0")}:00`;
             if (!newSchedule[dia]) newSchedule[dia] = {};
-            newSchedule[dia][block] = materia;
+            newSchedule[dia][block] = `${materia}\nProf. ${maestro}\n${semestre}"${grupo}"`;
           }
         });
+
 
         setSchedule(newSchedule);
       } catch (error) {
@@ -77,14 +81,24 @@ const Tabla = ({ salaSeleccionada }) => {
               {days.map((day) => (
                 <td
                   key={`${day}-${hour}`}
+                  onClick={() => setSelectedCell({ day, hour })}
                   style={{
                     textAlign: "center",
                     padding: "8px",
-                    backgroundColor: schedule[day]?.[hour] ? "#e0f7fa" : "",
+                    whiteSpace: "pre-line",
+                    backgroundColor:
+                      selectedCell.day === day && selectedCell.hour === hour
+                        ? "#ffe082"
+                        : schedule[day]?.[hour]
+                          ? "#e0f7fa"
+                          : "",
+                    cursor: "pointer",
                   }}
                 >
                   {schedule[day]?.[hour] || ""}
                 </td>
+
+
               ))}
             </tr>
           ))}

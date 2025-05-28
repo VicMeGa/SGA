@@ -30,7 +30,18 @@ public class Horario_Sala {
     @Column(name = "grupo", nullable = false)
     private String grupo;
 
+    @Column(name = "semestre", nullable = false)
+    private Integer semestre;
+
     // Faltan agregar 1 relacion, ademas de revisar la que ya esta
+
+    public Integer getSemestre() {
+        return semestre;
+    }
+
+    public void setSemestre(Integer semestre) {
+        this.semestre = semestre;
+    }
 
     public String getDia() {
         return dia;
