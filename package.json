@@ -12,6 +12,7 @@
     "tailwindcss": "^4.1.8"
   },
   "dependencies": {
-    "react-router-dom": "^7.6.0"
+    "react-router-dom": "^7.6.0",
+    "wrap-ansi": "^9.0.0"
   }
 }
