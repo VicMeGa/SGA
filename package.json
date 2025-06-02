@@ -5,13 +5,14 @@
   "scripts": {
     "start": "concurrently \"npm run start:frontend\" \"npm run start:backend\"",
     "start:backend": "node backend-start.js",
-    "start:frontend": "cd Frontend && npm run dev"
+    "start:frontend": "cd Frontend && npm run dev -- --host"
   },
   "devDependencies": {
     "concurrently": "^8.0.0",
     "tailwindcss": "^4.1.8"
   },
   "dependencies": {
-    "react-router-dom": "^7.6.0"
+    "react-router-dom": "^7.6.0",
+    "wrap-ansi": "^9.0.0"
   }
 }

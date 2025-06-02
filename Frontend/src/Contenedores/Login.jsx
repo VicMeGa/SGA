@@ -11,7 +11,7 @@ const Login = () => {
         e.preventDefault();
     
         try {
-            const response = await fetch("http://localhost:8080/sga/login", {
+            const response = await fetch("http://192.168.1.71:8080/sga/login", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
