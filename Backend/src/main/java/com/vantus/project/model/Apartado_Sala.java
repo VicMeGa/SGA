@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "id_apartado")
+@Table(name = "apartado_sala")
 
 public class Apartado_Sala {
 
@@ -67,7 +67,4 @@ public class Apartado_Sala {
     public void setAdministrativo(Administrativo administrativo) {
         this.administrativo = administrativo;
     }
-
-    
-
 }

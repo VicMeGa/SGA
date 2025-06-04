@@ -101,8 +101,6 @@ function Registrar() {
                                 </option>
                             ))}
                         </select>
-
-                        <input type='text' placeholder='Id Horario' value={id_horario} onChange={(e) => setIdHorario(e.target.value)} />
                     </div>
 
                     <div className="botonesre">

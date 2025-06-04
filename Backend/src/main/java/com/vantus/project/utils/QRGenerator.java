@@ -2,6 +2,7 @@ package com.vantus.project.utils;
 
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.EncodeHintType;
+import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.WriterException;
 import com.google.zxing.client.j2se.MatrixToImageWriter;
 import com.google.zxing.common.BitMatrix;
@@ -10,6 +11,7 @@ import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 
 import org.springframework.stereotype.Component;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -38,4 +40,12 @@ public class QRGenerator {
 
         return filePath; // Devuelve ruta del archivo
     }
+
+    public byte[] generateQRAsBytes(String contenido) throws Exception {
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        BitMatrix matrix = new MultiFormatWriter().encode(contenido, BarcodeFormat.QR_CODE, 300, 300);
+        MatrixToImageWriter.writeToStream(matrix, "PNG", outputStream);
+        return outputStream.toByteArray();
+    }
+
 }

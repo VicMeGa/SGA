@@ -10,7 +10,7 @@ public class RegistroAdministrativoRequest {
     private String numeroTelefono;
     private String programaEducativo;
     // private TipoUsuario tipoUsuario;
-    // private byte[] huellaDactilar;
+    private String huellaDactilar;
     // private String codigoQR;
 
     //Datos de tabla Administrativo
@@ -70,5 +70,11 @@ public class RegistroAdministrativoRequest {
     }
     public void setContrasena(String contrasena) {
         this.contrasena = contrasena;
+    }
+    public String getHuellaDactilar() {
+        return huellaDactilar;
+    }
+    public void setHuellaDactilar(String huellaDactilar) {
+        this.huellaDactilar = huellaDactilar;
     }
 }

@@ -4,8 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,7 +26,6 @@ import com.vantus.project.repository.HorarioSalaRepository;
 import com.vantus.project.repository.SalaRepository;
 import com.vantus.project.repository.UsuarioRepository;
 
-//@CrossOrigin(origins = "http://localhost:5173")
 @RestController
 @RequestMapping("/sga/buscar")
 public class BusquedaController {
@@ -130,6 +132,20 @@ public class BusquedaController {
         }
 
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuario no encontrado.");
+    }
+
+    @GetMapping("/articulo/{id}/imagen")
+    public ResponseEntity<byte[]> obtenerImagen(@PathVariable Integer id) {
+        Optional<Articulos_Laboratorio> optionalArticulo = artiRepo.findById(id);
+        if (optionalArticulo.isEmpty() || optionalArticulo.get().getFoto() == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        byte[] imagen = optionalArticulo.get().getFoto();
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.IMAGE_JPEG); // o IMAGE_PNG, según el tipo
+
+        return new ResponseEntity<>(imagen, headers, HttpStatus.OK);
     }
 
     @GetMapping("/articulos")

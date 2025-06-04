@@ -57,7 +57,6 @@ public class EditarController {
                 Alumno alumno = optAlumno.get();
                 alumno.setSemestre(dto.getSemestre());
                 alumno.setGrupo(dto.getGrupo());
-                alumno.setHorario(dto.getHorario());
                 alumnoRepo.save(alumno);
             }
         } else if ("administrativo".equalsIgnoreCase(dto.getTipo())) {

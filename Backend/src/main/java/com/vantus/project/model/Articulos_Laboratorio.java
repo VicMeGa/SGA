@@ -36,8 +36,9 @@ public class Articulos_Laboratorio {
     @Column(name = "descripcion", nullable = false)
     private String descripcion;
 
-    @Column(name = "url_fotografia", nullable = false)
-    private String urlFotografia;
+    @Lob
+    @Column(name = "foto", columnDefinition = "LONGBLOB")
+    private byte[] foto;
 
     @Column(name = "esta_prestado", nullable = false)
     private Integer estaPrestado;
@@ -73,16 +74,16 @@ public class Articulos_Laboratorio {
         return descripcion;
     }
 
+    public byte[] getFoto() {
+        return foto;
+    }
+
+    public void setFoto(byte[] foto) {
+        this.foto = foto;
+    }
+
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
-    }
-
-    public String getUrlFotografia() {
-        return urlFotografia;
-    }
-
-    public void setUrlFotografia(String urlFotografia) {
-        this.urlFotografia = urlFotografia;
     }
 
     public TipoArticulo getTipoArticulo() {

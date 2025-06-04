@@ -22,7 +22,7 @@ const Prestamo = () => {
                         name: data.nombre,
                         description: data.descripcion,
                         status: data.estaPrestado === 0 ? "Disponible" : "Ocupado",
-                        image: `http://localhost:8080${data.urlFotografia}` // Asegúrate de que `urlFotografia` esté bien
+                        image: `http://localhost:8080/sga/buscar/articulo/${data.idArticulo}/imagen?${Date.now()}`
                     };
                     setItem(formattedItem);
                 } else {

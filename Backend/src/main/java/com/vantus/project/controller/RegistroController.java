@@ -3,14 +3,9 @@ package com.vantus.project.controller;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
 import java.time.LocalTime;
-import java.util.Optional;
-import java.util.UUID;
 
-//import org.apache.tomcat.util.http.parser.MediaType;
 import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -46,7 +41,6 @@ import com.vantus.project.utils.QRGenerator;
 //import jakarta.persistence.criteria.Path;
 
 import org.springframework.http.MediaType;
-import java.nio.file.Path;
 
 @RestController
 @RequestMapping("/sga/registro")
@@ -104,6 +98,8 @@ public class RegistroController {
         admin.setCargo(request.getCargo());
         admin.setUsuario(usuario);
 
+        usuario.setHuellaDactilar("Huella_" + request.getNumeroEmpleado());
+
         // ✅ Generar QR después de guardar el usuario
         try {
             String contenidoQR = "ID: " + admin.getNumeroEmpleado() + "\n" +
@@ -141,17 +137,13 @@ public class RegistroController {
         usuario.setTipoUsuario(Usuario.TipoUsuario.Alumno);
         usuario.setProgramaEducativo(request.getProgramaEducativo());
 
-        Optional<Horario_Sala> horarioOpt = horarioSalaRepo.findByIdHorario(request.getId_horario());
-        if (!horarioOpt.isPresent()) {
-            return ResponseEntity.badRequest().body("Horario con ID " + request.getId_horario() + " no encontrado.");
-        }
-
         Alumno alumn = new Alumno();
         alumn.setMatricula(request.getMatricula());
         alumn.setSemestre(request.getSemestre());
         alumn.setGrupo(request.getGrupo());
-        alumn.setHorario(horarioOpt.get());
         alumn.setUsuario(usuario);
+
+        usuario.setHuellaDactilar("Huella_" + request.getMatricula());
 
         // ✅ Generar QR después de guardar el usuario
         try {
@@ -188,6 +180,8 @@ public class RegistroController {
         usuario.setCorreo(request.getCorreo());
         usuario.setNumeroTelefono(request.getNumeroTelefono());
         usuario.setTipoUsuario(Usuario.TipoUsuario.Invitado);
+        usuario.setHuellaDactilar("N/A");
+        usuario.setProgramaEducativo("N/A");
 
         Invitado invi = new Invitado();
         invi.setFechaRegistro(request.getFechaRegistro());
@@ -201,7 +195,7 @@ public class RegistroController {
             String relativePath = "src/main/resources/static/qrcodes/";
             Files.createDirectories(Paths.get(relativePath)); // Asegura que exista
 
-            String nombreArchivo = "usuario_" + invi.getIdInvitado();
+            String nombreArchivo = "usuario_" + request.getApellido_paterno() + "_" + request.getApellido_materno();
             String rutaQR = qrGenerator.generateQR(contenidoQR, nombreArchivo);
 
             System.out.println("QR generado exitosamente en: " + rutaQR);
@@ -224,7 +218,6 @@ public class RegistroController {
 
         Articulos_Laboratorio arti = new Articulos_Laboratorio();
 
-        // Convertir el string del request al enum (asegura que coincida exactamente)
         try {
             Articulos_Laboratorio.TipoArticulo tipo = Articulos_Laboratorio.TipoArticulo
                     .valueOf(request.getTipoArticulo());
@@ -238,18 +231,10 @@ public class RegistroController {
         arti.setEstaPrestado(0);
         arti.setDescripcion(request.getDescripcion());
 
-        String relativePath = "src/main/resources/static/uploads/";
-        Files.createDirectories(Paths.get(relativePath)); // Asegura que exista
+        // Aquí se guarda directamente el contenido en la BD
+        arti.setFoto(imagen.getBytes());
 
-        String nombreArchivo = UUID.randomUUID().toString() + "_" + imagen.getOriginalFilename();
-        Path ruta = Paths.get(relativePath + nombreArchivo);
-
-        Files.copy(imagen.getInputStream(), ruta, StandardCopyOption.REPLACE_EXISTING);
-
-        // Guarda solo la ruta relativa que se usará desde frontend (opcional)
-        arti.setUrlFotografia("/uploads/" + nombreArchivo);
         artiRepo.save(arti);
-
         return ResponseEntity.ok("Artículo registrado exitosamente");
     }
 

@@ -8,19 +8,13 @@ public class RegistroAlumnoRequest {
     private String correo;
     private String numeroTelefono;
     private String programaEducativo;
+    private String huellaDactilar;
 
     private String matricula;
     private Integer semestre;
     private String grupo;
-    private Integer id_horario;
-    //Revisar el asunto de los horarios
 
-    public Integer getId_horario() {
-        return id_horario;
-    }
-    public void setId_horario(Integer id_horario) {
-        this.id_horario = id_horario;
-    }
+
     public String getNombre() {
         return nombre;
     }
@@ -74,5 +68,11 @@ public class RegistroAlumnoRequest {
     }
     public void setSemestre(Integer semestre) {
         this.semestre = semestre;
+    }
+    public String getHuellaDactilar() {
+        return huellaDactilar;
+    }
+    public void setHuellaDactilar(String huellaDactilar) {
+        this.huellaDactilar = huellaDactilar;
     }
 }
