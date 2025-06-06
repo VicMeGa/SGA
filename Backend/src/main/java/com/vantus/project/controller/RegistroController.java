@@ -3,7 +3,10 @@ package com.vantus.project.controller;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.vantus.project.dto.ApartadoRequest;
 import com.vantus.project.dto.RegistroAdministrativoRequest;
 import com.vantus.project.dto.RegistroAlumnoRequest;
 import com.vantus.project.dto.RegistroArticuloRequest;
@@ -23,6 +27,7 @@ import com.vantus.project.dto.RegistroInvitadoRequest;
 import com.vantus.project.dto.RegistroSalaRequest;
 import com.vantus.project.model.Administrativo;
 import com.vantus.project.model.Alumno;
+import com.vantus.project.model.Apartado_Sala;
 import com.vantus.project.model.Articulos_Laboratorio;
 import com.vantus.project.model.Horario_Sala;
 import com.vantus.project.model.Invitado;
@@ -30,6 +35,7 @@ import com.vantus.project.model.Sala;
 import com.vantus.project.model.Usuario;
 import com.vantus.project.repository.AdministrativoRepository;
 import com.vantus.project.repository.AlumnoRepository;
+import com.vantus.project.repository.ApartadoSalaRepository;
 import com.vantus.project.repository.ArticulosRepository;
 import com.vantus.project.repository.HorarioSalaRepository;
 import com.vantus.project.repository.InvitadoRepository;
@@ -37,6 +43,8 @@ import com.vantus.project.repository.SalaRepository;
 import com.vantus.project.repository.UsuarioRepository;
 import com.vantus.project.service.EmailService;
 import com.vantus.project.utils.QRGenerator;
+
+import org.springframework.http.HttpStatus;
 
 //import jakarta.persistence.criteria.Path;
 
@@ -70,6 +78,9 @@ public class RegistroController {
 
     @Autowired
     private QRGenerator qrGenerator;
+
+    @Autowired
+    private ApartadoSalaRepository apartadoRepo;
 
     @Autowired
     private EmailService emailService;
@@ -267,11 +278,17 @@ public class RegistroController {
                 .orElseThrow(() -> new RuntimeException("Sala no encontrada: " + request.getNombreSala()));
         horario.setSala(sala);
 
-        // Buscar administrativo por número de empleado
+        // Verificar administrativo y su estado activo
         if (request.getNumeroEmpleado() != null) {
             Administrativo admin = adminRepo.findByNumeroEmpleado(request.getNumeroEmpleado())
                     .orElseThrow(
                             () -> new RuntimeException("Administrativo no encontrado: " + request.getNumeroEmpleado()));
+
+            Usuario usuario = admin.getUsuario();
+            if (usuario == null || !Boolean.TRUE.equals(usuario.getActivo())) {
+                return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                        .body("El administrativo no está activo, no puede registrar horarios.");
+            }
 
             horario.setAdministrativo(admin);
         }
@@ -280,4 +297,55 @@ public class RegistroController {
 
         return ResponseEntity.ok("Horario registrado exitosamente");
     }
+
+    @PostMapping("/apartado")
+    public ResponseEntity<?> apartarSala(@RequestBody ApartadoRequest request) {
+        Optional<Administrativo> adminOpt = adminRepo.findByNumeroEmpleado(request.getNumeroEmpleado());
+
+        if (!adminOpt.isPresent()) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Número de empleado no encontrado");
+        }
+
+        Administrativo admin = adminOpt.get();
+
+        // Verificar contraseña (sin codificación)
+        if (!admin.getContrasena().equals(request.getPassword())) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Contraseña incorrecta");
+        }
+
+        // Obtener usuario vinculado
+        Usuario usuario = admin.getUsuario();
+        if (usuario == null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("No se encontró el usuario vinculado");
+        }
+
+        // Verificar si el usuario está activo
+        if (!Boolean.TRUE.equals(usuario.getActivo())) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                    .body("El usuario no está activo para realizar préstamos");
+        }
+
+        Optional<Sala> salaOpt = salaRepo.findByNombreSala(request.getNombreSala());
+
+        if (!salaOpt.isPresent()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Sala no encontrada.");
+        }
+
+        Sala sala = salaOpt.get();
+
+        LocalDateTime inicio = LocalDateTime.of(LocalDate.now(), LocalTime.parse(request.getHoraInicio()));
+        LocalDateTime fin = inicio.plusHours(1); // asumimos duración de 1h
+
+        Apartado_Sala apartado = new Apartado_Sala();
+        apartado.setAdministrativo(admin);
+        apartado.setSala(sala);
+        apartado.setDia(request.getDia());
+        apartado.setFechaHoraInicio(inicio);
+        apartado.setFechaHoraFin(fin);
+
+        apartadoRepo.save(apartado);
+
+        return ResponseEntity.ok("Apartado registrado con éxito");
+    }
+
 }

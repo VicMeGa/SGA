@@ -40,6 +40,9 @@ public class Usuario {
     @Column(name = "codigoQR")
     private String codigoQR;
 
+    @Column(name = "activo")
+    private Boolean activo = true;
+    
     // Enum personalizado para tipo_usuario
     public enum TipoUsuario {
         Administrativo,
@@ -127,5 +130,13 @@ public class Usuario {
 
     public void setHuellaDactilar(String huellaDactilar) {
         this.huellaDactilar = huellaDactilar;
+    }
+
+    public Boolean getActivo() {
+        return activo;
+    }
+
+    public void setActivo(Boolean activo) {
+        this.activo = activo;
     }
 }

@@ -1,11 +1,15 @@
 package com.vantus.project.controller;
 
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -15,12 +19,14 @@ import org.springframework.web.bind.annotation.*;
 import com.vantus.project.dto.BusquedaRequest;
 import com.vantus.project.model.Administrativo;
 import com.vantus.project.model.Alumno;
+import com.vantus.project.model.Apartado_Sala;
 import com.vantus.project.model.Articulos_Laboratorio;
 import com.vantus.project.model.Horario_Sala;
 import com.vantus.project.model.Sala;
 import com.vantus.project.model.Usuario;
 import com.vantus.project.repository.AdministrativoRepository;
 import com.vantus.project.repository.AlumnoRepository;
+import com.vantus.project.repository.ApartadoSalaRepository;
 import com.vantus.project.repository.ArticulosRepository;
 import com.vantus.project.repository.HorarioSalaRepository;
 import com.vantus.project.repository.SalaRepository;
@@ -46,7 +52,12 @@ public class BusquedaController {
     private SalaRepository salaRepo;
 
     @Autowired
+    private ApartadoSalaRepository apartadoRepo;
+
+    @Autowired
     private HorarioSalaRepository horaRepo;
+
+    private static final DateTimeFormatter FORMATO = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
     @GetMapping("/usuarios")
     public ResponseEntity<?> buscar(@RequestParam String query) {
@@ -55,31 +66,33 @@ public class BusquedaController {
         // Buscar por matrícula (8 dígitos)
         if (query.matches("\\d{8}")) {
             alumnoRepo.findByMatricula(query).ifPresent(alumno -> {
-                String nombre = alumno.getUsuario().getNombre();
-                resultados.add(new BusquedaRequest(alumno.getMatricula(), nombre));
+                if (Boolean.TRUE.equals(alumno.getUsuario().getActivo())) {
+                    String nombre = alumno.getUsuario().getNombre();
+                    resultados.add(new BusquedaRequest(alumno.getMatricula(), nombre));
+                }
             });
         }
 
         // Buscar por número de empleado (6 dígitos)
         else if (query.matches("\\d{6}")) {
             adminRepo.findByNumeroEmpleado(query).ifPresent(admin -> {
-                String nombre = admin.getUsuario().getNombre();
-                resultados.add(new BusquedaRequest(admin.getNumeroEmpleado(), nombre));
+                if (Boolean.TRUE.equals(admin.getUsuario().getActivo())) {
+                    String nombre = admin.getUsuario().getNombre();
+                    resultados.add(new BusquedaRequest(admin.getNumeroEmpleado(), nombre));
+                }
             });
         }
 
         // Buscar por nombre (en tabla Usuario)
         else {
-            List<Usuario> usuarios = usuarioRepo.findByNombreContainingIgnoreCase(query);
+            List<Usuario> usuarios = usuarioRepo.findByNombreContainingIgnoreCaseAndActivoTrue(query);
             for (Usuario usuario : usuarios) {
-                // Ver si es alumno
                 Optional<Alumno> alumnoOpt = alumnoRepo.findByUsuario(usuario);
                 if (alumnoOpt.isPresent()) {
                     resultados.add(new BusquedaRequest(alumnoOpt.get().getMatricula(), usuario.getNombre()));
                     continue;
                 }
 
-                // Ver si es administrativo
                 Optional<Administrativo> adminOpt = adminRepo.findByUsuario(usuario);
                 if (adminOpt.isPresent()) {
                     resultados.add(new BusquedaRequest(adminOpt.get().getNumeroEmpleado(), usuario.getNombre()));
@@ -111,14 +124,14 @@ public class BusquedaController {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuario no encontrado.");
     }
 
-    @DeleteMapping("/eliminar/usuarios/{identificador}")
+    @PostMapping("/eliminar/usuarios/{identificador}")
     public ResponseEntity<?> eliminarUsuario(@PathVariable String identificador) {
         // Buscar si es Alumno
         Optional<Alumno> alumnoOpt = alumnoRepo.findByMatricula(identificador);
         if (alumnoOpt.isPresent()) {
             Usuario usuario = alumnoOpt.get().getUsuario(); // Obtener usuario antes de borrar
-            alumnoRepo.delete(alumnoOpt.get());
-            usuarioRepo.delete(usuario); // Eliminar el usuario también
+            usuario.setActivo(false); // Eliminar el usuario también
+            usuarioRepo.save(usuario);
             return ResponseEntity.ok("Alumno y usuario eliminados.");
         }
 
@@ -126,9 +139,9 @@ public class BusquedaController {
         Optional<Administrativo> adminOpt = adminRepo.findByNumeroEmpleado(identificador);
         if (adminOpt.isPresent()) {
             Usuario usuario = adminOpt.get().getUsuario();
-            adminRepo.delete(adminOpt.get());
-            usuarioRepo.delete(usuario);
-            return ResponseEntity.ok("Administrativo y usuario eliminados.");
+            usuario.setActivo(false); // Eliminar el usuario también
+            usuarioRepo.save(usuario);
+            return ResponseEntity.ok("Usuario 'eliminado'");
         }
 
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuario no encontrado.");
@@ -169,8 +182,46 @@ public class BusquedaController {
 
     @GetMapping("/horarios")
     public ResponseEntity<List<Horario_Sala>> obtenerHorarios() {
-        List<Horario_Sala> horarios = horaRepo.findAll();
-        return ResponseEntity.ok(horarios);
+        List<Horario_Sala> todosHorarios = horaRepo.findAll();
+
+        List<Horario_Sala> filtrados = todosHorarios.stream()
+                .filter(h -> h.getAdministrativo().getUsuario().getActivo() == true) // Suponiendo getter booleano
+                .collect(Collectors.toList());
+
+        return ResponseEntity.ok(filtrados);
+    }
+
+    @GetMapping("/horarios/apartados")
+    public ResponseEntity<List<Apartado_Sala>> obtenerApartados() {
+        List<Apartado_Sala> todosHorarios = apartadoRepo.findAll();
+
+        List<Apartado_Sala> filtrados = todosHorarios.stream()
+                .filter(h -> h.getAdministrativo().getUsuario().getActivo() == true) // Suponiendo getter booleano
+                .collect(Collectors.toList());
+
+        return ResponseEntity.ok(filtrados);
+    }
+
+    @GetMapping("/anteriores")
+    public List<String> obtenerFechasHabiles(
+            @RequestParam("fecha") @DateTimeFormat(pattern = "dd/MM/yyyy") LocalDate fechaActual) {
+
+        List<String> fechasHabiles = new ArrayList<>();
+        LocalDate fecha = fechaActual;
+
+        while (fechasHabiles.size() < 9) {
+            if (esDiaHabil(fecha)) {
+                fechasHabiles.add(0, fecha.format(FORMATO)); // Insertar al inicio para que queden en orden
+            }
+            fecha = fecha.minusDays(1);
+        }
+
+        return fechasHabiles;
+    }
+
+    private boolean esDiaHabil(LocalDate fecha) {
+        DayOfWeek dia = fecha.getDayOfWeek();
+        return dia != DayOfWeek.SATURDAY && dia != DayOfWeek.SUNDAY;
     }
 
 }
