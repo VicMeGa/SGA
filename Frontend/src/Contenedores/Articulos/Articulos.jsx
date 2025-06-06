@@ -22,7 +22,7 @@ const Articulos = () => {
             name: articulo.nombre,
             description: articulo.descripcion,
             status: articulo.estaPrestado === 0 ? "Disponible" : "Ocupado",
-            image: `http://localhost:8080/${articulo.urlFotografia}`, // <- Asegúrate que esa URL esté bien
+            image: `http://localhost:8080/sga/buscar/articulo/${articulo.idArticulo}/imagen?${Date.now()}`
           }));
           setItems(formattedItems);
         } else {

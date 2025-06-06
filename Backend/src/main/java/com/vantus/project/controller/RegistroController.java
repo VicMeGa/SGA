@@ -3,14 +3,12 @@ package com.vantus.project.controller;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Optional;
-import java.util.UUID;
 
-//import org.apache.tomcat.util.http.parser.MediaType;
 import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.vantus.project.dto.ApartadoRequest;
 import com.vantus.project.dto.RegistroAdministrativoRequest;
 import com.vantus.project.dto.RegistroAlumnoRequest;
 import com.vantus.project.dto.RegistroArticuloRequest;
@@ -28,6 +27,7 @@ import com.vantus.project.dto.RegistroInvitadoRequest;
 import com.vantus.project.dto.RegistroSalaRequest;
 import com.vantus.project.model.Administrativo;
 import com.vantus.project.model.Alumno;
+import com.vantus.project.model.Apartado_Sala;
 import com.vantus.project.model.Articulos_Laboratorio;
 import com.vantus.project.model.Horario_Sala;
 import com.vantus.project.model.Invitado;
@@ -35,6 +35,7 @@ import com.vantus.project.model.Sala;
 import com.vantus.project.model.Usuario;
 import com.vantus.project.repository.AdministrativoRepository;
 import com.vantus.project.repository.AlumnoRepository;
+import com.vantus.project.repository.ApartadoSalaRepository;
 import com.vantus.project.repository.ArticulosRepository;
 import com.vantus.project.repository.HorarioSalaRepository;
 import com.vantus.project.repository.InvitadoRepository;
@@ -43,10 +44,11 @@ import com.vantus.project.repository.UsuarioRepository;
 import com.vantus.project.service.EmailService;
 import com.vantus.project.utils.QRGenerator;
 
+import org.springframework.http.HttpStatus;
+
 //import jakarta.persistence.criteria.Path;
 
 import org.springframework.http.MediaType;
-import java.nio.file.Path;
 
 @RestController
 @RequestMapping("/sga/registro")
@@ -78,6 +80,9 @@ public class RegistroController {
     private QRGenerator qrGenerator;
 
     @Autowired
+    private ApartadoSalaRepository apartadoRepo;
+
+    @Autowired
     private EmailService emailService;
 
     @PostMapping("/administrativo")
@@ -103,6 +108,8 @@ public class RegistroController {
         admin.setContrasena(request.getContrasena());
         admin.setCargo(request.getCargo());
         admin.setUsuario(usuario);
+
+        usuario.setHuellaDactilar("Huella_" + request.getNumeroEmpleado());
 
         // ✅ Generar QR después de guardar el usuario
         try {
@@ -141,17 +148,13 @@ public class RegistroController {
         usuario.setTipoUsuario(Usuario.TipoUsuario.Alumno);
         usuario.setProgramaEducativo(request.getProgramaEducativo());
 
-        Optional<Horario_Sala> horarioOpt = horarioSalaRepo.findByIdHorario(request.getId_horario());
-        if (!horarioOpt.isPresent()) {
-            return ResponseEntity.badRequest().body("Horario con ID " + request.getId_horario() + " no encontrado.");
-        }
-
         Alumno alumn = new Alumno();
         alumn.setMatricula(request.getMatricula());
         alumn.setSemestre(request.getSemestre());
         alumn.setGrupo(request.getGrupo());
-        alumn.setHorario(horarioOpt.get());
         alumn.setUsuario(usuario);
+
+        usuario.setHuellaDactilar("Huella_" + request.getMatricula());
 
         // ✅ Generar QR después de guardar el usuario
         try {
@@ -188,6 +191,8 @@ public class RegistroController {
         usuario.setCorreo(request.getCorreo());
         usuario.setNumeroTelefono(request.getNumeroTelefono());
         usuario.setTipoUsuario(Usuario.TipoUsuario.Invitado);
+        usuario.setHuellaDactilar("N/A");
+        usuario.setProgramaEducativo("N/A");
 
         Invitado invi = new Invitado();
         invi.setFechaRegistro(request.getFechaRegistro());
@@ -201,7 +206,7 @@ public class RegistroController {
             String relativePath = "src/main/resources/static/qrcodes/";
             Files.createDirectories(Paths.get(relativePath)); // Asegura que exista
 
-            String nombreArchivo = "usuario_" + invi.getIdInvitado();
+            String nombreArchivo = "usuario_" + request.getApellido_paterno() + "_" + request.getApellido_materno();
             String rutaQR = qrGenerator.generateQR(contenidoQR, nombreArchivo);
 
             System.out.println("QR generado exitosamente en: " + rutaQR);
@@ -224,7 +229,6 @@ public class RegistroController {
 
         Articulos_Laboratorio arti = new Articulos_Laboratorio();
 
-        // Convertir el string del request al enum (asegura que coincida exactamente)
         try {
             Articulos_Laboratorio.TipoArticulo tipo = Articulos_Laboratorio.TipoArticulo
                     .valueOf(request.getTipoArticulo());
@@ -238,18 +242,10 @@ public class RegistroController {
         arti.setEstaPrestado(0);
         arti.setDescripcion(request.getDescripcion());
 
-        String relativePath = "src/main/resources/static/uploads/";
-        Files.createDirectories(Paths.get(relativePath)); // Asegura que exista
+        // Aquí se guarda directamente el contenido en la BD
+        arti.setFoto(imagen.getBytes());
 
-        String nombreArchivo = UUID.randomUUID().toString() + "_" + imagen.getOriginalFilename();
-        Path ruta = Paths.get(relativePath + nombreArchivo);
-
-        Files.copy(imagen.getInputStream(), ruta, StandardCopyOption.REPLACE_EXISTING);
-
-        // Guarda solo la ruta relativa que se usará desde frontend (opcional)
-        arti.setUrlFotografia("/uploads/" + nombreArchivo);
         artiRepo.save(arti);
-
         return ResponseEntity.ok("Artículo registrado exitosamente");
     }
 
@@ -275,17 +271,24 @@ public class RegistroController {
         horario.setHoraInicio(LocalTime.parse(request.getHoraInicio()));
         horario.setHoraFin(LocalTime.parse(request.getHoraFin()));
         horario.setGrupo(request.getGrupo());
+        horario.setSemestre(request.getSemestre());
 
         // Buscar sala por nombre
         Sala sala = salaRepo.findByNombreSala(request.getNombreSala())
                 .orElseThrow(() -> new RuntimeException("Sala no encontrada: " + request.getNombreSala()));
         horario.setSala(sala);
 
-        // Buscar administrativo por número de empleado
+        // Verificar administrativo y su estado activo
         if (request.getNumeroEmpleado() != null) {
             Administrativo admin = adminRepo.findByNumeroEmpleado(request.getNumeroEmpleado())
                     .orElseThrow(
                             () -> new RuntimeException("Administrativo no encontrado: " + request.getNumeroEmpleado()));
+
+            Usuario usuario = admin.getUsuario();
+            if (usuario == null || !Boolean.TRUE.equals(usuario.getActivo())) {
+                return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                        .body("El administrativo no está activo, no puede registrar horarios.");
+            }
 
             horario.setAdministrativo(admin);
         }
@@ -294,4 +297,55 @@ public class RegistroController {
 
         return ResponseEntity.ok("Horario registrado exitosamente");
     }
+
+    @PostMapping("/apartado")
+    public ResponseEntity<?> apartarSala(@RequestBody ApartadoRequest request) {
+        Optional<Administrativo> adminOpt = adminRepo.findByNumeroEmpleado(request.getNumeroEmpleado());
+
+        if (!adminOpt.isPresent()) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Número de empleado no encontrado");
+        }
+
+        Administrativo admin = adminOpt.get();
+
+        // Verificar contraseña (sin codificación)
+        if (!admin.getContrasena().equals(request.getPassword())) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Contraseña incorrecta");
+        }
+
+        // Obtener usuario vinculado
+        Usuario usuario = admin.getUsuario();
+        if (usuario == null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("No se encontró el usuario vinculado");
+        }
+
+        // Verificar si el usuario está activo
+        if (!Boolean.TRUE.equals(usuario.getActivo())) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                    .body("El usuario no está activo para realizar préstamos");
+        }
+
+        Optional<Sala> salaOpt = salaRepo.findByNombreSala(request.getNombreSala());
+
+        if (!salaOpt.isPresent()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Sala no encontrada.");
+        }
+
+        Sala sala = salaOpt.get();
+
+        LocalDateTime inicio = LocalDateTime.of(LocalDate.now(), LocalTime.parse(request.getHoraInicio()));
+        LocalDateTime fin = inicio.plusHours(1); // asumimos duración de 1h
+
+        Apartado_Sala apartado = new Apartado_Sala();
+        apartado.setAdministrativo(admin);
+        apartado.setSala(sala);
+        apartado.setDia(request.getDia());
+        apartado.setFechaHoraInicio(inicio);
+        apartado.setFechaHoraFin(fin);
+
+        apartadoRepo.save(apartado);
+
+        return ResponseEntity.ok("Apartado registrado con éxito");
+    }
+
 }

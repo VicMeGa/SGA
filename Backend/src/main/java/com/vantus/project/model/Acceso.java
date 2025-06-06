@@ -17,9 +17,6 @@ public class Acceso {
     @Column(name = "fecha_hora_entrada", nullable = false)
     private LocalDateTime fechaHoraEntrada;
 
-    @Column(name = "fecha_hora_salida", nullable = false)
-    private LocalDateTime fechaHoraSalida;
-
     public enum TipoAcceso {
         QR,
         Huella
@@ -49,14 +46,6 @@ public class Acceso {
 
     public void setFechaHoraEntrada(LocalDateTime fechaHoraEntrada) {
         this.fechaHoraEntrada = fechaHoraEntrada;
-    }
-
-    public LocalDateTime getFechaHoraSalida() {
-        return fechaHoraSalida;
-    }
-
-    public void setFechaHoraSalida(LocalDateTime fechaHoraSalida) {
-        this.fechaHoraSalida = fechaHoraSalida;
     }
 
     public Usuario getUsuario() {

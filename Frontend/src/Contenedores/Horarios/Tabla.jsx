@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 
-const Tabla = ({ salaSeleccionada }) => {
-  const [schedule, setSchedule] = useState({});
+const Tabla = ({ salaSeleccionada, selectedCell, setSelectedCell, schedule, setSchedule }) => {
+
   const hours = [
     "08:00 - 09:00",
     "09:00 - 10:00",
@@ -19,39 +19,85 @@ const Tabla = ({ salaSeleccionada }) => {
   const days = ["lunes", "martes", "miércoles", "jueves", "viernes"];
 
   useEffect(() => {
+
+    const obtenerHora = (campoHoraFormateada, campoFecha) => {
+      if (campoHoraFormateada) {
+        return parseInt(campoHoraFormateada.split(":")[0]);
+      } else if (campoFecha) {
+        return new Date(campoFecha).getHours();
+      }
+      return null;
+    };
+
     const fetchSchedule = async () => {
       try {
-        const response = await fetch("http://localhost:8080/sga/buscar/horarios");
-        const rawData = await response.json();
+        const [horariosRes, apartadosRes] = await Promise.all([
+          fetch("http://localhost:8080/sga/buscar/horarios"),
+          fetch("http://localhost:8080/sga/buscar/horarios/apartados")
+        ]);
 
-        // Filtrar por nombre de sala si hay una sala seleccionada
-        const filtrados = salaSeleccionada
-          ? rawData.filter(item => item.sala.nombreSala === salaSeleccionada)
+        const horariosData = await horariosRes.json();
+        const apartadosData = await apartadosRes.json();
+
+        // Filtrar por sala
+        const horariosFiltrados = salaSeleccionada
+          ? horariosData.filter(item => item.sala.nombreSala === salaSeleccionada)
+          : [];
+
+        const apartadosFiltrados = salaSeleccionada
+          ? apartadosData.filter(item => item.sala.nombreSala === salaSeleccionada)
           : [];
 
         const newSchedule = {};
 
-        filtrados.forEach((item) => {
+        // Procesar HORARIOS (clases)
+        horariosFiltrados.forEach((item) => {
           const dia = item.dia.toLowerCase();
-          const materia = item.materia;
           const start = item.horaInicioFormateada;
           const end = item.horaFinFormateada;
+          const maestro = item.administrativo.usuario.nombre + ' ' + item.administrativo.usuario.apellido_paterno;
+          const info = `${item.materia}\nProf. ${maestro}\n${item.semestre}"${item.grupo}"`;
 
           const startHour = parseInt(start.split(":")[0]);
           const endHour = parseInt(end.split(":")[0]);
 
+          console.log("Apartado con problema:", item);
+
           for (let h = startHour; h < endHour; h++) {
             const block = `${h.toString().padStart(2, "0")}:00 - ${(h + 1).toString().padStart(2, "0")}:00`;
             if (!newSchedule[dia]) newSchedule[dia] = {};
-            newSchedule[dia][block] = materia;
+            newSchedule[dia][block] = info;
           }
         });
 
+        // Procesar APARTADOS
+        apartadosFiltrados.forEach((item) => {
+          const dia = item.dia?.toLowerCase();
+          const administrativo = item.administrativo?.usuario?.nombre + ' ' + item.administrativo?.usuario?.apellido_paterno;
+
+          const startHour = obtenerHora(item.horaInicioFormateada, item.fechaHoraInicio);
+          const endHour = obtenerHora(item.horaFinFormateada, item.fechaHoraFin);
+
+          if (startHour != null && endHour != null) {
+            for (let h = startHour; h < endHour; h++) {
+              const block = `${h.toString().padStart(2, "0")}:00 - ${(h + 1).toString().padStart(2, "0")}:00`;
+              if (!newSchedule[dia]) newSchedule[dia] = {};
+              if (newSchedule[dia][block]) {
+                newSchedule[dia][block] += `\nApartado por \nProf.${administrativo}`;
+              } else {
+                newSchedule[dia][block] = `Apartado por \nProf.${administrativo}`;
+              }
+            }
+          }
+        });
+
+
         setSchedule(newSchedule);
       } catch (error) {
-        console.error("Error al obtener horarios:", error);
+        console.error("Error al obtener horarios o apartados:", error);
       }
     };
+
 
     // Solo cargar si hay una sala seleccionada
     if (salaSeleccionada) {
@@ -77,14 +123,24 @@ const Tabla = ({ salaSeleccionada }) => {
               {days.map((day) => (
                 <td
                   key={`${day}-${hour}`}
+                  onClick={() => setSelectedCell({ day, hour })}
                   style={{
                     textAlign: "center",
                     padding: "8px",
-                    backgroundColor: schedule[day]?.[hour] ? "#e0f7fa" : "",
+                    whiteSpace: "pre-line",
+                    backgroundColor:
+                      selectedCell.day === day && selectedCell.hour === hour
+                        ? "#ffe082"
+                        : schedule[day]?.[hour]
+                          ? "#e0f7fa"
+                          : "",
+                    cursor: "pointer",
                   }}
                 >
                   {schedule[day]?.[hour] || ""}
                 </td>
+
+
               ))}
             </tr>
           ))}

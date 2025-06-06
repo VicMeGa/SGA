@@ -38,7 +38,7 @@ const DivIzquierdo = ({ selectedStudent }) => {
   const identificador = formData.matricula ? formData.matricula : formData.numeroEmpleado;
   try {
     const response = await fetch(`http://localhost:8080/sga/buscar/eliminar/usuarios/${identificador}`, {
-      method: 'DELETE',
+      method: 'POST',
     });
 
     if (response.ok) {
@@ -73,7 +73,6 @@ const DivIzquierdo = ({ selectedStudent }) => {
             matricula: formData.matricula,
             semestre: formData.semestre,
             grupo: formData.grupo,
-            horario: formData.horario?.idHorario,
           }
         : {
             numeroEmpleado: formData.numeroEmpleado,
@@ -118,16 +117,7 @@ const DivIzquierdo = ({ selectedStudent }) => {
             <input type="text" className="imputnorm" name="matricula" value={formData.matricula} onChange={handleChange} placeholder="Matrícula"/>
             <input type="text" className="imputnorm" name="semestre" value={formData.semestre} onChange={handleChange} placeholder="Semestre"/>
             <input type="text" className="imputnorm" name="grupo" value={formData.grupo} onChange={handleChange} placeholder="Grupo"/>
-            <input type="text" className="imputnorm" name="horario.idHorario" value={formData.horario?.idHorario || ''}
-              onChange={(e) => setFormData((prev) => ({
-                  ...prev,
-                  horario: {
-                    ...prev.horario,
-                    idHorario: e.target.value,
-                  },
-                }))
-              }
-              placeholder="ID Horario"/>
+
           </>
         )}
 

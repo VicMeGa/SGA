@@ -22,10 +22,6 @@ public class Alumno {
     private String grupo;
 
     @ManyToOne
-    @JoinColumn(name = "id_horario")
-    private Horario_Sala horario;
-
-    @ManyToOne
     @JoinColumn(name = "id_usuario")
     private Usuario usuario;
 
@@ -61,14 +57,6 @@ public class Alumno {
 
     public void setGrupo(String grupo) {
         this.grupo = grupo;
-    }
-
-    public Horario_Sala getHorario() {
-        return horario;
-    }
-
-    public void setHorario(Horario_Sala horario) {
-        this.horario = horario;
     }
 
     public Usuario getUsuario() {

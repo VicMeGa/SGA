@@ -1,7 +1,7 @@
 import Cabeza from "../../Cabeza";
 import Nav from "../../Nav";
 import { useState } from "react";
-import monitor from "../../../../public/monitor.png"
+import { MonitorCog } from 'lucide-react';
 
 function RegSala() {
     const [NombreS, setNombreS] = useState("");
@@ -50,7 +50,7 @@ function RegSala() {
                         <input type="text" placeholder="Capacidad maxima" value={CapcidadMax} onChange={(e) => setCapacidadMax(e.target.value)} required />
                     </div>
                     <br />
-                    <img src={monitor} />
+                    <MonitorCog size={100} />
                     <div className="botonesreS">
                         <button className="cancelButtonS" type="button" onClick={() => window.location.reload()}>Cancelar</button>
                         <button className="okButton" type="submit">Registrar</button>

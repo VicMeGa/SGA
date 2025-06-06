@@ -10,6 +10,7 @@ const RegistrarHorario = () => {
     const [horaFin, setFin] = useState("");
     const [numeroEmpleado, setEmpleado] = useState("");
     const [grupo, setGrupo] = useState("");
+    const [semestre, setSemestre] = useState("");
 
     const [salas, setSalas] = useState([]);
     const [loadingSalas, setLoad] = useState(false);
@@ -55,7 +56,8 @@ const RegistrarHorario = () => {
             horaFin,
             nombreSala: salaSeleccionada?.nombreSala || "", // Asegúrate de que sea el nombre, no el ID
             numeroEmpleado, // Se espera como cadena, ejemplo "000002"
-            grupo
+            grupo,
+            semestre
         };
 
         try {
@@ -80,6 +82,7 @@ const RegistrarHorario = () => {
             setSala("");
             setEmpleado("");
             setGrupo("");
+            setSemestre("");
         } catch (err) {
             console.error("Error al registrar horario:", err);
             setMensaje("❌ Error al registrar el horario");
@@ -155,6 +158,15 @@ const RegistrarHorario = () => {
                         placeholder="Grupo (ej. A, B)"
                         value={grupo}
                         onChange={(e) => setGrupo(e.target.value)}
+                        required
+                    />
+
+                    {/* Grupo */}
+                    <input
+                        type="text"
+                        placeholder="Semestre (ej. 5, 6)"
+                        value={semestre}
+                        onChange={(e) => setSemestre(e.target.value)}
                         required
                     />
 

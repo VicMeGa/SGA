@@ -14,6 +14,9 @@ public class Apartado_Sala {
     @Column(name = "id_apartado")
     private Integer idApartado;
 
+    @Column(name = "dia", nullable = false)
+    private String dia;
+
     @Column(name = "fecha_hora_inicio", nullable = false)
     private LocalDateTime fechaHoraInicio;
 
@@ -23,6 +26,14 @@ public class Apartado_Sala {
     @ManyToOne
     @JoinColumn(name = "id_sala")
     private Sala sala;
+
+    public String getDia() {
+        return dia;
+    }
+
+    public void setDia(String dia) {
+        this.dia = dia;
+    }
 
     @ManyToOne
     @JoinColumn(name = "id_administrativo")
@@ -67,7 +78,4 @@ public class Apartado_Sala {
     public void setAdministrativo(Administrativo administrativo) {
         this.administrativo = administrativo;
     }
-
-    
-
 }

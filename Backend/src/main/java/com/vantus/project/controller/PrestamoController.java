@@ -60,6 +60,12 @@ public class PrestamoController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("No se encontró el usuario vinculado");
         }
 
+        // Verificar si el usuario está activo
+        if (!Boolean.TRUE.equals(usuario.getActivo())) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                    .body("El usuario no está activo para realizar préstamos");
+        }
+
         // Buscar el artículo
         Optional<Articulos_Laboratorio> artOpt = artiRepo.findById(datos.getIdArticulo());
         if (!artOpt.isPresent()) {
@@ -81,12 +87,11 @@ public class PrestamoController {
         Prestamo nuevoPrestamo = new Prestamo();
         nuevoPrestamo.setUsuario(usuario);
         nuevoPrestamo.setFechaHoraPrestamo(LocalDateTime.now());
-        nuevoPrestamo.setArticulo(art); // Asegúrate de tener la relación en la entidad Prestamo
+        nuevoPrestamo.setArticulo(art);
 
         prestamoRepo.save(nuevoPrestamo);
 
         return ResponseEntity.ok(String.valueOf(nuevoPrestamo.getIdPrestamo()));
-
     }
 
     @GetMapping("/id-actual/{idArticulo}")
