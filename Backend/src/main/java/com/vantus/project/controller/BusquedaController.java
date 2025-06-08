@@ -224,4 +224,10 @@ public class BusquedaController {
         return dia != DayOfWeek.SATURDAY && dia != DayOfWeek.SUNDAY;
     }
 
+    @GetMapping("/grupos")
+    public ResponseEntity<List<String>> obtenerGrupos() {
+        List<String> todosGrupos = alumnoRepo.findDistinctGruposOrderByGrupo();
+        return ResponseEntity.ok(todosGrupos);
+    }
+
 }

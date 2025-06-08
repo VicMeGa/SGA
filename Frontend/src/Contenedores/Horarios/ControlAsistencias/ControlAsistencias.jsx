@@ -12,14 +12,16 @@ const ControlAsistencias = () => {
     const [selectedCell, setSelectedCell] = useState({ day: "", hour: "" });
     const [schedule, setSchedule] = useState({});
 
-    const Materias = ["Algebra Superior 6B", "Sistemas Operativos 3A", "Programación Orientada a Objetos 2B"];
+    const Materias = ["Algebra Superior", "Sistemas Operativos", "POO"];
     const grupos = ["A", "B", "C"];
+    const semestres = [1, 2, 3, 4, 5, 6, 7, 8, 9];
     const [Materiaa, setMateriaa] = useState("");
 
     const [Profesor, setProfesor] = useState("");
     const [Materia, setMateria] = useState("");
     const [Grupo, setGrupo] = useState("");
     const [Carrera, setCarrera] = useState("");
+    const [Semestre, setSemestre] = useState("");
 
 
     const obtenerSalas = async () => {
@@ -36,6 +38,25 @@ const ControlAsistencias = () => {
         } catch (err) {
             console.error('Error al obtener las salas:', err);
             setError('Error al cargar las salas. Por favor, intenta de nuevo.');
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const obtenerGrupos = async () => {
+        setLoading(true);
+        setError(null);
+        try {
+            const response = await fetch('http://localhost:8080/sga/buscar/grupos');
+            if (!response.ok) {
+                throw new Error(`Error: ${response.status} ${response.statusText}`);
+            }
+
+            const data = await response.json();
+            setSalas(data);
+        } catch (err) {
+            console.error('Error al obtener los grupos:', err);
+            setError('Error al cargar los grupos. Por favor, intenta de nuevo.');
         } finally {
             setLoading(false);
         }
@@ -73,11 +94,22 @@ const ControlAsistencias = () => {
                         ))}
                     </select>
 
-                    <select value={Grupo} onChange={(e) => setGrupo(e.target.value)} >
-                        <option value="" disabled>Selecciona un grupo</option>
-                        {grupos.map((grp) => (
-                            <option key={grp} value={grp}>
-                                {grp}
+                    <select value={Grupo} onChange={(e) => setGrupo(e.target.value)}>
+                        <option value="" disabled>
+                            {loading ? 'Cargando grupos...' : 'Selecciona un grupo'}
+                        </option>
+                        {grupos.map((grupo) => (
+                            <option key={grupo} value={grupo}>
+                                {grupo}
+                            </option>
+                        ))}
+                    </select>
+
+                    <select value={Semestre} onChange={(e) => setSemestre(e.target.value)} >
+                        <option value="" disabled>Selecciona un semestre</option>
+                        {semestres.map((smtr) => (
+                            <option key={smtr} value={smtr}>
+                                {smtr}
                             </option>
                         ))}
                     </select>
