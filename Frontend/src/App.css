@@ -23,7 +23,19 @@ body{
   position: relative;
   z-index: 1;
 }
-
+/*----------> Registrar Cuenta <--------------*/
+.signin{
+    align-items: center;
+    text-align:center;
+    top: 0;
+    left: 0;
+    position: absolute;
+    background-color: aliceblue;
+    display: flex;
+    min-height: 100%;
+    width: 50%;
+    background-color:white;
+}
 /*--------->Login<-------------*/
 .login {
     align-items: center;
@@ -68,7 +80,12 @@ button {
     transition: background-color 0.3s ease;
 }
 
-
+button:hover{
+  background-color: white;
+    color: #0d1124;
+    border: 2px ;
+    border-color: black;
+}
 /*--------->Home<-------------*/
 
 .arriba{
@@ -663,8 +680,8 @@ background-color: #0B1E33;
 .divHorario{
   position: relative;
   background-color:rgba(255,255,255,0.8);
-  max-width: 80%;
-  min-width: 800px;
+  max-width: 90%;
+  min-width: 900px;
   margin: auto;
   margin-top: 7%;
   margin-bottom: 20px;
@@ -968,4 +985,38 @@ background-color: #0B1E33;
   margin-bottom: 10px;
   background-color:rgba(168, 179, 191, .3);
   font-size: 3.5vh;
+}
+
+/*------------------------------ Apartado div -------------------*/
+.apart {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  display: flex;
+   background-color: rgba(0, 0, 0, 0.5); /* Fondo semi-transparente */
+  top: 0;
+  left: 0;
+  z-index: 1000;
+}
+
+.form-aprt{
+  background-color: white;
+  border-radius: 8px;
+  width: 600px;
+
+}
+
+.form-aprt input{
+  color:black;
+  height: 5vh;
+  margin-bottom: 10px;
+  background-color:rgba(168, 179, 191, .3);
+  font-size: 3.5vh;
+}
+.form-aprt button{
+  width: 200px;
+  margin: 30px;
 }

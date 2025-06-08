@@ -2,7 +2,7 @@ import Cabeza from '../Cabeza'
 import { useState } from "react"
 import Nav from '../Nav'
 import MenuReg from './MenuReg'
-import Notificaciones from '../Notificacioness/notificaciones';
+import Notificaciones from '../Notificacioness/Notificaciones';
 
 function Registrar() {
     const [nombre, setNombre] = useState("");
