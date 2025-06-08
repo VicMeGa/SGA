@@ -61,6 +61,7 @@ const Login = () => {
                 />
                 <br />
                 <button type="submit">Iniciar Sesión</button>
+                <h3 onClick={()=>navigate("/RegistrarCuenta")} style={{ cursor: "pointer" }}>Registrar Cuenta</h3>
             </form>
         </div>
     );

@@ -23,7 +23,19 @@ body{
   position: relative;
   z-index: 1;
 }
-
+/*----------> Registrar Cuenta <--------------*/
+.signin{
+    align-items: center;
+    text-align:center;
+    top: 0;
+    left: 0;
+    position: absolute;
+    background-color: aliceblue;
+    display: flex;
+    min-height: 100%;
+    width: 50%;
+    background-color:white;
+}
 /*--------->Login<-------------*/
 .login {
     align-items: center;
@@ -68,7 +80,12 @@ button {
     transition: background-color 0.3s ease;
 }
 
-
+button:hover{
+  background-color: white;
+    color: #0d1124;
+    border: 2px ;
+    border-color: black;
+}
 /*--------->Home<-------------*/
 
 .arriba{

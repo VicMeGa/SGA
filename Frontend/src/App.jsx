@@ -13,7 +13,8 @@ import Horario from './Contenedores/Horarios/Horario';
 import RegistrarSala from './Contenedores/Horarios/RegistrarSala/RegistrarSala';
 import ControlAsistencias from './Contenedores/Horarios/ControlAsistencias/ControlAsistencias';
 import Reportes from './Contenedores/Reportes/Reportes'
-import RegistrarHorario from './Contenedores/Horarios/RegistarHorario/RegistrarHorario'; 
+import RegistrarHorario from './Contenedores/Horarios/RegistarHorario/RegistrarHorario';
+import RegistrarCuenta from './Contenedores/RegisCuenta/RegistrarCuenta';
 
 function App() {
     
@@ -36,6 +37,7 @@ function App() {
             <Route path="/ControlAsistencias" element={<ControlAsistencias />} />
             <Route path='/Reportes' element={<Reportes />} />
             <Route path='/RegistrarHorario' element={<RegistrarHorario />} />
+            <Route path='/RegistrarCuenta' element={<RegistrarCuenta />} />
           </Routes>
     </Router>
     </>
