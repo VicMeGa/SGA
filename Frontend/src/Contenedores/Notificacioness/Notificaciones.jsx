@@ -1,7 +1,6 @@
-import { use } from "react";
 import { useEffect, useState } from "react";
 
-function Notificaciones({ mensaje, tipo, onClose }) {
+function Notificaciones({ mensaje, tipo, onClose, duracion }) {
   const colores ={
     error:"#e53935", //error 
     exito:"#43a047", //exito 

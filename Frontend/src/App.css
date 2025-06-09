@@ -160,7 +160,7 @@ button:hover{
 .div-registro{
   background-color:rgba(255,255,255,0.9);
   position:relative;
-  min-width: 600px;
+  min-width: 800px;
   max-width: 900px;
   margin: auto;
   margin-top: 12%;
@@ -175,6 +175,12 @@ button:hover{
 
 .regis{
   text-align: center;
+}
+
+.regiSon{
+  align-items: center;
+   display: flex;
+  flex-direction: column;
 }
 
 .regis input{
@@ -227,6 +233,11 @@ background-color: #0B1E33;
 .okButton:hover{
   background-color:white ;
   color: #0B1E33;
+}
+
+.error{
+  color: red;
+  font-size: 3vh;
 }
 
 /* ----------------> Nav <-----------------*/
@@ -628,7 +639,7 @@ background-color: #0B1E33;
   position: relative;
   background-color:rgba(255,255,255,0.8);
   max-width: 70%;
-  min-width: 600px;
+  min-width: 800px;
   margin: auto;
   margin-top: 7%;
   margin-bottom: 20px;
