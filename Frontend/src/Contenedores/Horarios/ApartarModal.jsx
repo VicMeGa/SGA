@@ -1,11 +1,38 @@
 import { useState } from "react";
+import * as Yup from "yup";
 
 const ApartarModal = ({ isOpen, onClose, onConfirm, day, hour }) => {
   const [numeroEmpleado, setNumeroEmpleado] = useState("");
   const [password, setPassword] = useState("");
+  const [errores, setErrores] = useState({});
+
+  const esquemaValidacion = Yup.object().shape({
+      numeroEmpleado : Yup.string().required("El numero de empleado es obligatorio")
+          .matches(/^\d{6}$/, "Debe tener 6 dígitos"),
+      password: Yup.string().required("La contraseña es obligatoria"),
+  });
 
   if (!isOpen) return null;
-
+  
+  const Validar  = async () => {
+    try{
+      const datos = {
+        numeroEmpleado,
+        password,
+      }
+      await esquemaValidacion.validate(datos, { abortEarly: false });
+      setErrores({}); // Limpiar errores si la validación pasa 
+      onConfirm({ numeroEmpleado, password, day, hour })
+    } catch (error){
+      if (error.name === "ValidationError") {
+                const nuevoErrores = {};
+                error.inner.forEach((err) => {
+                    nuevoErrores[err.path] = err.message;
+                });
+                setErrores(nuevoErrores);
+            }
+    }
+  }
   return (
     <div className="apart">
       <div className="form-aprt">
@@ -14,20 +41,21 @@ const ApartarModal = ({ isOpen, onClose, onConfirm, day, hour }) => {
           Apartar sala para {day}, {hour}
         </h2>
         
-        <div >
+        <div className="regiSon">
           <input
             type="text"
             placeholder="Número de empleado"
             value={numeroEmpleado}
             onChange={(e) => setNumeroEmpleado(e.target.value)}
           />
-          
+          {errores.numeroEmpleado && <span className="error">{errores.numeroEmpleado}</span>}
           <input
             type="password"
             placeholder="Contraseña"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
+          {errores.password && <span className="error">{errores.password}</span>}
         </div>
         
         <div>
@@ -39,7 +67,7 @@ const ApartarModal = ({ isOpen, onClose, onConfirm, day, hour }) => {
           </button>
           <button
             onClick={() =>
-              onConfirm({ numeroEmpleado, password, day, hour })
+              Validar()
             }
             className="okButton"
           >

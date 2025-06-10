@@ -3,6 +3,7 @@ import { useState } from "react";
 import Nav from '../Nav';
 import MenuReg from './MenuReg';
 import Notificaciones from '../Notificacioness/Notificaciones';
+import * as Yup from "yup";
 
 function RegAdminis() {
     const [nombre, setNombre] = useState("");
@@ -16,6 +17,7 @@ function RegAdminis() {
     const [programaEducativo, setProgramaEducativo] = useState("");
 
     const [notificacion, setNotificaciones] = useState(null);
+    const [errores, setErrores] = useState({});
 
     const opciones = [
         { value: 'Licenciatura en Ingeniería Mecánica', label: 'Licenciatura en Ingeniería Mecánica' },
@@ -27,13 +29,32 @@ function RegAdminis() {
         { value: 'Licenciatura en Ingeniería en Inteligencia Artificial', label: 'Licenciatura en Ingeniería en Inteligencia Artificial' },
     ];
 
+    const esquemaValidacion = Yup.object().shape({
+        nombre: Yup.string().required("El nombre es obligatorio").min(2, "Debe tener al menos 2 caracteres")
+            .matches(/^([A-Z][a-z]+)(\s[A-Z][a-z]+)*$/,"Las primeras letras deben ser mayusculas, solo se admiten letras"),
+        apellidoPaterno: Yup.string().required("El apellido paterno es obligatorio")
+            .matches(/^([A-Z][a-z]+)(\s[A-Z][a-z]+)*$/,"Las primeras letras deben ser mayusculas, solo se admiten letras"),
+        apellidoMaterno: Yup.string().required("El apellido materno es obligatorio")
+            .matches(/^([A-Z][a-z]+)(\s[A-Z][a-z]+)*$/,"Las primeras letras deben ser mayusculas, solo se admiten letras"),
+        numeroEmpleado : Yup.string().required("El numero de empleado es obligatoria")
+            .matches(/^\d{8}$/, "Debe tener 6 dígitos"),
+        correo: Yup.string().required("El correo es obligatorio").email("Debe ser un correo válido"),
+        cargo: Yup.string().required("El cargo es requerido"),
+        grupo: Yup.string().required("El grupo es obligario").matches(/^[ABC]$/, "Solo hay grupos A, B o C"),
+        programaEducativo: Yup.string().required("El programa educativo es obligatorio"),
+        contrasena: Yup.string().required("La contraseña es obligatoria"),
+        numeroTelefono: Yup.string()
+            .matches(/^\d{10}$/, "Debe tener 10 dígitos")
+            .notRequired(),
+    });
+
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        const datos = {
+        const datoss = {
             nombre,
-            apellido_paterno: apellidoPaterno,
-            apellido_materno: apellidoMaterno,
+            apellidoPaterno,
+            apellidoMaterno,
             correo,
             numeroTelefono,
             numeroEmpleado,
@@ -43,6 +64,23 @@ function RegAdminis() {
         };
 
         try {
+
+            // Validar antes de enviar
+            await esquemaValidacion.validate(datoss, { abortEarly: false });
+            setErrores({}); // Limpiar errores si la validación pasa
+
+            const datos = {
+                nombre,
+                apellido_paterno: apellidoPaterno,
+                apellido_materno: apellidoMaterno,
+                correo,
+                numeroTelefono,
+                numeroEmpleado,
+                contrasena,
+                cargo,
+                programaEducativo
+            };
+
             const res = await fetch("http://localhost:8080/sga/registro/administrativo", {
                 method: "POST",
                 headers: {
@@ -63,8 +101,16 @@ function RegAdminis() {
             setContrasena("");
             setProgramaEducativo("");
         } catch (error) {
-            console.error("Error al registrar administrativo:", error);
-            setNotificaciones({ mensaje: "Error al registrar administrativo", tipo: "error" });
+            if (error.name === "ValidationError") {
+                const nuevoErrores = {};
+                error.inner.forEach((err) => {
+                    nuevoErrores[err.path] = err.message;
+                });
+                setErrores(nuevoErrores);
+            } else {
+                console.error("Error al registrar administrativo:", error);
+                setNotificaciones({ mensaje: "Error al registrar administrativo", tipo: "error" });
+            }
         }
         setTimeout(() => setNotificaciones(null), 6000);
     };
@@ -78,25 +124,36 @@ function RegAdminis() {
                 <h1>Registrar Administrativo</h1>
                 <form className='formas' onSubmit={handleSubmit}>
                     <div className='regis'>
-                        <input type='text' placeholder='Nombre' value={nombre} onChange={(e) => setNombre(e.target.value)} required />
-                        <input type='text' placeholder='Apellido Paterno' value={apellidoPaterno} onChange={(e) => setApellidoPaterno(e.target.value)} required />
-                        <input type='text' placeholder='Apellido Materno' value={apellidoMaterno} onChange={(e) => setApellidoMaterno(e.target.value)} required />
-                        <input type='text' placeholder='Número de empleado' value={numeroEmpleado} onChange={(e) => setNumeroEmpleado(e.target.value)} required />
-                        <input type='email' placeholder='Correo Electrónico' value={correo} onChange={(e) => setCorreo(e.target.value)} required />
-                        <input type='text' placeholder='Cargo' value={cargo} onChange={(e) => setCargo(e.target.value)} />
-                        <input type='text' placeholder='Teléfono' value={numeroTelefono} onChange={(e) => setNumeroTelefono(e.target.value)} />
-                        <select
-                            value={programaEducativo}
-                            onChange={(e) => setProgramaEducativo(e.target.value)}
-                        >
-                            <option value="" disabled>Selecciona un programa educativo</option>
-                            {opciones.map((opcion) => (
-                                <option key={opcion.value} value={opcion.value}>
-                                    {opcion.label}
-                                </option>
-                            ))}
-                        </select>
-                        <input type='password' placeholder='Contraseña' value={contrasena} onChange={(e) => setContrasena(e.target.value)} required />
+                        <div className='regiSon'>
+                            <input type='text' placeholder='Nombre' value={nombre} onChange={(e) => setNombre(e.target.value)}  />
+                            {errores.nombre && <span className="error">{errores.nombre}</span>}
+                            <input type='text' placeholder='Apellido Paterno' value={apellidoPaterno} onChange={(e) => setApellidoPaterno(e.target.value)}  />
+                            {errores.apellidoPaterno && <span className="error">{errores.apellidoPaterno}</span>}
+                            <input type='text' placeholder='Apellido Materno' value={apellidoMaterno} onChange={(e) => setApellidoMaterno(e.target.value)}  />
+                            {errores.apellidoMaterno && <span className="error">{errores.apellidoMaterno}</span>}
+                            <input type='text' placeholder='Número de empleado' value={numeroEmpleado} onChange={(e) => setNumeroEmpleado(e.target.value)}  />
+                            {errores.numeroEmpleado && <span className="error">{errores.numeroEmpleado}</span>}
+                            <input type='email' placeholder='Correo Electrónico' value={correo} onChange={(e) => setCorreo(e.target.value)}  />
+                            {errores.correo && <span className="error">{errores.correo}</span>}
+                            <input type='text' placeholder='Cargo' value={cargo} onChange={(e) => setCargo(e.target.value)} />
+                            {errores.cargo && <span className="error">{errores.cargo}</span>}
+                            <input type='text' placeholder='Teléfono' value={numeroTelefono} onChange={(e) => setNumeroTelefono(e.target.value)} />
+                            {errores.numeroTelefono && <span className="error">{errores.numeroTelefono}</span>}
+                            <select
+                                value={programaEducativo}
+                                onChange={(e) => setProgramaEducativo(e.target.value)}
+                            >
+                                <option value="" disabled>Selecciona un programa educativo</option>
+                                {opciones.map((opcion) => (
+                                    <option key={opcion.value} value={opcion.value}>
+                                        {opcion.label}
+                                    </option>
+                                ))}
+                            </select>
+                            {errores.programaEducativo && <span className="error">{errores.programaEducativo}</span>}
+                            <input type='password' placeholder='Contraseña' value={contrasena} onChange={(e) => setContrasena(e.target.value)}  />
+                            {errores.contrasena && <span className="error">{errores.contrasena}</span>}
+                        </div>
                     </div>
 
                     <div className="botonesre">
