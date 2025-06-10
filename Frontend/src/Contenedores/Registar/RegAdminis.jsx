@@ -30,10 +30,14 @@ function RegAdminis() {
     ];
 
     const esquemaValidacion = Yup.object().shape({
-        nombre: Yup.string().required("El nombre es obligatorio").min(2, "Debe tener al menos 2 caracteres"),
-        apellidoPaterno: Yup.string().required("El apellido paterno es obligatorio"),
-        apellidoMaterno: Yup.string().required("El apellido materno es obligatorio"),
-        numeroEmpleado : Yup.string().required("El numero de empleado es obligatoria").matches(/^\d{8}$/, "Debe tener 6 dígitos"),
+        nombre: Yup.string().required("El nombre es obligatorio").min(2, "Debe tener al menos 2 caracteres")
+            .matches(/^([A-Z][a-z]+)(\s[A-Z][a-z]+)*$/,"Las primeras letras deben ser mayusculas, solo se admiten letras"),
+        apellidoPaterno: Yup.string().required("El apellido paterno es obligatorio")
+            .matches(/^([A-Z][a-z]+)(\s[A-Z][a-z]+)*$/,"Las primeras letras deben ser mayusculas, solo se admiten letras"),
+        apellidoMaterno: Yup.string().required("El apellido materno es obligatorio")
+            .matches(/^([A-Z][a-z]+)(\s[A-Z][a-z]+)*$/,"Las primeras letras deben ser mayusculas, solo se admiten letras"),
+        numeroEmpleado : Yup.string().required("El numero de empleado es obligatoria")
+            .matches(/^\d{8}$/, "Debe tener 6 dígitos"),
         correo: Yup.string().required("El correo es obligatorio").email("Debe ser un correo válido"),
         cargo: Yup.string().required("El cargo es requerido"),
         grupo: Yup.string().required("El grupo es obligario").matches(/^[ABC]$/, "Solo hay grupos A, B o C"),
