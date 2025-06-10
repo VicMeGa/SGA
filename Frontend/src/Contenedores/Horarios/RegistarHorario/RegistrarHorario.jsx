@@ -28,7 +28,7 @@ const RegistrarHorario = () => {
     ];
 
     const esquemaValidacion = Yup.object().shape({
-        nombresala: Yup.string().required("La sala es obligatoria"),
+        sala: Yup.string().required("La sala es obligatoria"),
         materia: Yup.string().required("La materia es obligatoria").min(2, "Debe tener al menos 2 caracteres")
             .matches(/^([A-Z][a-z]+)(\s[A-Z][a-z]+)*$/,"Las primeras letras deben ser mayusculas, solo se admiten letras"),
         dia: Yup.string().required("El dia es obligatorio"),
@@ -64,20 +64,31 @@ const RegistrarHorario = () => {
 
         const salaSeleccionada = salas.find(s => s.idSala === parseInt(sala));
 
-        const body = {
+        const datos = {
             materia,
             dia,
             horaInicio,
             horaFin,
-            sala: salaSeleccionada?.nombreSala || "", // Asegúrate de que sea el nombre, no el ID
+            sala, // Asegúrate de que sea el nombre, no el ID
             numeroEmpleado, // Se espera como cadena, ejemplo "000002"
             grupo,
             semestre
         };
 
         try {
-            await esquemaValidacion.validate(body, { abortEarly: false });
+            await esquemaValidacion.validate(datos, { abortEarly: false });
             setErrores({}); // Limpiar errores si la validación pasa
+
+            const body = {
+                materia,
+                dia,
+                horaInicio,
+                horaFin,
+                sala: salaSeleccionada?.nombreSala || "", // Asegúrate de que sea el nombre, no el ID
+                numeroEmpleado, // Se espera como cadena, ejemplo "000002"
+                grupo,
+                semestre
+            };
 
             const resp = await fetch("http://localhost:8080/sga/registro/horario", {
                 method: "POST",
