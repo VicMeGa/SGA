@@ -17,6 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.vantus.project.dto.BusquedaRequest;
+import com.vantus.project.model.Acceso;
 import com.vantus.project.model.Administrativo;
 import com.vantus.project.model.Alumno;
 import com.vantus.project.model.Apartado_Sala;
@@ -24,6 +25,7 @@ import com.vantus.project.model.Articulos_Laboratorio;
 import com.vantus.project.model.Horario_Sala;
 import com.vantus.project.model.Sala;
 import com.vantus.project.model.Usuario;
+import com.vantus.project.repository.AccesoRepository;
 import com.vantus.project.repository.AdministrativoRepository;
 import com.vantus.project.repository.AlumnoRepository;
 import com.vantus.project.repository.ApartadoSalaRepository;
@@ -56,6 +58,9 @@ public class BusquedaController {
 
     @Autowired
     private HorarioSalaRepository horaRepo;
+
+    @Autowired
+    private AccesoRepository accesoRepo;
 
     private static final DateTimeFormatter FORMATO = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
@@ -228,6 +233,42 @@ public class BusquedaController {
     public ResponseEntity<List<String>> obtenerGrupos() {
         List<String> todosGrupos = alumnoRepo.findDistinctGruposOrderByGrupo();
         return ResponseEntity.ok(todosGrupos);
+    }
+
+    @GetMapping("/materias")
+    public ResponseEntity<List<String>> obtenerMaterias() {
+        List<String> todasMaterias = horaRepo.findDistinctMaterias();
+        return ResponseEntity.ok(todasMaterias);
+    }
+
+    @GetMapping("/semestres")
+    public ResponseEntity<List<String>> obtenerSemestres() {
+        List<String> todosSemestres = horaRepo.findDistinctSemestre();
+        return ResponseEntity.ok(todosSemestres);
+    }
+
+    @GetMapping("/nombres/semestre/{semestre}/grupo/{grupo}/materia/{materia}/sala/{nombreSala}")
+    public ResponseEntity<List<String>> obtenerNombres(
+            @PathVariable String grupo,
+            @PathVariable Integer semestre,
+            @PathVariable String materia,
+            @PathVariable String nombreSala) {
+
+        List<String> nombres = alumnoRepo.obtenerNombresUsuariosPorGrupoSemestreMateriaYSala(grupo, semestre, materia,
+                nombreSala);
+        return ResponseEntity.ok(nombres);
+    }
+
+    @GetMapping("/nombres/maestro/{materia}")
+    public ResponseEntity<List<Administrativo>> obtenerNombres(@PathVariable String materia) {
+        List<Administrativo> administrativos = adminRepo.obtenerAdministrativosPorMateria(materia);
+        return ResponseEntity.ok(administrativos);
+    }
+
+    @GetMapping("/accesos")
+    public ResponseEntity<List<Acceso>> getTodosLosAccesos() {
+        List<Acceso> accesos = accesoRepo.findAll();
+        return ResponseEntity.ok(accesos);
     }
 
 }

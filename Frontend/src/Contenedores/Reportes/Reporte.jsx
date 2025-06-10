@@ -1,10 +1,15 @@
-import report from '../../../public/SGA.pdf'
-
-const Reporte =()=>{
-
+const Reporte = ({ urlPDF }) => {
     return (
         <>
-        <iframe src={report}></iframe>
+            {urlPDF && (
+                <iframe
+                    src={urlPDF}
+                    title="Reporte PDF"
+                    width="100%"
+                    height="600px"
+                    style={{ border: "1px solid black" }}
+                ></iframe>
+            )}
         </>
     );
 };

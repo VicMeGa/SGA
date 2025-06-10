@@ -12,7 +12,7 @@ public class Acceso {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_acceso")
-    private Integer idInvitado;
+    private Integer idAcceso;
 
     @Column(name = "fecha_hora_entrada", nullable = false)
     private LocalDateTime fechaHoraEntrada;
@@ -22,26 +22,36 @@ public class Acceso {
         Huella
     }
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "tipo_acceso")
+    private TipoAcceso tipoAcceso;
+
     @ManyToOne
     @JoinColumn(name = "id_usuario")
     private Usuario usuario;
+
+    public TipoAcceso getTipoAcceso() {
+        return tipoAcceso;
+    }
+
+    public void setTipoAcceso(TipoAcceso tipoAcceso) {
+        this.tipoAcceso = tipoAcceso;
+    }
 
     @ManyToOne
     @JoinColumn(name = "id_sala")
     private Sala sala;
 
-    // Setters y Getters
-
-    public Integer getIdInvitado() {
-        return idInvitado;
-    }
-
-    public void setIdInvitado(Integer idInvitado) {
-        this.idInvitado = idInvitado;
-    }
-
     public LocalDateTime getFechaHoraEntrada() {
         return fechaHoraEntrada;
+    }
+
+    public Integer getIdAcceso() {
+        return idAcceso;
+    }
+
+    public void setIdAcceso(Integer idAcceso) {
+        this.idAcceso = idAcceso;
     }
 
     public void setFechaHoraEntrada(LocalDateTime fechaHoraEntrada) {
