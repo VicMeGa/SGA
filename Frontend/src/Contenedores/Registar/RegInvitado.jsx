@@ -17,11 +17,11 @@ function RegInvitado (){
 
     const esquemaValidacion = Yup.object().shape({
         nombre: Yup.string().required("El nombre es obligatorio").min(2, "Debe tener al menos 2 caracteres")
-            .matches(/^([A-Z][a-z]+)(\s[A-Z][a-z]+)*$/,"Las primeras letras deben ser mayusculas, solo se admiten letras"),
+            .matches(/^([A-ZÁÉÍÓÚÑ][a-záéíóúñ]+)(\s[A-ZÁÉÍÓÚ][a-záéíóúñ]+)*$/,"Las primeras letras deben ser mayusculas, solo se admiten letras"),
         apellidoPaterno: Yup.string().required("El apellido paterno es obligatorio")
-            .matches(/^([A-Z][a-z]+)(\s[A-Z][a-z]+)*$/,"Las primeras letras deben ser mayusculas, solo se admiten letras"),
+            .matches(/^([A-ZÁÉÍÓÚÑ][a-záéíóúñ]+)(\s[A-ZÁÉÍÓÚ][a-záéíóúñ]+)*$/,"Las primeras letras deben ser mayusculas, solo se admiten letras"),
         apellidoMaterno: Yup.string().required("El apellido materno es obligatorio")
-            .matches(/^([A-Z][a-z]+)(\s[A-Z][a-z]+)*$/,"Las primeras letras deben ser mayusculas, solo se admiten letras"),
+            .matches(/^([A-ZÁÉÍÓÚÑ][a-záéíóúñ]+)(\s[A-ZÁÉÍÓÚ][a-záéíóúñ]+)*$/,"Las primeras letras deben ser mayusculas, solo se admiten letras"),
         correo: Yup.string().required("El correo es obligatorio").email("Debe ser un correo válido"),
         numeroTelefono: Yup.string()
             .matches(/^\d{10}$/, "Debe tener 10 dígitos")
