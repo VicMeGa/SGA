@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { UserPlus, Users, FileSpreadsheet, Calendar, FileText } from 'lucide-react';
 
 const Menu = () =>{
+
 return(
     <>
     <div className="MEnu">

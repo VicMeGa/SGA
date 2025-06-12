@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/sga")
 @CrossOrigin(origins = "*")
 public class LoginController {
-
+    
     @Autowired
     private UsuarioRepository usuarioRepo;
 
@@ -28,8 +28,8 @@ public class LoginController {
         return usuarioRepo.findByCorreo(request.getCorreo())
             .flatMap(usuario -> adminRepo.findByUsuario(usuario)
                 .filter(admin -> admin.getContrasena().equals(request.getContrasena()))
-                .map(admin -> new LoginResponse("Inicio de sesión exitoso", true))
+                .map(admin -> new LoginResponse("Inicio de sesión exitoso", true, admin.getNumeroEmpleado()))
             )
-            .orElse(new LoginResponse("Credenciales incorrectas.", false));
+            .orElse(new LoginResponse("Credenciales incorrectas.", false,null));
     }
 }

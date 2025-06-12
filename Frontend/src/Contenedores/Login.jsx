@@ -1,11 +1,13 @@
 import { useState } from "react";
 import user from "../recursos/user.png";
 import { useNavigate } from "react-router-dom";
+import useSession  from "../hook/useSession";
 
 const Login = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const navigate = useNavigate();
+    const { saveSession } = useSession();
 
     const logeo = async (e) => {
         e.preventDefault();
@@ -23,6 +25,7 @@ const Login = () => {
             });
     
             const data = await response.json();
+            saveSession(data.numeroEmpleado)
     
             if (data.exito) {
                 alert("✅ Éxito: " + data.mensaje);
@@ -34,10 +37,6 @@ const Login = () => {
             alert("⚠️ Error en la conexión con el servidor: " + err.message);
         }
     };    
-
-    function testeo (){
-        navigate("/next")
-    }
 
     return (
         <div className="login">

@@ -1,12 +1,13 @@
 import Cabeza from '../Cabeza'
-import { HashRouter as Router, Route, Routes } from "react-router-dom";
 import Opciones from "./Opciones"
+import Logout from './LogOut';
 
 const Menu = () =>{
 return(
     <>
     <Cabeza />
     <Opciones />
+    <Logout />
     </>
 );
 }

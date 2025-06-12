@@ -3,7 +3,7 @@ package com.vantus.project.dto;
 public class LoginRequest {
     private String correo;
     private String contrasena;
-    
+
     public String getCorreo() {
         return correo;
     }

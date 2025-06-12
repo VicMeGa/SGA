@@ -15,6 +15,7 @@ import ControlAsistencias from './Contenedores/Horarios/ControlAsistencias/Contr
 import Reportes from './Contenedores/Reportes/Reportes'
 import RegistrarHorario from './Contenedores/Horarios/RegistarHorario/RegistrarHorario';
 import RegistrarCuenta from './Contenedores/RegisCuenta/RegistrarCuenta';
+import ProtectedRoute from './hook/ProtectedRoute';
 
 function App() {
     
@@ -24,19 +25,69 @@ function App() {
     <Router>
           <Routes>
             <Route path="/" element={<Login />}/>
-            <Route path="/next" element={<Menu />}/>
-            <Route path="/Registrar" element={<Registrar />} />
-            <Route path="/RegistrarAdmin" element={<RegAdminis />} />
-            <Route path="/RegistrarInvitado" element={<RegInvitado />} />
-            <Route path="/ModificarUsuario" element={<Modificar />} />
-            <Route path="/Articulos" element={<Articulos />} />
-            <Route path="/prestamo/:itemId" element={<Prestamo />} />
-            <Route path="/NewArticulo" element={<NewArticulo />} /> 
-            <Route path="/Horario" element={<Horario />} /> 
-            <Route path="/RegistrarSala" element={<RegistrarSala />} />
-            <Route path="/ControlAsistencias" element={<ControlAsistencias />} />
-            <Route path='/Reportes' element={<Reportes />} />
-            <Route path='/RegistrarHorario' element={<RegistrarHorario />} />
+            <Route path="/next" element={
+              <ProtectedRoute>
+                <Menu />
+              </ProtectedRoute>
+            }/>
+            <Route path="/Registrar" element={<ProtectedRoute>
+              <Registrar />
+            </ProtectedRoute>} />
+            <Route path="/RegistrarAdmin" element={
+              <ProtectedRoute>
+                <RegAdminis />
+              </ProtectedRoute>
+            } />
+            <Route path="/RegistrarInvitado" element={
+              <ProtectedRoute>
+                <RegInvitado />
+              </ProtectedRoute>
+            } />
+            <Route path="/ModificarUsuario" element={
+              <ProtectedRoute>
+                <Modificar />
+              </ProtectedRoute>
+            } />
+            <Route path="/Articulos" element={
+              <ProtectedRoute>
+                <Articulos />
+              </ProtectedRoute>
+            } />
+            <Route path="/prestamo/:itemId" element={
+              <ProtectedRoute>
+                <Prestamo />
+              </ProtectedRoute>
+            } />
+            <Route path="/NewArticulo" element={
+              <ProtectedRoute>
+                <NewArticulo />
+              </ProtectedRoute>
+            } /> 
+            <Route path="/Horario" element={
+              <ProtectedRoute>
+                <Horario />
+              </ProtectedRoute>
+            } /> 
+            <Route path="/RegistrarSala" element={
+              <ProtectedRoute>
+                <RegistrarSala />
+              </ProtectedRoute>
+            } />
+            <Route path="/ControlAsistencias" element={
+              <ProtectedRoute>
+                <ControlAsistencias />
+              </ProtectedRoute>
+            } />
+            <Route path='/Reportes' element={
+              <ProtectedRoute>
+                <Reportes />
+              </ProtectedRoute>
+            } />
+            <Route path='/RegistrarHorario' element={
+              <ProtectedRoute>
+                <RegistrarHorario />
+              </ProtectedRoute>
+            } />
             <Route path='/RegistrarCuenta' element={<RegistrarCuenta />} />
           </Routes>
     </Router>
