@@ -42,6 +42,7 @@ import com.vantus.project.repository.InvitadoRepository;
 import com.vantus.project.repository.SalaRepository;
 import com.vantus.project.repository.UsuarioRepository;
 import com.vantus.project.service.EmailService;
+import com.vantus.project.service.EncriptacionService;
 import com.vantus.project.utils.QRGenerator;
 
 import org.springframework.http.HttpStatus;
@@ -105,7 +106,7 @@ public class RegistroController {
         // Crear administrativo
         Administrativo admin = new Administrativo();
         admin.setNumeroEmpleado(request.getNumeroEmpleado());
-        admin.setContrasena(request.getContrasena());
+        admin.setContrasena(EncriptacionService.encriptar(request.getContrasena()));
         admin.setCargo(request.getCargo());
         admin.setUsuario(usuario);
 
