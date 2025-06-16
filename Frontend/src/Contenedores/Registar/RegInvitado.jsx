@@ -4,6 +4,7 @@ import Nav from '../Nav'
 import MenuReg from './MenuReg'
 import Notificaciones from '../Notificacioness/Notificaciones';
 import * as Yup from "yup";
+import { toast } from "react-toastify";
 
 
 function RegInvitado (){
@@ -61,7 +62,7 @@ function RegInvitado (){
             });
 
             const mensaje = await res.text();
-            setNotificaciones({mensaje,tipo:"exito"});
+            toast.success(mensaje || "Registro exitoso");
             
             setNombre("");
             setApellidoPaterno("");
@@ -77,11 +78,10 @@ function RegInvitado (){
                 });
                 setErrores(nuevoErrores);
             } else {
-                console.error("Error al registrar invitado:", error);
-                setNotificaciones({ mensaje: "Error al registrar invitado", tipo: "error" });
+                console.error("Error al registrar alumno:", error);
+                toast.error("Error al registrar alumno");
             }
         }
-        setTimeout(() => setNotificaciones(null), 6000);
     };
 
     return (
@@ -113,14 +113,6 @@ function RegInvitado (){
                     </div>
                 </form>
             </div>
-            {notificacion && (
-                <Notificaciones
-                    mensaje={notificacion.mensaje}
-                    tipo={notificacion.tipo}
-                    onClose={() => setNotificaciones(null)}
-                    duracion={6000}
-                />
-            )}
         </>
     );
 }

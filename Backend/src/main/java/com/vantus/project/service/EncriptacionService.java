@@ -102,10 +102,10 @@ public class EncriptacionService {
 
     public static void main(String[] args) {
 
-        String res = EncriptacionService.encriptar("Pass123$");
-        System.out.println(res);
+        //String res = EncriptacionService.encriptar("310704");
+        //System.out.println(res);
 
-        res = EncriptacionService.desencriptar(res);
+        String res = EncriptacionService.desencriptar("vm7><<");
         System.out.println(res);
     }
 }

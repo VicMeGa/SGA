@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import Cabeza from "../../Cabeza";
 import Nav from "../../Nav";
 import * as Yup from "yup";
+import { toast } from "react-toastify";
 
 const RegistrarHorario = () => {
     const [sala, setSala] = useState("");
@@ -16,7 +17,6 @@ const RegistrarHorario = () => {
     const [salas, setSalas] = useState([]);
     const [loadingSalas, setLoad] = useState(false);
     const [errorSalas, setErr] = useState(null);
-    const [mensaje, setMensaje] = useState("");
 
     const [errores, setErrores] = useState({});
 
@@ -28,15 +28,23 @@ const RegistrarHorario = () => {
     ];
 
     const esquemaValidacion = Yup.object().shape({
-        sala: Yup.string().required("La sala es obligatoria"),
-        materia: Yup.string().required("La materia es obligatoria").min(2, "Debe tener al menos 2 caracteres")
-            .matches(/^([A-Z][a-z]+)(\s[A-Z][a-z]+)*$/,"Las primeras letras deben ser mayusculas, solo se admiten letras"),
-        dia: Yup.string().required("El dia es obligatorio"),
+        nombreSala: Yup.string().required("La sala es obligatoria"),
+        materia: Yup.string()
+            .required("La materia es obligatoria")
+            .min(2, "Debe tener al menos 2 caracteres")
+            .matches(/^([A-Z][a-z]+)(\s[A-Z][a-z]+)*$/, "Las primeras letras deben ser mayúsculas, solo se admiten letras"),
+        dia: Yup.string().required("El día es obligatorio"),
         horaInicio: Yup.string().required("La hora de inicio es obligatoria"),
         horaFin: Yup.string().required("La hora de fin es obligatoria"),
-        numeroEmpleado: Yup.string().required("El numero de empleado es obligatorio").matches(/^\d{8}$/, "Debe tener 6 dígitos"),
-        grupo: Yup.string().required("El grupo es obligatorio").matches(/^[ABC]$/, "Solo hay grupos A, B o C"),
-        semestre: Yup.string().required("El semestre es obligatorio").matches(/^\d{1}$/, "Debe tener 1 dígito"),
+        numeroEmpleado: Yup.string()
+            .required("El número de empleado es obligatorio")
+            .matches(/^\d{6}$/, "Debe tener 6 dígitos"),
+        grupo: Yup.string()
+            .required("El grupo es obligatorio")
+            .matches(/^[ABC]$/, "Solo hay grupos A, B o C"),
+        semestre: Yup.string()
+            .required("El semestre es obligatorio")
+            .matches(/^\d{1}$/, "Debe tener 1 dígito"),
     });
 
     useEffect(() => {
@@ -51,6 +59,9 @@ const RegistrarHorario = () => {
             } catch (err) {
                 console.error("Error salas:", err);
                 setErr("No se pudieron cargar las salas");
+                toast.error("❌ No se pudieron cargar las salas", {
+                    closeButton: false,
+                });
             } finally {
                 setLoad(false);
             }
@@ -60,7 +71,6 @@ const RegistrarHorario = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setMensaje("");
 
         const salaSeleccionada = salas.find(s => s.idSala === parseInt(sala));
 
@@ -69,32 +79,30 @@ const RegistrarHorario = () => {
             dia,
             horaInicio,
             horaFin,
-            sala, // Asegúrate de que sea el nombre, no el ID
-            numeroEmpleado, // Se espera como cadena, ejemplo "000002"
+            nombreSala: salaSeleccionada?.nombreSala || "",
+            numeroEmpleado,
             grupo,
             semestre
         };
 
         try {
             await esquemaValidacion.validate(datos, { abortEarly: false });
-            setErrores({}); // Limpiar errores si la validación pasa
+            setErrores({});
 
             const body = {
                 materia,
                 dia,
                 horaInicio,
                 horaFin,
-                sala: salaSeleccionada?.nombreSala || "", // Asegúrate de que sea el nombre, no el ID
-                numeroEmpleado, // Se espera como cadena, ejemplo "000002"
+                nombreSala: salaSeleccionada?.nombreSala || "",
+                numeroEmpleado,
                 grupo,
                 semestre
             };
 
             const resp = await fetch("http://localhost:8080/sga/registro/horario", {
                 method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
+                headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(body)
             });
 
@@ -102,8 +110,11 @@ const RegistrarHorario = () => {
                 throw new Error(`Error al registrar horario (HTTP ${resp.status})`);
             }
 
-            setMensaje("✅ Horario registrado correctamente");
-            // Opcional: limpiar formulario
+            toast.success("✅ Horario registrado correctamente", {
+                closeButton: false,
+            });
+
+            // Limpiar formulario
             setMateria("");
             setDia("");
             setInicio("");
@@ -115,13 +126,15 @@ const RegistrarHorario = () => {
         } catch (err) {
             if (err.name === "ValidationError") {
                 const nuevoErrores = {};
-                err.inner.forEach((err) => {
-                    nuevoErrores[err.path] = err.message;
+                err.inner.forEach((e) => {
+                    nuevoErrores[e.path] = e.message;
                 });
                 setErrores(nuevoErrores);
             } else {
                 console.error("Error al registrar horario:", err);
-                setMensaje("❌ Error al registrar el horario");
+                toast.error("❌ Error al registrar el horario", {
+                    closeButton: false,
+                });
             }
         }
     };
@@ -130,32 +143,32 @@ const RegistrarHorario = () => {
         <>
             <Cabeza />
             <Nav />
-
             <div className="divRegistrarHorario">
                 <h1>Registrar Horario</h1>
                 <form onSubmit={handleSubmit}>
                     <div className="regiSon">
-                        {errorSalas && <p style={{ color: "red" }}>{errorSalas}</p>}
-                        {mensaje && <p style={{ color: mensaje.startsWith("✅") ? "green" : "red" }}>{mensaje}</p>}
-
                         {/* Sala */}
                         <select
                             value={sala}
                             onChange={(e) => setSala(e.target.value)}
                             disabled={loadingSalas || salas.length === 0}
-                            
                         >
                             <option value="">Selecciona una sala</option>
                             {salas.map((s) => (
-                                <option key={s.idSala} value={s.idSala}>
-                                    {s.nombreSala}
-                                </option>
+                                <option key={s.idSala} value={s.idSala}>{s.nombreSala}</option>
                             ))}
                         </select>
                         {errores.sala && <span className="error">{errores.sala}</span>}
+
                         {/* Materia */}
-                        <input type="text" placeholder="Nombre de la materia" value={materia} onChange={(e) => setMateria(e.target.value)}/>
+                        <input
+                            type="text"
+                            placeholder="Nombre de la materia"
+                            value={materia}
+                            onChange={(e) => setMateria(e.target.value)}
+                        />
                         {errores.materia && <span className="error">{errores.materia}</span>}
+
                         {/* Día */}
                         <select value={dia} onChange={(e) => setDia(e.target.value)}>
                             <option value="">Selecciona un día</option>
@@ -164,6 +177,7 @@ const RegistrarHorario = () => {
                             ))}
                         </select>
                         {errores.dia && <span className="error">{errores.dia}</span>}
+
                         {/* Hora inicio */}
                         <select value={horaInicio} onChange={(e) => setInicio(e.target.value)}>
                             <option value="">Hora de inicio</option>
@@ -200,7 +214,7 @@ const RegistrarHorario = () => {
                         />
                         {errores.grupo && <span className="error">{errores.grupo}</span>}
 
-                        {/* Grupo */}
+                        {/* Semestre */}
                         <input
                             type="text"
                             placeholder="Semestre (ej. 5, 6)"
@@ -209,6 +223,7 @@ const RegistrarHorario = () => {
                         />
                         {errores.semestre && <span className="error">{errores.semestre}</span>}
                     </div>
+
                     {/* Botones */}
                     <div className="botonesre">
                         <button

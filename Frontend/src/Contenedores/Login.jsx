@@ -1,7 +1,8 @@
 import { useState } from "react";
 import user from "../recursos/user.png";
 import { useNavigate } from "react-router-dom";
-import useSession  from "../hook/useSession";
+import useSession from "../hook/useSession";
+import { toast } from "react-toastify";
 
 const Login = () => {
     const [email, setEmail] = useState("");
@@ -11,7 +12,7 @@ const Login = () => {
 
     const logeo = async (e) => {
         e.preventDefault();
-    
+
         try {
             const response = await fetch("http://localhost:8080/sga/login", {
                 method: "POST",
@@ -23,20 +24,20 @@ const Login = () => {
                     contrasena: password,
                 }),
             });
-    
+
             const data = await response.json();
-            saveSession(data.numeroEmpleado)
-    
+            saveSession(data.numeroEmpleado);
+
             if (data.exito) {
-                alert("✅ Éxito: " + data.mensaje);
+                toast.success("✅ " + data.mensaje);
                 navigate("/next");
             } else {
-                alert("❌ Error: " + data.mensaje);
+                toast.error("❌ " + data.mensaje);
             }
         } catch (err) {
-            alert("⚠️ Error en la conexión con el servidor: " + err.message);
+            toast.warning("⚠️ Error en la conexión con el servidor: " + err.message);
         }
-    };    
+    };
 
     return (
         <div className="login">
@@ -60,7 +61,6 @@ const Login = () => {
                 />
                 <br />
                 <button type="submit">Iniciar Sesión</button>
-                {/*<h3 onClick={()=>navigate("/RegistrarCuenta")} style={{ cursor: "pointer" }}>Registrar Cuenta</h3>*/}
             </form>
         </div>
     );

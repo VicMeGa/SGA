@@ -2,8 +2,8 @@ import Cabeza from '../Cabeza'
 import { useState } from "react"
 import Nav from '../Nav'
 import MenuReg from './MenuReg'
-import Notificaciones from '../Notificacioness/Notificaciones';
 import * as Yup from "yup";
+import { toast } from "react-toastify";
 
 function Registrar() {
     const [nombre, setNombre] = useState("");
@@ -16,7 +16,6 @@ function Registrar() {
     const [grupo, setGrupo] = useState("");
     const [programaEducativo, setProgramaEducativo] = useState("");
     const [id_horario, setIdHorario] = useState("");
-    const [notificacion, setNotificaciones] = useState(null);
 
     const [errores, setErrores] = useState({});
 
@@ -28,16 +27,16 @@ function Registrar() {
         { value: 'Licenciatura en Química Industrial', label: 'Licenciatura en Química Industrial' },
         { value: 'Ingeniería en Sistemas Electrónicos', label: 'Ingeniería en Sistemas Electrónicos' },
         { value: 'Licenciatura en Ingeniería en Inteligencia Artificial', label: 'Licenciatura en Ingeniería en Inteligencia Artificial' },
-    ]; 
+    ];
 
     const esquemaValidacion = Yup.object().shape({
         nombre: Yup.string().required("El nombre es obligatorio").min(2, "Debe tener al menos 2 caracteres")
-            .matches(/^([A-ZÁÉÍÓÚÑ][a-záéíóúñ]+)(\s[A-ZÁÉÍÓÚ][a-záéíóúñ]+)*$/,"Las primeras letras deben ser mayusculas, solo se admiten letras"),
+            .matches(/^([A-ZÁÉÍÓÚÑ][a-záéíóúñ]+)(\s[A-ZÁÉÍÓÚ][a-záéíóúñ]+)*$/, "Las primeras letras deben ser mayusculas, solo se admiten letras"),
         apellidoPaterno: Yup.string().required("El apellido paterno es obligatorio")
-            .matches(/^([A-ZÁÉÍÓÚÑ][a-záéíóúñ]+)(\s[A-ZÁÉÍÓÚ][a-záéíóúñ]+)*$/,"Las primeras letras deben ser mayusculas, solo se admiten letras"),
+            .matches(/^([A-ZÁÉÍÓÚÑ][a-záéíóúñ]+)(\s[A-ZÁÉÍÓÚ][a-záéíóúñ]+)*$/, "Las primeras letras deben ser mayusculas, solo se admiten letras"),
         apellidoMaterno: Yup.string().required("El apellido materno es obligatorio")
-            .matches(/^([A-ZÁÉÍÓÚÑ][a-záéíóúñ]+)(\s[A-ZÁÉÍÓÚ][a-záéíóúñ]+)*$/,"Las primeras letras deben ser mayusculas, solo se admiten letras"),
-        matricula : Yup.string().required("La matricula es obligatoria")
+            .matches(/^([A-ZÁÉÍÓÚÑ][a-záéíóúñ]+)(\s[A-ZÁÉÍÓÚ][a-záéíóúñ]+)*$/, "Las primeras letras deben ser mayusculas, solo se admiten letras"),
+        matricula: Yup.string().required("La matricula es obligatoria")
             .matches(/^\d{8}$/, "Debe tener 8 dígitos"),
         correo: Yup.string().required("El correo es obligatorio").email("Debe ser un correo válido"),
         semestre: Yup.string().required("El semestre es requerido").matches(/^\d{1}$/, "Debe tener 1 dígito"),
@@ -65,9 +64,8 @@ function Registrar() {
         };
 
         try {
-                        // Validar antes de enviar
             await esquemaValidacion.validate(datoss, { abortEarly: false });
-            setErrores({}); // Limpiar errores si la validación pasa
+            setErrores({});
 
             const datos = {
                 nombre,
@@ -91,13 +89,16 @@ function Registrar() {
             });
 
             const mensaje = await res.text();
-            setNotificaciones({ mensaje, tipo: "exito" });
+
+            toast.success(mensaje || "Registro exitoso");
+
+            // Limpiar campos
             setNombre("");
             setApellidoPaterno("");
             setApellidoMaterno("");
             setCorreo("");
             setNumeroTelefono("");
-            setMatricula("");   
+            setMatricula("");
             setSemestre("");
             setGrupo("");
             setProgramaEducativo("");
@@ -110,12 +111,14 @@ function Registrar() {
                 });
                 setErrores(nuevoErrores);
             } else {
-                console.error("Error al registrar invitado:", error);
-                setNotificaciones({ mensaje: "Error al registrar invitado", tipo: "error" });
+                console.error("Error al registrar alumno:", error);
+                toast.error("Error al registrar alumno", {
+                    closeButton: false,
+                });
             }
         }
-        setTimeout(() => setNotificaciones(null), 6000);
     };
+
 
     return (
         <>
@@ -127,34 +130,34 @@ function Registrar() {
                 <form className='formas' onSubmit={handleSubmit}>
                     <div className='regis'>
                         <div className='regiSon'>
-                            <input type='text' placeholder='Nombre' value={nombre} onChange={(e) => setNombre(e.target.value)}  />
-                        {errores.nombre && <span className="error">{errores.nombre}</span>}
-                        <input type='text' placeholder='Apellido Paterno' value={apellidoPaterno} onChange={(e) => setApellidoPaterno(e.target.value)}  />
-                        {errores.apellidoPaterno && <span className="error">{errores.apellidoPaterno}</span>}
-                        <input type='text' placeholder='Apellido Materno' value={apellidoMaterno} onChange={(e) => setApellidoMaterno(e.target.value)}  />
-                        {errores.apellidoMaterno && <span className="error">{errores.apellidoMaterno}</span>}
-                        <input type='text' placeholder='Matricula' value={matricula} onChange={(e) => setMatricula(e.target.value)}  />
-                        {errores.matricula && <span className="error">{errores.matricula}</span>}
-                        <input type='email' placeholder='Correo Electrónico' value={correo} onChange={(e) => setCorreo(e.target.value)}  />
-                        {errores.correo && <span className="error">{errores.correo}</span>}
-                        <input type='text' placeholder='Grupo' value={grupo} onChange={(e) => setGrupo(e.target.value)} />
-                        {errores.grupo && <span className="error">{errores.grupo}</span>}
-                        <input type='text' placeholder='Teléfono' value={numeroTelefono} onChange={(e) => setNumeroTelefono(e.target.value)} />
-                        {errores.numeroTelefono && <span className="error">{errores.numeroTelefono}</span>}
-                        <input type='text' placeholder='Semestre' value={semestre} onChange={(e) => setSemestre(e.target.value)} />
-                        {errores.semestre && <span className="error">{errores.semestre}</span>}
-                        <select
-                            value={programaEducativo}
-                            onChange={(e) => setProgramaEducativo(e.target.value)}
-                        >
-                            <option value="" disabled>Selecciona un programa educativo</option>
-                            {opciones.map((opcion) => (
-                                <option key={opcion.value} value={opcion.value}>
-                                    {opcion.label}
-                                </option>
-                            ))}
-                        </select>
-                        {errores.programaEducativo && <span className="error">{errores.programaEducativo}</span>}
+                            <input type='text' placeholder='Nombre' value={nombre} onChange={(e) => setNombre(e.target.value)} />
+                            {errores.nombre && <span className="error">{errores.nombre}</span>}
+                            <input type='text' placeholder='Apellido Paterno' value={apellidoPaterno} onChange={(e) => setApellidoPaterno(e.target.value)} />
+                            {errores.apellidoPaterno && <span className="error">{errores.apellidoPaterno}</span>}
+                            <input type='text' placeholder='Apellido Materno' value={apellidoMaterno} onChange={(e) => setApellidoMaterno(e.target.value)} />
+                            {errores.apellidoMaterno && <span className="error">{errores.apellidoMaterno}</span>}
+                            <input type='text' placeholder='Matricula' value={matricula} onChange={(e) => setMatricula(e.target.value)} />
+                            {errores.matricula && <span className="error">{errores.matricula}</span>}
+                            <input type='email' placeholder='Correo Electrónico' value={correo} onChange={(e) => setCorreo(e.target.value)} />
+                            {errores.correo && <span className="error">{errores.correo}</span>}
+                            <input type='text' placeholder='Grupo' value={grupo} onChange={(e) => setGrupo(e.target.value)} />
+                            {errores.grupo && <span className="error">{errores.grupo}</span>}
+                            <input type='text' placeholder='Teléfono' value={numeroTelefono} onChange={(e) => setNumeroTelefono(e.target.value)} />
+                            {errores.numeroTelefono && <span className="error">{errores.numeroTelefono}</span>}
+                            <input type='text' placeholder='Semestre' value={semestre} onChange={(e) => setSemestre(e.target.value)} />
+                            {errores.semestre && <span className="error">{errores.semestre}</span>}
+                            <select
+                                value={programaEducativo}
+                                onChange={(e) => setProgramaEducativo(e.target.value)}
+                            >
+                                <option value="" disabled>Selecciona un programa educativo</option>
+                                {opciones.map((opcion) => (
+                                    <option key={opcion.value} value={opcion.value}>
+                                        {opcion.label}
+                                    </option>
+                                ))}
+                            </select>
+                            {errores.programaEducativo && <span className="error">{errores.programaEducativo}</span>}
                         </div>
                     </div>
 
@@ -164,13 +167,6 @@ function Registrar() {
                     </div>
                 </form>
             </div>
-            {notificacion && (
-                <Notificaciones
-                    mensaje={notificacion.mensaje}
-                    tipo={notificacion.tipo}
-                    onClose={() => setNotificaciones(null)}
-                />
-            )}
         </>
     );
 }
