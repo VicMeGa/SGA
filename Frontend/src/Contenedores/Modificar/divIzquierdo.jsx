@@ -19,6 +19,8 @@ const DivIzquierdo = ({ selectedStudent }) => {
     { value: 'Licenciatura en Ingeniería en Inteligencia Artificial', label: 'Licenciatura en Ingeniería en Inteligencia Artificial' },
   ];
 
+  const back = import.meta.env.VITE_BACKEND_URL;
+
   const alumnoValidacion = Yup.object().shape({
     nombre: Yup.string().required("El nombre es obligatorio").min(2, "Debe tener al menos 2 caracteres")
       .matches(/^([A-Z][a-z]+)(\s[A-Z][a-z]+)*$/, "Las primeras letras deben ser mayusculas, solo se admiten letras"),
@@ -87,11 +89,12 @@ const DivIzquierdo = ({ selectedStudent }) => {
     const confirm = window.confirm('¿Estás seguro de que deseas eliminar este usuario?');
     if (!confirm) return;
 
-    const identificador = formData.matricula ? formData.matricula : formData.numeroEmpleado;
-    try {
-      const response = await fetch(`http://localhost:8080/sga/buscar/eliminar/usuarios/${identificador}`, {
-        method: 'POST',
-      });
+
+  const identificador = formData.matricula ? formData.matricula : formData.numeroEmpleado;
+  try {
+    const response = await fetch(`${back}/buscar/eliminar/usuarios/${identificador}`, {
+      method: 'POST',
+    });
 
       if (response.ok) {
         toast.success('Usuario eliminado correctamente', {
@@ -171,7 +174,7 @@ const DivIzquierdo = ({ selectedStudent }) => {
         setErrores({}); // Limpiar errores si la validación pasa
       }
 
-      const response = await fetch('http://localhost:8080/sga/editar/usuario', {
+      const response = await fetch(`${back}/editar/usuario`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -223,7 +226,7 @@ const DivIzquierdo = ({ selectedStudent }) => {
         {errores.correo && <span className="error">{errores.correo}</span>}
         <input type="text" className="imputnorm" name="usuario.numeroTelefono" value={formData.usuario.numeroTelefono || ''} onChange={handleChange} placeholder="Número Teléfono" />
         {errores.numeroTelefono && <span className="error">{errores.numeroTelefono}</span>}
-        <select
+        <select className="imputnorm"
           value={programaEducativo}
           onChange={(e) => setProgramaEducativo(e.target.value)}
         >

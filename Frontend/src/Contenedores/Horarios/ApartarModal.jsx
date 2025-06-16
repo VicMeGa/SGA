@@ -1,10 +1,17 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import * as Yup from "yup";
+import useSession from "../../hook/useSession";
 
 const ApartarModal = ({ isOpen, onClose, onConfirm, day, hour }) => {
   const [numeroEmpleado, setNumeroEmpleado] = useState("");
   const [password, setPassword] = useState("");
   const [errores, setErrores] = useState({});
+
+  const {session} = useSession();
+
+  useEffect(()=>{
+    setNumeroEmpleado(session.token);
+  });
 
   const esquemaValidacion = Yup.object().shape({
       numeroEmpleado : Yup.string().required("El numero de empleado es obligatorio")
@@ -47,6 +54,7 @@ const ApartarModal = ({ isOpen, onClose, onConfirm, day, hour }) => {
             placeholder="Número de empleado"
             value={numeroEmpleado}
             onChange={(e) => setNumeroEmpleado(e.target.value)}
+            readOnly
           />
           {errores.numeroEmpleado && <span className="error">{errores.numeroEmpleado}</span>}
           <input

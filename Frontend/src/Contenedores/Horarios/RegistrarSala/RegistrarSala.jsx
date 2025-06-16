@@ -10,6 +10,10 @@ function RegSala() {
     const [NombreS, setNombreS] = useState("");
     const [NoEquipos, setNoEquipos] = useState("");
     const [CapcidadMax, setCapacidadMax] = useState("");
+
+
+    const back = import.meta.env.VITE_BACKEND_URL;
+
     const [errores, setErrores] = useState({});
 
     const esquemaValidacion = Yup.object().shape({
@@ -37,7 +41,7 @@ function RegSala() {
                 numeroEquipos: parseInt(NoEquipos),
             };
 
-            const res = await fetch("http://localhost:8080/sga/registro/sala", {
+            const res = await fetch(`${back}/registro/sala`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"

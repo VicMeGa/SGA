@@ -10,11 +10,13 @@ const Prestamo = () => {
     const { itemId } = useParams();
     const [item, setItem] = useState(null);
 
+    const back = import.meta.env.VITE_BACKEND_URL;
+
     // Simula la carga de datos desde la base de datos
     useEffect(() => {
         const fetchItem = async () => {
             try {
-                const response = await fetch(`http://localhost:8080/sga/buscar/articulos/${itemId}`);
+                const response = await fetch(`${back}/buscar/articulos/${itemId}`);
                 if (response.ok) {
                     const data = await response.json();
                     const formattedItem = {
@@ -22,7 +24,7 @@ const Prestamo = () => {
                         name: data.nombre,
                         description: data.descripcion,
                         status: data.estaPrestado === 0 ? "Disponible" : "Ocupado",
-                        image: `http://localhost:8080/sga/buscar/articulo/${data.idArticulo}/imagen?${Date.now()}`
+                        image: `${back}/buscar/articulo/${data.idArticulo}/imagen?${Date.now()}`
                     };
                     setItem(formattedItem);
                 } else {

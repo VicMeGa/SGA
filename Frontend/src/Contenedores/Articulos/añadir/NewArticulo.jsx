@@ -13,6 +13,8 @@ const NewArticulo = () => {
     const [imagenFile, setImagenFile] = useState(null);
     const [errores, setErrores] = useState({});
 
+    const back = import.meta.env.VITE_BACKEND_URL;
+
     const tiposArticulos = [
         { value: 'Proyector', label: 'Proyector' },
         { value: 'Micrófono', label: 'Micrófono' },
@@ -49,10 +51,11 @@ const NewArticulo = () => {
             })], { type: 'application/json' }));
             formData.append("imagen", imagenFile);
 
-            const response = await fetch("http://localhost:8080/sga/registro/articulo", {
-                method: "POST",
-                body: formData,
-            });
+
+            const response = await fetch(`${back}/registro/articulo`, {
+            method: "POST",
+            body: formData,
+             });
 
             if (response.ok) {
                 toast.success("Artículo registrado con éxito");

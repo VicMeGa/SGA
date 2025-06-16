@@ -2,24 +2,31 @@ import { useState, useEffect } from "react";
 import { toast, ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 
+import useSession  from "../../../hook/useSession";
+
+
 const DivDerecho = ({ itemId }) => {
   const [numeroEm, setNE] = useState("");
   const [password, setPassword] = useState("");
   const [prestamoId, setPrestamoId] = useState(null);
   const [prestado, setPrestado] = useState(false);
 
+  const {session} = useSession();
+ 
+  const back = import.meta.env.VITE_BACKEND_URL;
   // Obtener el estado de préstamo desde el backend
   useEffect(() => {
+    setNE(session.token);
     const verificarEstadoPrestamo = async () => {
       try {
-        const response = await fetch(`http://localhost:8080/sga/buscar/articulos/${itemId}`);
+        const response = await fetch(`${back}/buscar/articulos/${itemId}`);
         if (response.ok) {
           const data = await response.json();
           const estaPrestado = data.estaPrestado === 1;
           setPrestado(estaPrestado);
 
           if (estaPrestado) {
-            const prestamoResp = await fetch(`http://localhost:8080/sga/prestamo/id-actual/${itemId}`);
+            const prestamoResp = await fetch(`${back}/prestamo/id-actual/${itemId}`);
             if (prestamoResp.ok) {
               const idPrestamo = await prestamoResp.text();
               setPrestamoId(idPrestamo);
@@ -48,7 +55,7 @@ const DivDerecho = ({ itemId }) => {
     }
 
     try {
-      const response = await fetch("http://localhost:8080/sga/prestamo/pedir", {
+      const response = await fetch(`${back}/prestamo/pedir`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -78,7 +85,7 @@ const DivDerecho = ({ itemId }) => {
 
   const handleDevolver = async () => {
     try {
-      const response = await fetch(`http://localhost:8080/sga/prestamo/devolver/${prestamoId}`, {
+      const response = await fetch(`${back}/prestamo/devolver/${prestamoId}`, {
         method: "PUT",
       });
 
@@ -116,6 +123,7 @@ const DivDerecho = ({ itemId }) => {
             value={numeroEm}
             onChange={(e) => setNE(e.target.value)}
             disabled={prestado}
+            readOnly
           />
           <input
             type="password"

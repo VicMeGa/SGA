@@ -1,7 +1,7 @@
 import { useState } from "react";
 import user from "../recursos/user.png";
 import { useNavigate } from "react-router-dom";
-import useSession from "../hook/useSession";
+import useSession  from "../hook/useSession";
 import { toast } from "react-toastify";
 
 const Login = () => {
@@ -9,12 +9,14 @@ const Login = () => {
     const [password, setPassword] = useState("");
     const navigate = useNavigate();
     const { saveSession } = useSession();
-
+  
+    const back = import.meta.env.VITE_BACKEND_URL;
+  
     const logeo = async (e) => {
         e.preventDefault();
 
         try {
-            const response = await fetch("http://localhost:8080/sga/login", {
+            const response = await fetch(`${back}/login`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -30,6 +32,7 @@ const Login = () => {
 
             if (data.exito) {
                 toast.success("✅ " + data.mensaje);
+                saveSession(data.numeroEmpleado)
                 navigate("/next");
             } else {
                 toast.error("❌ " + data.mensaje);
