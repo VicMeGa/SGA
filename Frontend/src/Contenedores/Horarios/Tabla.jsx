@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 
 const Tabla = ({ salaSeleccionada, selectedCell, setSelectedCell, schedule, setSchedule }) => {
 
+  const back = import.meta.env.VITE_BACKEND_URL;
   const hours = [
     "08:00 - 09:00",
     "09:00 - 10:00",
@@ -32,8 +33,8 @@ const Tabla = ({ salaSeleccionada, selectedCell, setSelectedCell, schedule, setS
     const fetchSchedule = async () => {
       try {
         const [horariosRes, apartadosRes] = await Promise.all([
-          fetch("http://localhost:8080/sga/buscar/horarios"),
-          fetch("http://localhost:8080/sga/buscar/horarios/apartados")
+          fetch(`${back}/buscar/horarios`),
+          fetch(`${back}/buscar/horarios/apartados`)
         ]);
 
         const horariosData = await horariosRes.json();

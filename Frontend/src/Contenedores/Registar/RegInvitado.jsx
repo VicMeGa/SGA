@@ -16,6 +16,8 @@ function RegInvitado (){
     const [notificacion, setNotificaciones] = useState(null);
     const [errores, setErrores] = useState({});
 
+    const back = import.meta.env.VITE_BACKEND_URL;
+
     const esquemaValidacion = Yup.object().shape({
         nombre: Yup.string().required("El nombre es obligatorio").min(2, "Debe tener al menos 2 caracteres")
             .matches(/^([A-ZÁÉÍÓÚÑ][a-záéíóúñ]+)(\s[A-ZÁÉÍÓÚ][a-záéíóúñ]+)*$/,"Las primeras letras deben ser mayusculas, solo se admiten letras"),
@@ -53,7 +55,7 @@ function RegInvitado (){
                 numeroTelefono,
             };
 
-            const res = await fetch("http://localhost:8080/sga/registro/invitado", {
+            const res = await fetch(`${back}/registro/invitado`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"

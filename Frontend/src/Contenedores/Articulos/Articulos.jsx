@@ -8,11 +8,12 @@ import RegisArti from './RegisArti'
 const Articulos = () => {
   const [items, setItems] = useState([]);
 
+  const back = import.meta.env.VITE_BACKEND_URL;
   // Simulación de datos desde la base de datos
   useEffect(() => {
     const fetchItems = async () => {
       try {
-        const response = await fetch("http://localhost:8080/sga/buscar/articulos");
+        const response = await fetch(`${back}/buscar/articulos`);
         if (response.ok) {
           const data = await response.json();
 
@@ -22,7 +23,7 @@ const Articulos = () => {
             name: articulo.nombre,
             description: articulo.descripcion,
             status: articulo.estaPrestado === 0 ? "Disponible" : "Ocupado",
-            image: `http://localhost:8080/sga/buscar/articulo/${articulo.idArticulo}/imagen?${Date.now()}`
+            image: `${back}/buscar/articulo/${articulo.idArticulo}/imagen?${Date.now()}`
           }));
           setItems(formattedItems);
         } else {

@@ -27,6 +27,8 @@ const RegistrarHorario = () => {
         "18:00", "19:00", "20:00"
     ];
 
+    const back = import.meta.env.VITE_BACKEND_URL;
+
     const esquemaValidacion = Yup.object().shape({
         nombreSala: Yup.string().required("La sala es obligatoria"),
         materia: Yup.string()
@@ -52,7 +54,7 @@ const RegistrarHorario = () => {
             setLoad(true);
             setErr(null);
             try {
-                const resp = await fetch("http://localhost:8080/sga/buscar/salas");
+                const resp = await fetch(`${back}/buscar/salas`);
                 if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
                 const data = await resp.json();
                 setSalas(data);
@@ -100,7 +102,7 @@ const RegistrarHorario = () => {
                 semestre
             };
 
-            const resp = await fetch("http://localhost:8080/sga/registro/horario", {
+            const resp = await fetch(`${back}/registro/horario`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(body)

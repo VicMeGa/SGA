@@ -11,11 +11,11 @@ const Tabla = ({ nombresAlumnos, asistencias }) => {
     const anio = hoy.getFullYear();
     return `${dia}/${mes}/${anio}`;
   };
-
+  const back = import.meta.env.VITE_BACKEND_URL;
   useEffect(() => {
     const fechaActual = obtenerFechaActual();
 
-    fetch(`http://localhost:8080/sga/buscar/anteriores?fecha=${fechaActual}`)
+    fetch(`${back}/buscar/anteriores?fecha=${fechaActual}`)
       .then((res) => res.json())
       .then((data) => {
         console.log("📅 Fechas recibidas:", data);
