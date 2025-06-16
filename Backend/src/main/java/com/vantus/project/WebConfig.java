@@ -14,7 +14,7 @@ public class WebConfig {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**") // Puedes restringir por ruta si deseas
-                        .allowedOrigins("http://localhost:5173")
+                        .allowedOrigins("*")
                         .allowedMethods("*") // GET, POST, PUT, DELETE, etc.
                         .allowedHeaders("*");
             }
