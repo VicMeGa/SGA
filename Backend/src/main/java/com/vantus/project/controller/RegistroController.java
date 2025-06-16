@@ -309,8 +309,10 @@ public class RegistroController {
 
         Administrativo admin = adminOpt.get();
 
+        String contrasenaDesencriptada = EncriptacionService.desencriptar(admin.getContrasena());
+
         // Verificar contraseña (sin codificación)
-        if (!admin.getContrasena().equals(request.getPassword())) {
+        if (!contrasenaDesencriptada.equals(request.getPassword())) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Contraseña incorrecta");
         }
 
