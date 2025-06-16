@@ -226,7 +226,7 @@ const DivIzquierdo = ({ selectedStudent }) => {
         {errores.correo && <span className="error">{errores.correo}</span>}
         <input type="text" className="imputnorm" name="usuario.numeroTelefono" value={formData.usuario.numeroTelefono || ''} onChange={handleChange} placeholder="Número Teléfono" />
         {errores.numeroTelefono && <span className="error">{errores.numeroTelefono}</span>}
-        <select
+        <select className="imputnorm"
           value={programaEducativo}
           onChange={(e) => setProgramaEducativo(e.target.value)}
         >
