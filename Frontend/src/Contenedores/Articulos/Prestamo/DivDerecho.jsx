@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import useSession  from "../../../hook/useSession";
 
 const DivDerecho = ({ itemId }) => {
   const [numeroEm, setNE] = useState("");
@@ -8,9 +9,12 @@ const DivDerecho = ({ itemId }) => {
   const [prestamoId, setPrestamoId] = useState(null);
   const [prestado, setPrestado] = useState(false);
 
+  const {session} = useSession();
+ 
   const back = import.meta.env.VITE_BACKEND_URL;
   // Obtener el estado de préstamo desde el backend
   useEffect(() => {
+    setNE(session.token);
     const verificarEstadoPrestamo = async () => {
       try {
         const response = await fetch(`${back}/buscar/articulos/${itemId}`);
@@ -109,6 +113,7 @@ const DivDerecho = ({ itemId }) => {
             value={numeroEm}
             onChange={(e) => setNE(e.target.value)}
             disabled={prestado}
+            readOnly
           />
           <input
             type="password"

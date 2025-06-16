@@ -1,10 +1,7 @@
 import { useState } from "react";
 import user from "../recursos/user.png";
 import { useNavigate } from "react-router-dom";
-
 import useSession  from "../hook/useSession";
-
-import useSession from "../hook/useSession";
 import { toast } from "react-toastify";
 
 const Login = () => {
@@ -35,6 +32,7 @@ const Login = () => {
 
             if (data.exito) {
                 toast.success("✅ " + data.mensaje);
+                saveSession(data.numeroEmpleado)
                 navigate("/next");
             } else {
                 toast.error("❌ " + data.mensaje);

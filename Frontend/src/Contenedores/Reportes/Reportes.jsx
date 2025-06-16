@@ -33,7 +33,7 @@ const Reportes = () => {
                     <label>Fecha Fin</label>
                     <input type='date' placeholder='Fecha Fin' value={FechaFin} onChange={(e) => setFechaFin(e.target.value)} required />
                     <button type="button" onClick={exportarPDF}>Generar Reporte</button>
-                    <button type="button" >Exportar Reporte</button>
+                    {/*<button type="button" >Exportar Reporte</button>*/}
                 </div>
                 <div className="reportee">
                     <Reporte urlPDF={urlPDF} />
