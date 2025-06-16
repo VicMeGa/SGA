@@ -188,7 +188,7 @@ const ControlAsistencias = () => {
         setLoading(true);
         setError(null);
         try {
-            const response = await fetch(`${back}buscar/grupos`);
+            const response = await fetch(`${back}/buscar/grupos`);
             if (!response.ok) {
                 throw new Error(`Error: ${response.status} ${response.statusText}`);
             }
