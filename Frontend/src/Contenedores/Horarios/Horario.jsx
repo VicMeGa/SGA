@@ -5,6 +5,7 @@ import Tabla from './Tabla';
 import { useNavigate } from 'react-router-dom';
 import RegistrarH from "./RegistrarH";
 import ApartarModal from "./ApartarModal";
+import { toast } from "react-toastify";
 
 const Horario = () => {
     const navigate = useNavigate();
@@ -57,9 +58,9 @@ const Horario = () => {
 
             if (!response.ok) {
                 const errorText = await response.text();
-                alert("Error: " + errorText);
+                toast.error("Error: " + errorText);
             } else {
-                alert("Apartado realizado con éxito");
+                toast.success("Apartado realizado con éxito");
                 setSchedule((prev) => ({
                     ...prev,
                     [day]: {
@@ -78,15 +79,21 @@ const Horario = () => {
     const handleApartarClick = () => {
         const { day, hour } = selectedCell;
         if (!day || !hour) {
-            alert("Por favor, selecciona una celda del horario primero.");
+            toast.warn("Por favor, selecciona una celda del horario primero.", {
+                closeButton: false,
+            });
             return;
         }
         if (schedule[day]?.[hour]) {
-            alert("Esta hora ya está ocupada.");
+            toast.warn("Esta hora ya está ocupada.", {
+                closeButton: false,
+            });
             return;
         }
         if (!Sala) {
-            alert("Por favor, selecciona una sala primero.");
+            toast.warn("Por favor, selecciona una sala primero.", {
+                closeButton: false,
+            });
             return;
         }
         setShowModal(true);

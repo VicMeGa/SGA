@@ -2,8 +2,8 @@ import Cabeza from '../Cabeza';
 import { useState } from "react";
 import Nav from '../Nav';
 import MenuReg from './MenuReg';
-import Notificaciones from '../Notificacioness/Notificaciones';
 import * as Yup from "yup";
+import { toast } from "react-toastify";
 
 function RegAdminis() {
     const [nombre, setNombre] = useState("");
@@ -33,16 +33,15 @@ function RegAdminis() {
 
     const esquemaValidacion = Yup.object().shape({
         nombre: Yup.string().required("El nombre es obligatorio").min(2, "Debe tener al menos 2 caracteres")
-            .matches(/^([A-ZÁÉÍÓÚÑ][a-záéíóúñ]+)(\s[A-ZÁÉÍÓÚ][a-záéíóúñ]+)*$/,"Las primeras letras deben ser mayusculas, solo se admiten letras"),
+            .matches(/^([A-ZÁÉÍÓÚÑ][a-záéíóúñ]+)(\s[A-ZÁÉÍÓÚ][a-záéíóúñ]+)*$/, "Las primeras letras deben ser mayusculas, solo se admiten letras"),
         apellidoPaterno: Yup.string().required("El apellido paterno es obligatorio")
-            .matches(/^([A-ZÁÉÍÓÚÑ][a-záéíóúñ]+)(\s[A-ZÁÉÍÓÚ][a-záéíóúñ]+)*$/,"Las primeras letras deben ser mayusculas, solo se admiten letras"),
+            .matches(/^([A-ZÁÉÍÓÚÑ][a-záéíóúñ]+)(\s[A-ZÁÉÍÓÚ][a-záéíóúñ]+)*$/, "Las primeras letras deben ser mayusculas, solo se admiten letras"),
         apellidoMaterno: Yup.string().required("El apellido materno es obligatorio")
-            .matches(/^([A-ZÁÉÍÓÚÑ][a-záéíóúñ]+)(\s[A-ZÁÉÍÓÚ][a-záéíóúñ]+)*$/,"Las primeras letras deben ser mayusculas, solo se admiten letras"),
-        numeroEmpleado : Yup.string().required("El numero de empleado es obligatoria")
+            .matches(/^([A-ZÁÉÍÓÚÑ][a-záéíóúñ]+)(\s[A-ZÁÉÍÓÚ][a-záéíóúñ]+)*$/, "Las primeras letras deben ser mayusculas, solo se admiten letras"),
+        numeroEmpleado: Yup.string().required("El numero de empleado es obligatoria")
             .matches(/^\d{6}$/, "Debe tener 6 dígitos"),
         correo: Yup.string().required("El correo es obligatorio").email("Debe ser un correo válido"),
         cargo: Yup.string().required("El cargo es requerido"),
-        grupo: Yup.string().required("El grupo es obligario").matches(/^[ABC]$/, "Solo hay grupos A, B o C"),
         programaEducativo: Yup.string().required("El programa educativo es obligatorio"),
         contrasena: Yup.string().required("La contraseña es obligatoria"),
         numeroTelefono: Yup.string()
@@ -92,7 +91,10 @@ function RegAdminis() {
             });
 
             const mensaje = await res.text();
-            setNotificaciones({ mensaje, tipo: "exito" });
+            toast.success(mensaje || "Registro exitoso", {
+                closeButton: false,
+            });
+
             setNombre("");
             setApellidoPaterno("");
             setApellidoMaterno("");
@@ -110,11 +112,12 @@ function RegAdminis() {
                 });
                 setErrores(nuevoErrores);
             } else {
-                console.error("Error al registrar administrativo:", error);
-                setNotificaciones({ mensaje: "Error al registrar administrativo", tipo: "error" });
+                console.error("Error al registrar alumno:", error);
+                toast.error("Error al registrar alumno", {
+                    closeButton: false,
+                });
             }
         }
-        setTimeout(() => setNotificaciones(null), 6000);
     };
 
     return (
@@ -127,15 +130,15 @@ function RegAdminis() {
                 <form className='formas' onSubmit={handleSubmit}>
                     <div className='regis'>
                         <div className='regiSon'>
-                            <input type='text' placeholder='Nombre' value={nombre} onChange={(e) => setNombre(e.target.value)}  />
+                            <input type='text' placeholder='Nombre' value={nombre} onChange={(e) => setNombre(e.target.value)} />
                             {errores.nombre && <span className="error">{errores.nombre}</span>}
-                            <input type='text' placeholder='Apellido Paterno' value={apellidoPaterno} onChange={(e) => setApellidoPaterno(e.target.value)}  />
+                            <input type='text' placeholder='Apellido Paterno' value={apellidoPaterno} onChange={(e) => setApellidoPaterno(e.target.value)} />
                             {errores.apellidoPaterno && <span className="error">{errores.apellidoPaterno}</span>}
-                            <input type='text' placeholder='Apellido Materno' value={apellidoMaterno} onChange={(e) => setApellidoMaterno(e.target.value)}  />
+                            <input type='text' placeholder='Apellido Materno' value={apellidoMaterno} onChange={(e) => setApellidoMaterno(e.target.value)} />
                             {errores.apellidoMaterno && <span className="error">{errores.apellidoMaterno}</span>}
-                            <input type='text' placeholder='Número de empleado' value={numeroEmpleado} onChange={(e) => setNumeroEmpleado(e.target.value)}  />
+                            <input type='text' placeholder='Número de empleado' value={numeroEmpleado} onChange={(e) => setNumeroEmpleado(e.target.value)} />
                             {errores.numeroEmpleado && <span className="error">{errores.numeroEmpleado}</span>}
-                            <input type='email' placeholder='Correo Electrónico' value={correo} onChange={(e) => setCorreo(e.target.value)}  />
+                            <input type='email' placeholder='Correo Electrónico' value={correo} onChange={(e) => setCorreo(e.target.value)} />
                             {errores.correo && <span className="error">{errores.correo}</span>}
                             <input type='text' placeholder='Cargo' value={cargo} onChange={(e) => setCargo(e.target.value)} />
                             {errores.cargo && <span className="error">{errores.cargo}</span>}
@@ -153,7 +156,7 @@ function RegAdminis() {
                                 ))}
                             </select>
                             {errores.programaEducativo && <span className="error">{errores.programaEducativo}</span>}
-                            <input type='password' placeholder='Contraseña' value={contrasena} onChange={(e) => setContrasena(e.target.value)}  />
+                            <input type='password' placeholder='Contraseña' value={contrasena} onChange={(e) => setContrasena(e.target.value)} />
                             {errores.contrasena && <span className="error">{errores.contrasena}</span>}
                         </div>
                     </div>
@@ -164,13 +167,6 @@ function RegAdminis() {
                     </div>
                 </form>
             </div>
-            {notificacion && (
-                <Notificaciones
-                    mensaje={notificacion.mensaje}
-                    tipo={notificacion.tipo}
-                    onClose={() => setNotificaciones(null)}
-                />
-            )}	
         </>
     );
 }

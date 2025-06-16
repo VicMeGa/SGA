@@ -1,16 +1,23 @@
 import { useState } from "react";
 import user from "../recursos/user.png";
 import { useNavigate } from "react-router-dom";
+
 import useSession  from "../hook/useSession";
+
+import useSession from "../hook/useSession";
+import { toast } from "react-toastify";
+
 const Login = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const navigate = useNavigate();
     const { saveSession } = useSession();
-
+  
+    const back = import.meta.env.VITE_BACKEND_URL;
+  
     const logeo = async (e) => {
         e.preventDefault();
-        const back = import.meta.env.VITE_BACKEND_URL;
+
         try {
             const response = await fetch(`${back}/login`, {
                 method: "POST",
@@ -22,20 +29,20 @@ const Login = () => {
                     contrasena: password,
                 }),
             });
-    
+
             const data = await response.json();
-            saveSession(data.numeroEmpleado)
-    
+            saveSession(data.numeroEmpleado);
+
             if (data.exito) {
-                alert("✅ Éxito: " + data.mensaje);
+                toast.success("✅ " + data.mensaje);
                 navigate("/next");
             } else {
-                alert("❌ Error: " + data.mensaje);
+                toast.error("❌ " + data.mensaje);
             }
         } catch (err) {
-            alert("⚠️ Error en la conexión con el servidor: " + err.message);
+            toast.warning("⚠️ Error en la conexión con el servidor: " + err.message);
         }
-    };    
+    };
 
     return (
         <div className="login">
@@ -59,7 +66,6 @@ const Login = () => {
                 />
                 <br />
                 <button type="submit">Iniciar Sesión</button>
-                {/*<h3 onClick={()=>navigate("/RegistrarCuenta")} style={{ cursor: "pointer" }}>Registrar Cuenta</h3>*/}
             </form>
         </div>
     );

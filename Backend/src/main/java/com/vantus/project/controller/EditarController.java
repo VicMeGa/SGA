@@ -17,6 +17,7 @@ import com.vantus.project.model.Usuario;
 import com.vantus.project.repository.AdministrativoRepository;
 import com.vantus.project.repository.AlumnoRepository;
 import com.vantus.project.repository.UsuarioRepository;
+import com.vantus.project.service.EncriptacionService;
 
 @RestController
 @RequestMapping("/sga/editar")
@@ -64,7 +65,8 @@ public class EditarController {
             if (optAdmin.isPresent()) {
                 Administrativo admin = optAdmin.get();
                 admin.setCargo(dto.getCargo());
-                admin.setContrasena(dto.getContrasena());
+                admin.setContrasena(EncriptacionService.encriptar(dto.getContrasena()));
+                //admin.setContrasena(dto.getContrasena());
                 adminRepo.save(admin);
             }
         } else {

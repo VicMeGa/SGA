@@ -1,5 +1,5 @@
 import { Search } from 'lucide-react';
-
+import { toast } from 'react-toastify'; // ← Importar toast
 
 const DivDerecho = ({
   searchQuery,
@@ -19,16 +19,23 @@ const DivDerecho = ({
       const data = await res.json();
 
       if (!res.ok || !data || (Array.isArray(data) && data.length === 0)) {
-        alert("No se encontraron resultados.");
+        toast.warn("No se encontraron resultados.", {
+          closeButton: false,
+        });
         setStudents([]);
         return;
       }
 
       const normalizados = Array.isArray(data) ? data : [data];
       setStudents(normalizados);
+      toast.success("Búsqueda completada correctamente", {
+        closeButton: false,
+      });
     } catch (error) {
       console.error("Error al buscar estudiantes:", error);
-      alert("Error de conexión o formato inválido.");
+      toast.error("Error de conexión o formato inválido.", {
+        closeButton: false,
+      });
       setStudents([]);
     }
   };
@@ -37,12 +44,17 @@ const DivDerecho = ({
     try {
       const res = await fetch(`${back}/buscar/usuario/detalle/${identificador}`);
       if (!res.ok) throw new Error("No se encontró el usuario.");
-      
+
       const data = await res.json();
-      setSelectedStudent(data);  // ← Aquí se actualiza el estado con todos los datos
+      setSelectedStudent(data);
+      toast.info("Usuario seleccionado con éxito", {
+        closeButton: false,
+      });
     } catch (error) {
       console.error("Error al obtener detalles:", error);
-      alert("No se pudo obtener la información completa del usuario.");
+      toast.error("No se pudo obtener la información del usuario.", {
+        closeButton: false,
+      });
     }
   };
 
@@ -65,15 +77,15 @@ const DivDerecho = ({
         <table className="tabla">
           <thead>
             <tr>
-              <th className="tht" >Identificador</th>
-              <th className="tht" >Nombre</th>
+              <th className="tht">Identificador</th>
+              <th className="tht">Nombre</th>
             </tr>
           </thead>
           <tbody>
             {students.map((student, index) => (
               <tr key={index} onClick={() => obtenerDetalleUsuario(student.identificador)}>
-                 <td className="tdd">{student.identificador || student.matricula || student.numeroEmpleado}</td>
-                 <td className="tdd">{student.nombre}</td>
+                <td className="tdd">{student.identificador || student.matricula || student.numeroEmpleado}</td>
+                <td className="tdd">{student.nombre}</td>
               </tr>
             ))}
           </tbody>
