@@ -18,11 +18,13 @@ const Horario = () => {
     const [showModal, setShowModal] = useState(false);
     const [password, setPassword] = useState("");
 
+    const back = import.meta.env.VITE_BACKEND_URL;
+
     const obtenerSalas = async () => {
         setLoading(true);
         setError(null);
         try {
-            const response = await fetch('http://localhost:8080/sga/buscar/salas');
+            const response = await fetch(`${back}/buscar/salas`);
             if (!response.ok) {
                 throw new Error(`Error: ${response.status} ${response.statusText}`);
             }
@@ -41,7 +43,7 @@ const Horario = () => {
         console.log({ numeroEmpleado, password, day, hour, Sala });
 
         try {
-            const response = await fetch("http://localhost:8080/sga/registro/apartado", {
+            const response = await fetch(`${back}/registro/apartado`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({

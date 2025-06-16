@@ -7,6 +7,7 @@ const Reportes = () => {
     const [FechaInicio, setFechaInicio] = useState("");
     const [FechaFin, setFechaFin] = useState("");
     const [urlPDF, setUrlPDF] = useState(null);
+    const back = import.meta.env.VITE_BACKEND_URL;
 
     const exportarPDF = () => {
         if (!FechaInicio || !FechaFin) {
@@ -14,7 +15,7 @@ const Reportes = () => {
             return;
         }
 
-        const url = `http://localhost:8080/sga/reportes/reporte-accesos?inicio=${FechaInicio}&fin=${FechaFin}`;
+        const url = `${back}/reportes/reporte-accesos?inicio=${FechaInicio}&fin=${FechaFin}`;
         setUrlPDF(url);
     };
 

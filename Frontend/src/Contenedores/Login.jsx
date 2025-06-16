@@ -2,7 +2,6 @@ import { useState } from "react";
 import user from "../recursos/user.png";
 import { useNavigate } from "react-router-dom";
 import useSession  from "../hook/useSession";
-
 const Login = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -11,9 +10,9 @@ const Login = () => {
 
     const logeo = async (e) => {
         e.preventDefault();
-    
+        const back = import.meta.env.VITE_BACKEND_URL;
         try {
-            const response = await fetch("http://localhost:8080/sga/login", {
+            const response = await fetch(`${back}/login`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

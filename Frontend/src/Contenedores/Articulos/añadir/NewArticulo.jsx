@@ -12,6 +12,8 @@ const NewArticulo = () => {
     const [imagenFile, setImagenFile] = useState(null);
     const [errores, setErrores] = useState({});
 
+    const back = import.meta.env.VITE_BACKEND_URL;
+
     const tiposArticulos = [
         { value: 'Proyector', label: 'Proyector' },
         { value: 'Micrófono', label: 'Micrófono' },
@@ -54,7 +56,7 @@ const NewArticulo = () => {
             await esquemaValidacion.validate(datoss, { abortEarly: false });
             setErrores({}); 
 
-             const response = await fetch("http://localhost:8080/sga/registro/articulo", {
+             const response = await fetch(`${back}/registro/articulo`, {
             method: "POST",
             body: formData,
              });

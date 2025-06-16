@@ -19,6 +19,8 @@ function RegAdminis() {
     const [notificacion, setNotificaciones] = useState(null);
     const [errores, setErrores] = useState({});
 
+    const back = import.meta.env.VITE_BACKEND_URL;
+
     const opciones = [
         { value: 'Licenciatura en Ingeniería Mecánica', label: 'Licenciatura en Ingeniería Mecánica' },
         { value: 'Licenciatura en Ingeniería en Computación', label: 'Licenciatura en Ingeniería en Computación' },
@@ -81,7 +83,7 @@ function RegAdminis() {
                 programaEducativo
             };
 
-            const res = await fetch("http://localhost:8080/sga/registro/administrativo", {
+            const res = await fetch(`${back}/registro/administrativo`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"

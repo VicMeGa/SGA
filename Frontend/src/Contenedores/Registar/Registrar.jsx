@@ -20,6 +20,8 @@ function Registrar() {
 
     const [errores, setErrores] = useState({});
 
+    const back = import.meta.env.VITE_BACKEND_URL;
+
     const opciones = [
         { value: 'Licenciatura en Ingeniería Mecánica', label: 'Licenciatura en Ingeniería Mecánica' },
         { value: 'Licenciatura en Ingeniería en Computación', label: 'Licenciatura en Ingeniería en Computación' },
@@ -82,7 +84,7 @@ function Registrar() {
                 id_horario
             };
 
-            const res = await fetch("http://localhost:8080/sga/registro/alumno", {
+            const res = await fetch(`${back}/registro/alumno`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"

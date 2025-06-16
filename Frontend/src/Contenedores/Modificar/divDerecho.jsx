@@ -1,4 +1,3 @@
-import React from 'react';
 import { Search } from 'lucide-react';
 
 
@@ -12,10 +11,11 @@ const DivDerecho = ({
   const handleSearchChange = (e) => {
     setSearchQuery(e.target.value);
   };
-
+  
+  const back = import.meta.env.VITE_BACKEND_URL;
   const buscarEstudiantes = async () => {
     try {
-      const res = await fetch(`http://localhost:8080/sga/buscar/usuarios?query=${searchQuery}`);
+      const res = await fetch(`${back}/buscar/usuarios?query=${searchQuery}`);
       const data = await res.json();
 
       if (!res.ok || !data || (Array.isArray(data) && data.length === 0)) {
@@ -35,7 +35,7 @@ const DivDerecho = ({
 
   const obtenerDetalleUsuario = async (identificador) => {
     try {
-      const res = await fetch(`http://localhost:8080/sga/buscar/usuario/detalle/${identificador}`);
+      const res = await fetch(`${back}/buscar/usuario/detalle/${identificador}`);
       if (!res.ok) throw new Error("No se encontró el usuario.");
       
       const data = await res.json();

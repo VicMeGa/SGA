@@ -23,10 +23,12 @@ const ControlAsistencias = () => {
     const [nombresAlumnos, setNombresAlumnos] = useState([]);
     const [asistencias, setAsistencias] = useState([]);
 
+    const back = import.meta.env.VITE_BACKEND_URL;
+
     const obtenerAsistencias = async (nombresLista = nombresAlumnos) => {
         try {
             console.log("🔍 Obteniendo asistencias...");
-            const response = await fetch('http://localhost:8080/sga/buscar/accesos');
+            const response = await fetch(`${back}buscar/accesos`);
             const data = await response.json();
             
             console.log("📊 Datos de accesos recibidos:", data);
@@ -148,7 +150,7 @@ const ControlAsistencias = () => {
         setLoading(true);
         setError(null);
         try {
-            const response = await fetch('http://localhost:8080/sga/buscar/salas');
+            const response = await fetch(`${back}/buscar/salas`);
             if (!response.ok) {
                 throw new Error(`Error: ${response.status} ${response.statusText}`);
             }
@@ -167,7 +169,7 @@ const ControlAsistencias = () => {
         setLoading(true);
         setError(null);
         try {
-            const response = await fetch('http://localhost:8080/sga/buscar/materias');
+            const response = await fetch(`${back}/buscar/materias`);
             if (!response.ok) {
                 throw new Error(`Error: ${response.status} ${response.statusText}`);
             }
@@ -186,7 +188,7 @@ const ControlAsistencias = () => {
         setLoading(true);
         setError(null);
         try {
-            const response = await fetch('http://localhost:8080/sga/buscar/grupos');
+            const response = await fetch(`${back}buscar/grupos`);
             if (!response.ok) {
                 throw new Error(`Error: ${response.status} ${response.statusText}`);
             }
@@ -205,7 +207,7 @@ const ControlAsistencias = () => {
         setLoading(true);
         setError(null);
         try {
-            const response = await fetch('http://localhost:8080/sga/buscar/semestres');
+            const response = await fetch(`${back}/buscar/semestres`);
             if (!response.ok) {
                 throw new Error(`Error: ${response.status} ${response.statusText}`);
             }
@@ -223,11 +225,11 @@ const ControlAsistencias = () => {
     const buscarAlumnosYMaestro = async () => {
         if (Semestre && Grupo && Materia && Sala) {
             try {
-                const responseAlumnos = await fetch(`http://localhost:8080/sga/buscar/nombres/semestre/${Semestre}/grupo/${Grupo}/materia/${Materia}/sala/${Sala}`);
+                const responseAlumnos = await fetch(`${back}/buscar/nombres/semestre/${Semestre}/grupo/${Grupo}/materia/${Materia}/sala/${Sala}`);
                 const nombres = await responseAlumnos.json();
                 setNombresAlumnos(nombres);
 
-                const responseMaestro = await fetch(`http://localhost:8080/sga/buscar/nombres/maestro/${Materia}`);
+                const responseMaestro = await fetch(`${back}/buscar/nombres/maestro/${Materia}`);
                 const nombreMaestro = await responseMaestro.json();
                 if (Array.isArray(nombreMaestro) && nombreMaestro.length > 0) {
                     setProfesor(nombreMaestro[0]);

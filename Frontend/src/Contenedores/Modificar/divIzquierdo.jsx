@@ -6,6 +6,8 @@ const DivIzquierdo = ({ selectedStudent }) => {
 
   const [errores, setErrores] = useState({});
 
+  const back = import.meta.env.VITE_BACKEND_URL;
+
   const alumnoValidacion = Yup.object().shape({
       nombre: Yup.string().required("El nombre es obligatorio").min(2, "Debe tener al menos 2 caracteres")
           .matches(/^([A-Z][a-z]+)(\s[A-Z][a-z]+)*$/,"Las primeras letras deben ser mayusculas, solo se admiten letras"),
@@ -77,7 +79,7 @@ const DivIzquierdo = ({ selectedStudent }) => {
 
   const identificador = formData.matricula ? formData.matricula : formData.numeroEmpleado;
   try {
-    const response = await fetch(`http://localhost:8080/sga/buscar/eliminar/usuarios/${identificador}`, {
+    const response = await fetch(`${back}/buscar/eliminar/usuarios/${identificador}`, {
       method: 'POST',
     });
 
@@ -157,7 +159,7 @@ const DivIzquierdo = ({ selectedStudent }) => {
         alert("Admin");
       }
 
-      const response = await fetch('http://localhost:8080/sga/editar/usuario', {
+      const response = await fetch(`${back}/editar/usuario`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

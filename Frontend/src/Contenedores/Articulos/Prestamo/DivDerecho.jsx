@@ -8,18 +8,19 @@ const DivDerecho = ({ itemId }) => {
   const [prestamoId, setPrestamoId] = useState(null);
   const [prestado, setPrestado] = useState(false);
 
+  const back = import.meta.env.VITE_BACKEND_URL;
   // Obtener el estado de préstamo desde el backend
   useEffect(() => {
     const verificarEstadoPrestamo = async () => {
       try {
-        const response = await fetch(`http://localhost:8080/sga/buscar/articulos/${itemId}`);
+        const response = await fetch(`${back}/buscar/articulos/${itemId}`);
         if (response.ok) {
           const data = await response.json();
           const estaPrestado = data.estaPrestado === 1;
           setPrestado(estaPrestado);
 
           if (estaPrestado) {
-            const prestamoResp = await fetch(`http://localhost:8080/sga/prestamo/id-actual/${itemId}`);
+            const prestamoResp = await fetch(`${back}/prestamo/id-actual/${itemId}`);
             if (prestamoResp.ok) {
               const idPrestamo = await prestamoResp.text();
               setPrestamoId(idPrestamo);
@@ -46,7 +47,7 @@ const DivDerecho = ({ itemId }) => {
     }
 
     try {
-      const response = await fetch("http://localhost:8080/sga/prestamo/pedir", {
+      const response = await fetch(`${back}/prestamo/pedir`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -77,7 +78,7 @@ const DivDerecho = ({ itemId }) => {
     setError("");
 
     try {
-      const response = await fetch(`http://localhost:8080/sga/prestamo/devolver/${prestamoId}`, {
+      const response = await fetch(`${back}/prestamo/devolver/${prestamoId}`, {
         method: "PUT",
       });
 
