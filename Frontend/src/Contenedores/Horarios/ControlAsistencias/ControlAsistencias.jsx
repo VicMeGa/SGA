@@ -28,7 +28,7 @@ const ControlAsistencias = () => {
     const obtenerAsistencias = async (nombresLista = nombresAlumnos) => {
         try {
             console.log("🔍 Obteniendo asistencias...");
-            const response = await fetch(`${back}buscar/accesos`);
+            const response = await fetch(`${back}/buscar/accesos`);
             const data = await response.json();
             
             console.log("📊 Datos de accesos recibidos:", data);
