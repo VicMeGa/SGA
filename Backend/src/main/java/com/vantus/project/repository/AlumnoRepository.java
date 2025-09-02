@@ -21,7 +21,7 @@ public interface AlumnoRepository extends JpaRepository<Alumno, String> {
     List<String> findDistinctGruposOrderByGrupo();
 
     // ✅ CORRECTO: Devuelve List<String>
-    @Query(value = "SELECT u.nombre " +
+    @Query(value = "SELECT DISTINCT u.nombre " +
             "FROM usuario u " +
             "JOIN alumno a ON u.id_usuario = a.id_usuario " +
             "JOIN horario_sala h ON a.semestre = h.semestre " +
