@@ -3,8 +3,6 @@ import user from "../recursos/user.png";
 import { useNavigate } from "react-router-dom";
 
 import useSession  from "../hook/useSession";
-
-import useSession from "../hook/useSession";
 import { toast } from "react-toastify";
 
 const Login = () => {

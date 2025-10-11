@@ -4,7 +4,7 @@ import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { BrowserRouter } from 'react-router-dom'
 import Login from './Login'
 
-// Mocks
+// Mocks - IMPORTANTE: deben estar al inicio, antes de los imports del componente
 vi.mock('react-router-dom', () => ({
   useNavigate: vi.fn(),
   BrowserRouter: ({ children }) => children
@@ -42,7 +42,7 @@ import { useNavigate } from 'react-router-dom'
 import useSession from '../hook/useSession'
 import { toast } from 'react-toastify'
 
-// Wrapper  React Router
+// Wrapper para React Router
 const LoginWrapper = ({ children }) => (
   <BrowserRouter>
     {children}
@@ -203,7 +203,7 @@ describe('Login Component', () => {
     })
   })
 
-  it('llama a saveSession dos veces en login exitoso', async () => {
+  it('llama a saveSession correctamente en login exitoso', async () => {
     const mockResponse = {
       exito: true,
       mensaje: 'Login exitoso',
@@ -231,8 +231,8 @@ describe('Login Component', () => {
     fireEvent.click(screen.getByRole('button', { name: 'Iniciar Sesión' }))
 
     await waitFor(() => {
-      // Nota: En tu código tienes saveSession llamado dos veces
-      expect(mockSaveSession).toHaveBeenCalledTimes(2)
+      // Ahora espera solo 1 llamada (código corregido)
+      expect(mockSaveSession).toHaveBeenCalledTimes(1)
       expect(mockSaveSession).toHaveBeenCalledWith('12345')
     })
   })
