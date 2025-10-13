@@ -4,6 +4,7 @@ import Nav from '../Nav'
 import MenuReg from './MenuReg'
 import * as Yup from "yup";
 import { toast } from "react-toastify";
+import Huella from './Huella/Huella';
 
 function Registrar() {
     const [nombre, setNombre] = useState("");
@@ -160,6 +161,7 @@ function Registrar() {
                                 ))}
                             </select>
                             {errores.programaEducativo && <span className="error">{errores.programaEducativo}</span>}
+                            <Huella />
                         </div>
                     </div>
 

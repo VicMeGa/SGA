@@ -228,6 +228,7 @@ const DivIzquierdo = ({ selectedStudent }) => {
         {errores.numeroTelefono && <span className="error">{errores.numeroTelefono}</span>}
         <select
           value={programaEducativo}
+          className="imputnorm"
           onChange={(e) => setProgramaEducativo(e.target.value)}
         >
           <option value="" disabled>Selecciona un programa educativo</option>

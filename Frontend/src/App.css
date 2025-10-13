@@ -240,6 +240,49 @@ background-color: #0B1E33;
   font-size: 3vh;
 }
 
+.huella{
+  background-color: rgba(168, 179, 191, .3);
+  
+  width: 90vh;
+  display: flex;
+  flex-direction: column;
+  margin-top: 30px;
+  margin-bottom: 10px;
+  justify-content: center;
+  align-items: center;
+}
+.huella img{
+  position: relative;
+  width: 8%;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+  color: #0B1E33;
+}
+.mostrarHuella{
+  margin-top: 30px;
+  border: #3B526B;
+  border: 2px solid;
+  width: 50vh;
+  border-radius: 10px;
+  text-align: center;
+}
+.mostrarHuella button{
+  width: 5vh;
+  height: 5vh;
+}
+.equis{
+  width: 3vh;
+}
+
+.mostrarHuella span{
+  color: #0B1E33;
+  text-size-adjust: 100vh;
+}
+.mostrarHuella img{
+  width: 80%;
+}
+
 /* ----------------> Nav <-----------------*/
 .nav {
   background-color: white;

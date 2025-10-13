@@ -4,6 +4,7 @@ import Nav from '../Nav';
 import MenuReg from './MenuReg';
 import * as Yup from "yup";
 import { toast } from "react-toastify";
+import Huella from './Huella/Huella';
 
 function RegAdminis() {
     const [nombre, setNombre] = useState("");
@@ -158,6 +159,7 @@ function RegAdminis() {
                             {errores.programaEducativo && <span className="error">{errores.programaEducativo}</span>}
                             <input type='password' placeholder='Contraseña' value={contrasena} onChange={(e) => setContrasena(e.target.value)} />
                             {errores.contrasena && <span className="error">{errores.contrasena}</span>}
+                            <Huella />
                         </div>
                     </div>
 
