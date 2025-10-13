@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react';
 import * as Yup from "yup";
 import { toast } from 'react-toastify';
-
+import Huella from '../Registar/Huella/Huella';
 
 const DivIzquierdo = ({ selectedStudent }) => {
   const [formData, setFormData] = useState(null);
+  const [huellaDactilar, setHuellaDactilar] = useState(null);
 
   const [errores, setErrores] = useState({});
   const [programaEducativo, setProgramaEducativo] = useState("");
@@ -114,7 +115,9 @@ const DivIzquierdo = ({ selectedStudent }) => {
     }
   };
 
-
+  const handleHuellaCapturada = (huellaBase64) => {
+        setHuellaDactilar(huellaBase64);
+    };
 
   const handleModificar = async () => {
     const payload = {
@@ -127,6 +130,7 @@ const DivIzquierdo = ({ selectedStudent }) => {
         correo: formData.usuario.correo,
         numeroTelefono: formData.usuario.numeroTelefono,
         programaEducativo: formData.usuario.programaEducativo,
+        huellaDactilar
       },
       ...(formData.matricula
         ? {
@@ -180,7 +184,9 @@ const DivIzquierdo = ({ selectedStudent }) => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(payload),
+        
       });
+      console.log(JSON.stringify(payload))
 
       if (response.ok) {
         toast.success('Usuario actualizado correctamente', {
@@ -259,6 +265,7 @@ const DivIzquierdo = ({ selectedStudent }) => {
             {errores.contrasena && <span className="error">{errores.contrasena}</span>}
           </>
         )}
+        <Huella onHuellaCapturada={handleHuellaCapturada}/>
 
         <div className="botonesMod">
           <button type="button" className="borrarButton" onClick={handleEliminar}>Eliminar</button>

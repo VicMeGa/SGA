@@ -18,6 +18,7 @@ import com.vantus.project.repository.AdministrativoRepository;
 import com.vantus.project.repository.AlumnoRepository;
 import com.vantus.project.repository.UsuarioRepository;
 import com.vantus.project.service.EncriptacionService;
+import com.vantus.project.service.HuellaService;
 
 @RestController
 @RequestMapping("/sga/editar")
@@ -31,6 +32,9 @@ public class EditarController {
 
     @Autowired
     private UsuarioRepository usuarioRepo;
+
+    @Autowired
+    private HuellaService huellaserv;
 
     @PutMapping("/usuario")
     public ResponseEntity<String> editarUsuario(@RequestBody EditarUsuarioRequest dto) {
@@ -49,6 +53,27 @@ public class EditarController {
         usuario.setCorreo(dto.getUsuario().getCorreo());
         usuario.setNumeroTelefono(dto.getUsuario().getNumeroTelefono());
         usuario.setProgramaEducativo(dto.getUsuario().getProgramaEducativo());
+
+        System.out.println("Huella en DTO: " + dto.getUsuario().getHuellaDactilar());
+        System.out.println("¿Huella null? " + (dto.getUsuario().getHuellaDactilar() == null));
+        System.out.println("¿Huella vacía? " + (dto.getUsuario().getHuellaDactilar() != null && dto.getUsuario().getHuellaDactilar().isEmpty()));
+    
+
+       if (dto.getUsuario().getHuellaDactilar() != null && !dto.getUsuario().getHuellaDactilar().isEmpty()) {
+            System.out.println("✓ Huella recibida: " + dto.getUsuario().getHuellaDactilar().substring(0, 50) + "...");
+            usuario.setHuellaDactilar(dto.getUsuario().getHuellaDactilar());
+            
+            try {
+                byte[] template = huellaserv.generarTemplate(dto.getUsuario().getHuellaDactilar());
+                usuario.setTemplate(template);
+                System.out.println("✓ Template generado correctamente");
+            } catch (Exception e) {
+                System.err.println("Error al procesar huella: " + e.getMessage());
+                e.printStackTrace();
+            }
+        } else {
+            System.out.println("⚠ Huella NO recibida o está vacía");
+        }
 
         usuarioRepo.save(usuario);
 

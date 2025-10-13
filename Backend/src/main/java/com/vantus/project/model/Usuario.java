@@ -34,7 +34,7 @@ public class Usuario {
     @Enumerated(EnumType.STRING)
     private TipoUsuario tipoUsuario;
 
-    @Column(name = "huella_dactilar")
+    @Column(name = "huella_dactilar",columnDefinition = "LONGTEXT")
     private String huellaDactilar;
 
     @Column(name = "codigoQR")

@@ -8,6 +8,7 @@ public class EditarUsuarioRequest {
     private String tipo; // "alumno" o "administrativo"
 
     private Usuario usuario;
+    private String huellaDactilar;
 
     // Solo para alumno
     private String matricula;
@@ -74,7 +75,10 @@ public class EditarUsuarioRequest {
     public void setContrasena(String contrasena) {
         this.contrasena = contrasena;
     }
-
-    
-
+    public String getHuellaDactilar() {
+        return huellaDactilar;
+    }
+    public void setHuellaDactilar(String huellaDactilar) {
+        this.huellaDactilar = huellaDactilar;
+    }
 }
