@@ -17,8 +17,8 @@ function Registrar() {
     const [grupo, setGrupo] = useState("");
     const [programaEducativo, setProgramaEducativo] = useState("");
     const [id_horario, setIdHorario] = useState("");
-
     const [errores, setErrores] = useState({});
+    const [huellaDactilar, setHuellaDactilar] = useState(null);
 
     const back = import.meta.env.VITE_BACKEND_URL;
 
@@ -50,6 +50,10 @@ function Registrar() {
             .notRequired(),
     });
 
+     const handleHuellaCapturada = (huellaBase64) => {
+        setHuellaDactilar(huellaBase64);
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -63,7 +67,8 @@ function Registrar() {
             semestre,
             grupo,
             programaEducativo,
-            id_horario
+            id_horario,
+            huellaDactilar
         };
 
         try {
@@ -80,7 +85,8 @@ function Registrar() {
                 semestre,
                 grupo,
                 programaEducativo,
-                id_horario
+                id_horario,
+                huellaDactilar
             };
 
             const res = await fetch(`${back}/registro/alumno`, {
@@ -92,6 +98,7 @@ function Registrar() {
             });
 
             const mensaje = await res.text();
+            /*console.log(JSON.stringify(datos));*/
 
             toast.success(mensaje || "Registro exitoso");
 
@@ -106,6 +113,7 @@ function Registrar() {
             setGrupo("");
             setProgramaEducativo("");
             setIdHorario("");
+            setHuellaDactilar(null);
         } catch (error) {
             if (error.name === "ValidationError") {
                 const nuevoErrores = {};
@@ -161,7 +169,7 @@ function Registrar() {
                                 ))}
                             </select>
                             {errores.programaEducativo && <span className="error">{errores.programaEducativo}</span>}
-                            <Huella />
+                            <Huella onHuellaCapturada={handleHuellaCapturada}/>
                         </div>
                     </div>
 

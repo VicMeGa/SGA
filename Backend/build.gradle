@@ -15,6 +15,12 @@ java {
 
 repositories {
 	mavenCentral()
+	maven {
+        url "https://repo1.maven.org/maven2/"
+    }
+    maven {
+        url "https://jcenter.bintray.com"
+    }
 }
 
 dependencies {
@@ -29,6 +35,8 @@ dependencies {
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 	runtimeOnly 'com.mysql:mysql-connector-j:8.3.0'
 	implementation 'org.mariadb.jdbc:mariadb-java-client:3.3.3'
+	implementation 'com.machinezoo.sourceafis:sourceafis:3.15.1'
+
 }
 
 tasks.named('test') {

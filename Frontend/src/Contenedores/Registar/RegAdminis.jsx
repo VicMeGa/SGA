@@ -16,7 +16,7 @@ function RegAdminis() {
     const [numeroTelefono, setNumeroTelefono] = useState("");
     const [contrasena, setContrasena] = useState("");
     const [programaEducativo, setProgramaEducativo] = useState("");
-
+    const [huellaDactilar, setHuellaDactilar] = useState(null);
     const [notificacion, setNotificaciones] = useState(null);
     const [errores, setErrores] = useState({});
 
@@ -50,6 +50,11 @@ function RegAdminis() {
             .notRequired(),
     });
 
+     const handleHuellaCapturada = (huellaBase64) => {
+        setHuellaDactilar(huellaBase64);
+    };
+
+
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -62,7 +67,8 @@ function RegAdminis() {
             numeroEmpleado,
             contrasena,
             cargo,
-            programaEducativo
+            programaEducativo,
+            huellaDactilar
         };
 
         try {
@@ -80,7 +86,8 @@ function RegAdminis() {
                 numeroEmpleado,
                 contrasena,
                 cargo,
-                programaEducativo
+                programaEducativo,
+                huellaDactilar
             };
 
             const res = await fetch(`${back}/registro/administrativo`, {
@@ -105,6 +112,7 @@ function RegAdminis() {
             setNumeroTelefono("");
             setContrasena("");
             setProgramaEducativo("");
+            setHuellaDactilar(null);
         } catch (error) {
             if (error.name === "ValidationError") {
                 const nuevoErrores = {};
@@ -159,7 +167,7 @@ function RegAdminis() {
                             {errores.programaEducativo && <span className="error">{errores.programaEducativo}</span>}
                             <input type='password' placeholder='Contraseña' value={contrasena} onChange={(e) => setContrasena(e.target.value)} />
                             {errores.contrasena && <span className="error">{errores.contrasena}</span>}
-                            <Huella />
+                            <Huella onHuellaCapturada={handleHuellaCapturada}/>
                         </div>
                     </div>
 

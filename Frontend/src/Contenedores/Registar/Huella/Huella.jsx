@@ -2,7 +2,7 @@ import huellaIcon from "../../../recursos/huella-dactilar.png";
 import { useState } from 'react';
 import { X } from 'lucide-react';
 
-function Huella (){
+function Huella ({ onHuellaCapturada = () => {} }){
   const [loading, setLoading] = useState(false);
   const [fingerprintData, setFingerprintData] = useState(null);
   const [message, setMessage] = useState('');
@@ -11,6 +11,10 @@ function Huella (){
   const clearCapture = () => {
     setFingerprintData(null);
     setMessage('');
+
+    if (onHuellaCapturada) {
+      onHuellaCapturada(null);
+    }
   };
 
     const captureFingerprintSimulated = async () => {
@@ -20,7 +24,7 @@ function Huella (){
       /*await new Promise(resolve => setTimeout(resolve, 2000));*/
       
       // Leer archivo BMP
-      const response = await fetch('/Huellas/huella1.BMP');
+      const response = await fetch('/Huellas/huella2.BMP');
       const blob = await response.blob();
       
       const reader = new FileReader();
@@ -33,6 +37,10 @@ function Huella (){
         });
         setMessage('✓ Huella capturada exitosamente');
         setLoading(false);
+        if (onHuellaCapturada) {
+            console.log('Enviando huella:', reader.result);
+            onHuellaCapturada(reader.result);
+          }
       };
       reader.readAsDataURL(blob);
     } catch (error) {
