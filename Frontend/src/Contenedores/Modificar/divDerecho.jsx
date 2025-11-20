@@ -11,7 +11,7 @@ const DivDerecho = ({
   const handleSearchChange = (e) => {
     setSearchQuery(e.target.value);
   };
-  
+
   const back = import.meta.env.VITE_BACKEND_URL;
   const buscarEstudiantes = async () => {
     try {
@@ -63,12 +63,13 @@ const DivDerecho = ({
       <div className="busqueda">
         <input
           type="text"
+          id="buscar-usuario"
           placeholder="Buscar por nombre o matrícula"
           className="inputBuscar"
           value={searchQuery}
           onChange={handleSearchChange}
         />
-        <button className="botonBuscar" onClick={buscarEstudiantes}>
+        <button id="btn-buscar" className="botonBuscar" onClick={buscarEstudiantes}>
           <Search size={20} />
         </button>
       </div>
