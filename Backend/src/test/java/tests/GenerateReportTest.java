@@ -15,7 +15,7 @@ import java.nio.file.Paths;
 /**
  * Tests para el caso de uso: Exportar Reportes (CPS_28)
  */
-class ExportReportTest extends BaseTest {
+class GenerateReportTest extends BaseTest {
 
     private LoginPage loginPage;
     private ReportsPage reportsPage;
@@ -33,9 +33,9 @@ class ExportReportTest extends BaseTest {
         // Realizar login con credenciales válidas
         loginPage.login("saul@gmail.com", "123");
 
-        // Esperar a que el login se complete y navegar a reportes
+        // Esperar a que cargue el menú principal y navegar a Generar reportes
         waitFor(1000);
-        reportsPage.navigateToReportes();
+        reportsPage.navigateToReportesFromMenu();
     }
 
     @Test
@@ -46,6 +46,7 @@ class ExportReportTest extends BaseTest {
         // Act - Ingresar fechas y generar reporte
         reportsPage.enterFechaInicio(FECHA_INICIO);
         reportsPage.enterFechaFin(FECHA_FIN);
+        waitFor(500); // Esperar a que React actualice el estado
         reportsPage.clickGenerarReporte();
 
         // Esperar a que se cargue el PDF

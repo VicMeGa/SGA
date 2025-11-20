@@ -9,6 +9,9 @@ import org.openqa.selenium.WebDriver;
 public class ReportsPage extends BasePage {
 
     // Localizadores de elementos basados en el frontend real
+    // Opción del menú principal para acceder a Generar reportes
+    private By menuGenerarReportes = By.xpath("//span[contains(text(),'Generar reportes')]");
+
     // Botón de navegación en el Nav (último botón nav-item que lleva a /Reportes)
     private By btnNavReportes = By.xpath("//nav[@class='nav']//button[@class='nav-item'][last()]");
 
@@ -33,6 +36,16 @@ public class ReportsPage extends BasePage {
     }
 
     /**
+     * Navega al menú de Reportes desde el menú principal después del login
+     * y espera a que aparezcan los campos de fecha
+     */
+    public void navigateToReportesFromMenu() {
+        click(menuGenerarReportes);
+        // Esperar a que aparezca el formulario de reportes
+        waitForElement(inputFechaInicio);
+    }
+
+    /**
      * Navega al menú de Reportes haciendo clic en el botón del Nav
      * y espera a que aparezcan los campos de fecha
      */
@@ -43,17 +56,38 @@ public class ReportsPage extends BasePage {
     }
 
     /**
-     * Ingresa la fecha de inicio (formato: YYYY-MM-DD)
+     * Ingresa la fecha de inicio usando JavaScript (formato: YYYY-MM-DD)
      */
     public void enterFechaInicio(String fechaInicio) {
-        type(inputFechaInicio, fechaInicio);
+        setDateFieldValue(inputFechaInicio, fechaInicio);
     }
 
     /**
-     * Ingresa la fecha de fin (formato: YYYY-MM-DD)
+     * Ingresa la fecha de fin usando JavaScript (formato: YYYY-MM-DD)
      */
     public void enterFechaFin(String fechaFin) {
-        type(inputFechaFin, fechaFin);
+        setDateFieldValue(inputFechaFin, fechaFin);
+    }
+
+    /**
+     * Establece el valor de un campo de fecha usando JavaScript
+     * 
+     * @param locator   El localizador del campo de fecha
+     * @param dateValue El valor de la fecha en formato YYYY-MM-DD
+     */
+    private void setDateFieldValue(By locator, String dateValue) {
+        waitForElement(locator);
+        // Usar el descriptor nativo de React para actualizar el valor
+        String script = "var input = arguments[0];" +
+                "var nativeInputValueSetter = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'value').set;"
+                +
+                "nativeInputValueSetter.call(input, arguments[1]);" +
+                "var event = new Event('input', { bubbles: true });" +
+                "input.dispatchEvent(event);" +
+                "var changeEvent = new Event('change', { bubbles: true });" +
+                "input.dispatchEvent(changeEvent);";
+        org.openqa.selenium.JavascriptExecutor js = (org.openqa.selenium.JavascriptExecutor) driver;
+        js.executeScript(script, driver.findElement(locator), dateValue);
     }
 
     /**
@@ -68,6 +102,8 @@ public class ReportsPage extends BasePage {
      * Hace clic en el botón Generar Reporte
      */
     public void clickGenerarReporte() {
+        // Asegurar que el botón sea visible y clickeable
+        waitForClickableElement(btnGenerarReporte);
         click(btnGenerarReporte);
     }
 
