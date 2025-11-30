@@ -114,6 +114,7 @@ function Registrar() {
             setProgramaEducativo("");
             setIdHorario("");
             setHuellaDactilar(null);
+            
         } catch (error) {
             if (error.name === "ValidationError") {
                 const nuevoErrores = {};

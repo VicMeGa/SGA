@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import java.util.Collections;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -67,26 +68,50 @@ public class BusquedaController {
     @GetMapping("/usuarios")
     public ResponseEntity<?> buscar(@RequestParam String query) {
         List<BusquedaRequest> resultados = new ArrayList<>();
+        if (query.matches("\\d+")) {
+
+            // Búsqueda parcial en matrícula
+            List<Alumno> alumnos = alumnoRepo.findByMatriculaContaining(query);
+            for (Alumno alumno : alumnos) {
+                if (Boolean.TRUE.equals(alumno.getUsuario().getActivo())) {
+                    resultados.add(new BusquedaRequest(
+                        alumno.getMatricula(),
+                        alumno.getUsuario().getNombre()
+                    ));
+                }
+            }
+
+            // Búsqueda parcial en número de empleado
+            List<Administrativo> admins = adminRepo.findByNumeroEmpleadoContaining(query);
+            for (Administrativo admin : admins) {
+                if (Boolean.TRUE.equals(admin.getUsuario().getActivo())) {
+                    resultados.add(new BusquedaRequest(
+                        admin.getNumeroEmpleado(),
+                        admin.getUsuario().getNombre()
+                    ));
+                }
+            }
+        }
 
         // Buscar por matrícula (8 dígitos)
-        if (query.matches("\\d{8}")) {
-            alumnoRepo.findByMatricula(query).ifPresent(alumno -> {
-                if (Boolean.TRUE.equals(alumno.getUsuario().getActivo())) {
-                    String nombre = alumno.getUsuario().getNombre();
-                    resultados.add(new BusquedaRequest(alumno.getMatricula(), nombre));
-                }
-            });
-        }
-
-        // Buscar por número de empleado (6 dígitos)
-        else if (query.matches("\\d{6}")) {
-            adminRepo.findByNumeroEmpleado(query).ifPresent(admin -> {
-                if (Boolean.TRUE.equals(admin.getUsuario().getActivo())) {
-                    String nombre = admin.getUsuario().getNombre();
-                    resultados.add(new BusquedaRequest(admin.getNumeroEmpleado(), nombre));
-                }
-            });
-        }
+        //if (query.matches("\\d{8}")) {
+        //    alumnoRepo.findByMatricula(query).ifPresent(alumno -> {
+        //        if (Boolean.TRUE.equals(alumno.getUsuario().getActivo())) {
+        //            String nombre = alumno.getUsuario().getNombre();
+        //            resultados.add(new BusquedaRequest(alumno.getMatricula(), nombre));
+        //        }
+        //    });
+        //}
+//
+        //// Buscar por número de empleado (6 dígitos)
+        //else if (query.matches("\\d{6}")) {
+        //    adminRepo.findByNumeroEmpleado(query).ifPresent(admin -> {
+        //        if (Boolean.TRUE.equals(admin.getUsuario().getActivo())) {
+        //            String nombre = admin.getUsuario().getNombre();
+        //            resultados.add(new BusquedaRequest(admin.getNumeroEmpleado(), nombre));
+        //        }
+        //    });
+        //}
 
         // Buscar por nombre (en tabla Usuario)
         else {
@@ -106,7 +131,9 @@ public class BusquedaController {
         }
 
         if (resultados.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No se encontraron resultados.");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Collections.emptyList());
+
+            //return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No se encontraron resultados.");
         }
 
         return ResponseEntity.ok(resultados);

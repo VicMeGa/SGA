@@ -24,7 +24,7 @@ function Huella ({ onHuellaCapturada = () => {} }){
       /*await new Promise(resolve => setTimeout(resolve, 2000));*/
       
       // Leer archivo BMP
-      const response = await fetch('/Huellas/huella2.BMP');
+      const response = await fetch('/Huellas/TonoH.BMP');
       const blob = await response.blob();
       
       const reader = new FileReader();

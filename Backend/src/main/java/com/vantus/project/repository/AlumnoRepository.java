@@ -16,6 +16,7 @@ public interface AlumnoRepository extends JpaRepository<Alumno, String> {
     Optional<Alumno> findByMatricula(String matricula);
 
     Optional<Alumno> findByUsuario(Usuario usuario);
+    List<Alumno> findByMatriculaContaining(String matricula);
 
     @Query("SELECT DISTINCT a.grupo FROM Alumno a ORDER BY a.grupo")
     List<String> findDistinctGruposOrderByGrupo();
