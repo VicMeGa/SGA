@@ -2,6 +2,7 @@
 node_modules/
 dist/
 .env
+Frontend/node_modules/
 
 # Java / Spring Boot
 *.class
