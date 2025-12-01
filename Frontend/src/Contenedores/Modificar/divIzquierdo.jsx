@@ -91,11 +91,11 @@ const DivIzquierdo = ({ selectedStudent }) => {
     if (!confirm) return;
 
 
-  const identificador = formData.matricula ? formData.matricula : formData.numeroEmpleado;
-  try {
-    const response = await fetch(`${back}/buscar/eliminar/usuarios/${identificador}`, {
-      method: 'POST',
-    });
+    const identificador = formData.matricula ? formData.matricula : formData.numeroEmpleado;
+    try {
+      const response = await fetch(`${back}/buscar/eliminar/usuarios/${identificador}`, {
+        method: 'POST',
+      });
 
       if (response.ok) {
         toast.success('Usuario eliminado correctamente', {
@@ -118,6 +118,7 @@ const DivIzquierdo = ({ selectedStudent }) => {
   const handleHuellaCapturada = (huellaBase64) => {
         //setHuellaDactilar(huellaBase64);
     };
+
 
   const handleModificar = async () => {
     const payload = {
@@ -184,7 +185,7 @@ const DivIzquierdo = ({ selectedStudent }) => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(payload),
-        
+
       });
       console.log(JSON.stringify(payload))
 
@@ -222,17 +223,18 @@ const DivIzquierdo = ({ selectedStudent }) => {
     <div className="divIzquierdo">
       <form>
         <h1>Datos del Usuario</h1>
-        <input type="text" className="imputnorm" name="usuario.nombre" value={formData.usuario.nombre || ''} onChange={handleChange} placeholder="Nombre" />
+        <input type="text" id="nombre" className="imputnorm" name="usuario.nombre" value={formData.usuario.nombre || ''} onChange={handleChange} placeholder="Nombre" />
         {errores.nombre && <span className="error">{errores.nombre}</span>}
-        <input type="text" className="imputnorm" name="usuario.apellido_paterno" value={formData.usuario.apellido_paterno || ''} onChange={handleChange} placeholder="Apellido Paterno" />
+        <input type="text" id="apellido-paterno" className="imputnorm" name="usuario.apellido_paterno" value={formData.usuario.apellido_paterno || ''} onChange={handleChange} placeholder="Apellido Paterno" />
         {errores.apellidoPaterno && <span className="error">{errores.apellidoPaterno}</span>}
-        <input type="text" className="imputnorm" name="usuario.apellido_materno" value={formData.usuario.apellido_materno || ''} onChange={handleChange} placeholder="Apellido Materno" />
+        <input type="text" id="apellido-materno" className="imputnorm" name="usuario.apellido_materno" value={formData.usuario.apellido_materno || ''} onChange={handleChange} placeholder="Apellido Materno" />
         {errores.apellidoMaterno && <span className="error">{errores.apellidoMaterno}</span>}
-        <input type="text" className="imputnorm" name="usuario.correo" value={formData.usuario.correo || ''} onChange={handleChange} placeholder="Correo" />
+        <input type="text" id="correo" className="imputnorm" name="usuario.correo" value={formData.usuario.correo || ''} onChange={handleChange} placeholder="Correo" />
         {errores.correo && <span className="error">{errores.correo}</span>}
-        <input type="text" className="imputnorm" name="usuario.numeroTelefono" value={formData.usuario.numeroTelefono || ''} onChange={handleChange} placeholder="Número Teléfono" />
+        <input type="text" id="telefono" className="imputnorm" name="usuario.numeroTelefono" value={formData.usuario.numeroTelefono || ''} onChange={handleChange} placeholder="Número Teléfono" />
         {errores.numeroTelefono && <span className="error">{errores.numeroTelefono}</span>}
         <select
+          id="programa-educativo"
           value={programaEducativo}
           className="imputnorm"
           onChange={(e) => setProgramaEducativo(e.target.value)}
@@ -246,31 +248,31 @@ const DivIzquierdo = ({ selectedStudent }) => {
         </select>
         {formData.matricula && (
           <>
-            <input type="text" className="imputnorm" name="matricula" value={formData.matricula} onChange={handleChange} placeholder="Matrícula" readOnly />
+            <input type="text" id="matricula" className="imputnorm" name="matricula" value={formData.matricula} onChange={handleChange} placeholder="Matrícula" readOnly />
             {errores.matricula && <span className="error">{errores.matricula}</span>}
-            <input type="text" className="imputnorm" name="semestre" value={formData.semestre} onChange={handleChange} placeholder="Semestre" />
+            <input type="text" id="semestre" className="imputnorm" name="semestre" value={formData.semestre} onChange={handleChange} placeholder="Semestre" />
             {errores.semestre && <span className="error">{errores.semestre}</span>}
-            <input type="text" className="imputnorm" name="grupo" value={formData.grupo} onChange={handleChange} placeholder="Grupo" />
+            <input type="text" id="grupo" className="imputnorm" name="grupo" value={formData.grupo} onChange={handleChange} placeholder="Grupo" />
             {errores.grupo && <span className="error">{errores.grupo}</span>}
           </>
         )}
 
         {formData.numeroEmpleado && (
           <>
-            <input type="text" className="imputnorm" name="numeroEmpleado" value={formData.numeroEmpleado} onChange={handleChange} placeholder="N° Empleado" readOnly />
+            <input type="text" id="numero-empleado" className="imputnorm" name="numeroEmpleado" value={formData.numeroEmpleado} onChange={handleChange} placeholder="N° Empleado" readOnly />
             {errores.numeroEmpleado && <span className="error">{errores.numeroEmpleado}</span>}
-            <input type="text" className="imputnorm" name="cargo" value={formData.cargo} onChange={handleChange} placeholder="Cargo" />
+            <input type="text" id="cargo" className="imputnorm" name="cargo" value={formData.cargo} onChange={handleChange} placeholder="Cargo" />
             {errores.cargo && <span className="error">{errores.cargo}</span>}
-            <input type="password" className="imputnorm" name="contrasena" value={formData.contrasena} onChange={handleChange} placeholder="Contraseña" />
+            <input type="password" id="contrasena" className="imputnorm" name="contrasena" value={formData.contrasena} onChange={handleChange} placeholder="Contraseña" />
             {errores.contrasena && <span className="error">{errores.contrasena}</span>}
           </>
         )}
-        <Huella onHuellaCapturada={handleHuellaCapturada}/>
+        <Huella onHuellaCapturada={handleHuellaCapturada} />
 
         <div className="botonesMod">
-          <button type="button" className="borrarButton" onClick={handleEliminar}>Eliminar</button>
-          <button type="button" className="cancelButton2">Cancelar</button>
-          <button type="button" className="modButton" onClick={handleModificar}>Modificar</button>
+          <button type="button" id="btn-eliminar" className="borrarButton" onClick={handleEliminar}>Eliminar</button>
+          <button type="button" id="btn-cancelar" className="cancelButton2">Cancelar</button>
+          <button type="button" id="btn-modificar" className="modButton" onClick={handleModificar}>Modificar</button>
         </div>
       </form>
     </div>

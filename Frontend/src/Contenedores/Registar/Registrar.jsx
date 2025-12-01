@@ -50,7 +50,7 @@ function Registrar() {
             .notRequired(),
     });
 
-     const handleHuellaCapturada = (huellaBase64) => {
+    const handleHuellaCapturada = (huellaBase64) => {
         setHuellaDactilar(huellaBase64);
     };
 
@@ -142,23 +142,25 @@ function Registrar() {
                 <form className='formas' onSubmit={handleSubmit}>
                     <div className='regis'>
                         <div className='regiSon'>
-                            <input type='text' placeholder='Nombre' value={nombre} onChange={(e) => setNombre(e.target.value)} />
+                            <input id="nombre" data-testid="nombre-input" type='text' placeholder='Nombre' value={nombre} onChange={(e) => setNombre(e.target.value)} />
                             {errores.nombre && <span className="error">{errores.nombre}</span>}
-                            <input type='text' placeholder='Apellido Paterno' value={apellidoPaterno} onChange={(e) => setApellidoPaterno(e.target.value)} />
+                            <input id="apellido-paterno" data-testid="apellido-paterno-input" type='text' placeholder='Apellido Paterno' value={apellidoPaterno} onChange={(e) => setApellidoPaterno(e.target.value)} />
                             {errores.apellidoPaterno && <span className="error">{errores.apellidoPaterno}</span>}
-                            <input type='text' placeholder='Apellido Materno' value={apellidoMaterno} onChange={(e) => setApellidoMaterno(e.target.value)} />
+                            <input id="apellido-materno" data-testid="apellido-materno-input" type='text' placeholder='Apellido Materno' value={apellidoMaterno} onChange={(e) => setApellidoMaterno(e.target.value)} />
                             {errores.apellidoMaterno && <span className="error">{errores.apellidoMaterno}</span>}
-                            <input type='text' placeholder='Matricula' value={matricula} onChange={(e) => setMatricula(e.target.value)} />
+                            <input id="matricula" data-testid="matricula-input" type='text' placeholder='Matricula' value={matricula} onChange={(e) => setMatricula(e.target.value)} />
                             {errores.matricula && <span className="error">{errores.matricula}</span>}
-                            <input type='email' placeholder='Correo Electrónico' value={correo} onChange={(e) => setCorreo(e.target.value)} />
+                            <input id="email" data-testid="email-input" type='email' placeholder='Correo Electrónico' value={correo} onChange={(e) => setCorreo(e.target.value)} />
                             {errores.correo && <span className="error">{errores.correo}</span>}
-                            <input type='text' placeholder='Grupo' value={grupo} onChange={(e) => setGrupo(e.target.value)} />
+                            <input id="grupo" data-testid="grupo-input" type='text' placeholder='Grupo' value={grupo} onChange={(e) => setGrupo(e.target.value)} />
                             {errores.grupo && <span className="error">{errores.grupo}</span>}
-                            <input type='text' placeholder='Teléfono' value={numeroTelefono} onChange={(e) => setNumeroTelefono(e.target.value)} />
+                            <input id="telefono" data-testid="telefono-input" type='text' placeholder='Teléfono' value={numeroTelefono} onChange={(e) => setNumeroTelefono(e.target.value)} />
                             {errores.numeroTelefono && <span className="error">{errores.numeroTelefono}</span>}
-                            <input type='text' placeholder='Semestre' value={semestre} onChange={(e) => setSemestre(e.target.value)} />
+                            <input id="semestre" data-testid="semestre-input" type='text' placeholder='Semestre' value={semestre} onChange={(e) => setSemestre(e.target.value)} />
                             {errores.semestre && <span className="error">{errores.semestre}</span>}
                             <select
+                                id="carrera"
+                                data-testid="carrera-select"
                                 value={programaEducativo}
                                 onChange={(e) => setProgramaEducativo(e.target.value)}
                             >
@@ -170,13 +172,13 @@ function Registrar() {
                                 ))}
                             </select>
                             {errores.programaEducativo && <span className="error">{errores.programaEducativo}</span>}
-                            <Huella onHuellaCapturada={handleHuellaCapturada}/>
+                            <Huella onHuellaCapturada={handleHuellaCapturada} />
                         </div>
                     </div>
 
                     <div className="botonesre">
-                        <button className="cancelButton" type="button" onClick={() => window.location.reload()}>Cancelar</button>
-                        <button className="okButton" type="submit">Registrar</button>
+                        <button id="btn-cancelar" data-testid="cancelar-button" className="cancelButton" type="button" onClick={() => window.location.reload()}>Cancelar</button>
+                        <button id="btn-guardar" data-testid="guardar-button" className="okButton" type="submit">Registrar</button>
                     </div>
                 </form>
             </div>
