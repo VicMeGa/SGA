@@ -198,9 +198,9 @@ public class BusquedaController {
         return new ResponseEntity<>(imagen, headers, HttpStatus.OK);
     }
 
-    @GetMapping("/articulos")
+   @GetMapping("/articulos")
     public ResponseEntity<List<Articulos_Laboratorio>> obtenerArticulos() {
-        List<Articulos_Laboratorio> articulos = artiRepo.findAll();
+        List<Articulos_Laboratorio> articulos = artiRepo.findByActivoTrue();
         return ResponseEntity.ok(articulos);
     }
 

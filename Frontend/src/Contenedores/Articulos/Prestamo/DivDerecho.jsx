@@ -98,6 +98,39 @@ const DivDerecho = ({ itemId }) => {
     }
   };
 
+const handleEliminar = async () => {
+  setMensaje("");
+  setError("");
+
+  if (!itemId) {
+    setError("No se encontró ID del artículo");
+    return;
+  }
+
+  if (!confirm("¿Seguro que deseas desactivar este artículo? uwu")) {
+    return;
+  }
+
+  try {
+    const response = await fetch(`${back}/apii/articulos/desactivar/${itemId}`, {
+      method: "PUT",
+    });
+
+    if (response.ok) {
+      const result = await response.text();
+      setMensaje(result);
+    } else {
+      const errorText = await response.text();
+      setError(errorText || "Error al desactivar el artículo");
+    }
+  } catch (error) {
+    setError("Error de conexión: " + error.message);
+  }
+};
+
+
+
+
   return (
     <>
       <div className="prestamo-container">
@@ -123,11 +156,15 @@ const DivDerecho = ({ itemId }) => {
             <button className="okButton" type="submit">
               Pedir Préstamo
             </button>
+            
           ) : (
             <button className="okButton" type="button" onClick={handleDevolver}>
               Devolver
             </button>
           )}
+          <button className="btn-eliminar" type="button" onClick={handleEliminar}>
+              Eliminar Articulo
+          </button>
           <br />
           <br />
           {mensaje && <div className="mensaje-exito">{mensaje}</div>}
