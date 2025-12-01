@@ -116,7 +116,7 @@ const DivIzquierdo = ({ selectedStudent }) => {
   };
 
   const handleHuellaCapturada = (huellaBase64) => {
-        setHuellaDactilar(huellaBase64);
+        //setHuellaDactilar(huellaBase64);
     };
 
   const handleModificar = async () => {

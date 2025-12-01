@@ -35,6 +35,8 @@ import com.vantus.project.repository.HorarioSalaRepository;
 import com.vantus.project.repository.SalaRepository;
 import com.vantus.project.repository.UsuarioRepository;
 
+import com.vantus.project.service.EncriptacionService;
+
 @RestController
 @RequestMapping("/sga/buscar")
 public class BusquedaController {
@@ -147,9 +149,12 @@ public class BusquedaController {
                 return ResponseEntity.ok(alumno.get());
             }
         } else if (identificador.matches("\\d{6}")) {
-            Optional<Administrativo> admin = adminRepo.findByNumeroEmpleado(identificador);
-            if (admin.isPresent()) {
-                return ResponseEntity.ok(admin.get());
+            Optional<Administrativo> optAdmin = adminRepo.findByNumeroEmpleado(identificador);
+            if (optAdmin.isPresent()) {
+                Administrativo admin = optAdmin.get();
+                String pass = EncriptacionService.desencriptar(admin.getContrasena());
+                admin.setContrasena(pass);
+                return ResponseEntity.ok(admin);
             }
         }
 
