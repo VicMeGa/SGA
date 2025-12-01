@@ -1,13 +1,16 @@
 import { useState, useEffect } from "react";
+import useSession from "../../../hook/useSession";
 
 const DivDerecho = ({ itemId }) => {
-  const [numeroEm, setNE] = useState("");
   const [password, setPassword] = useState("");
   const [mensaje, setMensaje] = useState("");
   const [error, setError] = useState("");
   const [prestamoId, setPrestamoId] = useState(null);
   const [prestado, setPrestado] = useState(false);
-
+  const {session} = useSession();
+  
+  const [numeroEm, setNE] = useState(session.token);
+  
   const back = import.meta.env.VITE_BACKEND_URL;
   // Obtener el estado de préstamo desde el backend
   useEffect(() => {
@@ -139,9 +142,10 @@ const handleEliminar = async () => {
           <input
             type="text"
             placeholder="Número de empleado"
-            value={numeroEm}
+            value={session.token}
             onChange={(e) => setNE(e.target.value)}
             disabled={prestado}
+            readOnly
           />
           <input
             type="password"

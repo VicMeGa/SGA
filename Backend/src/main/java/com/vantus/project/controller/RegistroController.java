@@ -263,6 +263,7 @@ public class RegistroController {
         arti.setNumeroArticulo(request.getNumeroArticulo());
         arti.setEstaPrestado(0);
         arti.setDescripcion(request.getDescripcion());
+        arti.setActivo(true);
 
         // Aquí se guarda directamente el contenido en la BD
         arti.setFoto(imagen.getBytes());
