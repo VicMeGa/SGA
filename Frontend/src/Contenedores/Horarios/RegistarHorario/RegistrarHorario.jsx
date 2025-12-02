@@ -34,7 +34,7 @@ const RegistrarHorario = () => {
         materia: Yup.string()
             .required("La materia es obligatoria")
             .min(2, "Debe tener al menos 2 caracteres")
-            .matches(/^([A-Z][a-z]+)(\s[A-Z][a-z]+)*$/, "Las primeras letras deben ser mayúsculas, solo se admiten letras"),
+            .matches(/^([A-ZÁÉÍÓÚÑ][a-záéíóúñ]+)(\s[A-ZÁÉÍÓÚ][a-záéíóúñ]+)*$/, "Las primeras letras deben ser mayúsculas, solo se admiten letras"),
         dia: Yup.string().required("El día es obligatorio"),
         horaInicio: Yup.string().required("La hora de inicio es obligatoria"),
         horaFin: Yup.string().required("La hora de fin es obligatoria"),

@@ -105,7 +105,7 @@ public class EncriptacionService {
         //String res = EncriptacionService.encriptar("310704");
         //System.out.println(res);
 
-        String res = EncriptacionService.desencriptar("vm7><<");
+        String res = EncriptacionService.desencriptar("o<@");
         System.out.println(res);
     }
 }

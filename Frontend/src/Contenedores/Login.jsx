@@ -33,6 +33,7 @@ const Login = () => {
 
             if (data.exito) {
                 toast.success("✅ " + data.mensaje);
+                saveSession(data.numeroEmpleado)
                 navigate("/next");
             } else {
                 toast.error("❌ " + data.mensaje);

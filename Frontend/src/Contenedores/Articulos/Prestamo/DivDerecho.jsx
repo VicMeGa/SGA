@@ -3,8 +3,6 @@ import useSession from "../../../hook/useSession";
 
 const DivDerecho = ({ itemId }) => {
   const [password, setPassword] = useState("");
-  const [mensaje, setMensaje] = useState("");
-  const [error, setError] = useState("");
   const [prestamoId, setPrestamoId] = useState(null);
   const [prestado, setPrestado] = useState(false);
   const {session} = useSession();
@@ -14,6 +12,7 @@ const DivDerecho = ({ itemId }) => {
   const back = import.meta.env.VITE_BACKEND_URL;
   // Obtener el estado de préstamo desde el backend
   useEffect(() => {
+    setNE(session.token);
     const verificarEstadoPrestamo = async () => {
       try {
         const response = await fetch(`${back}/buscar/articulos/${itemId}`);
@@ -32,29 +31,29 @@ const DivDerecho = ({ itemId }) => {
         }
       } catch (err) {
         console.error("Error al verificar estado del artículo:", err);
+        toast.error("❌ Error al verificar el estado del artículo", {
+          closeButton: false,
+        });
       }
     };
 
     verificarEstadoPrestamo();
   }, [itemId]);
 
-
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setMensaje("");
-    setError("");
 
     if (!numeroEm || !password || !itemId) {
-      setError("Por favor complete todos los campos requeridos");
+      toast.error("⚠️ Por favor complete todos los campos requeridos", {
+          closeButton: false,
+        });
       return;
     }
 
     try {
       const response = await fetch(`${back}/prestamo/pedir`, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           numeroEmpleado: numeroEm,
           password: password,
@@ -64,22 +63,23 @@ const DivDerecho = ({ itemId }) => {
 
       if (response.ok) {
         const result = await response.text();
-        setMensaje("Préstamo registrado correctamente");
+        toast.success("✅ Préstamo registrado correctamente");
         setPrestamoId(result);
         setPrestado(true);
       } else {
         const errorText = await response.text();
-        setError(errorText || "Error al solicitar el préstamo");
+        toast.error(errorText || "Error al solicitar el préstamo", {
+          closeButton: false,
+        });
       }
     } catch (error) {
-      setError("Error de conexión: " + error.message);
+      toast.error("Error de conexión: " + error.message, {
+          closeButton: false,
+        });
     }
   };
 
   const handleDevolver = async () => {
-    setMensaje("");
-    setError("");
-
     try {
       const response = await fetch(`${back}/prestamo/devolver/${prestamoId}`, {
         method: "PUT",
@@ -87,17 +87,23 @@ const DivDerecho = ({ itemId }) => {
 
       if (response.ok) {
         const result = await response.text();
-        setMensaje(result);
+        toast.success(result, {
+          closeButton: false,
+        });
         setPrestado(false);
         setPrestamoId(null);
         setNE("");
         setPassword("");
       } else {
         const errorText = await response.text();
-        setError(errorText || "Error al devolver el préstamo");
+        toast.error(errorText || "Error al devolver el préstamo", {
+          closeButton: false,
+        });
       }
     } catch (error) {
-      setError("Error de conexión: " + error.message);
+      toast.error("Error de conexión: " + error.message, {
+          closeButton: false,
+        });
     }
   };
 
@@ -136,6 +142,7 @@ const handleEliminar = async () => {
 
   return (
     <>
+      <ToastContainer />
       <div className="prestamo-container">
         <h1>Préstamo</h1>
         <form onSubmit={handleSubmit}>
