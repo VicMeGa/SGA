@@ -49,41 +49,40 @@ function Huella ({ onHuellaCapturada = () => {} }){
     }
   };
 
-  const registerFingerprint = async () => {
-    if (!fingerprintData) {
-      setMessage('Por favor captura una huella primero');
-      return;
-    }
-
-
+  const captureFingerprint = async () => {
     setLoading(true);
+    setMessage('Coloca tu dedo en el lector...');
 
     try {
-      const response = await fetch('http://localhost:8080/api/fingerprint/register', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          userId,
-          fingerprintImage: fingerprintData.image,
-          fingerprintId: fingerprintData.id
-        })
+      // Llamamos al backend que captura la huella real uwu
+      const response = await fetch('http://localhost:5000/capturar');
+      if (!response.ok) throw new Error("Error al capturar huella");
+
+      const data = await response.json();  // { image_b64: "..." }
+
+      const fingerprintId = `fp_${Date.now()}`;
+      const imageBase64 = `data:image/png;base64,${data.image_b64}`;
+
+      setFingerprintData({
+        id: fingerprintId,
+        image: imageBase64,
+        timestamp: new Date().toISOString()
       });
 
-      const data = await response.json();
+      setMessage('✓ Huella capturada exitosamente');
+      setLoading(false);
 
-      if (response.ok) {
-        setMessage(`✓ ${data.message}`);
-        setFingerprintData(null);
-        setUserId('');
-      } else {
-        setMessage(`✗ Error: ${data.message}`);
+      if (onHuellaCapturada) {
+        console.log("Enviando huella real:", imageBase64);
+        onHuellaCapturada(imageBase64);
       }
+
     } catch (error) {
-      setMessage(`✗ Error de conexión: ${error.message}`);
-    } finally {
+      setMessage(`✗ Error: ${error.message}`);
       setLoading(false);
     }
   };
+
 
   return(
     <div className="huella">
@@ -102,7 +101,7 @@ function Huella ({ onHuellaCapturada = () => {} }){
           <p>{new Date(fingerprintData.timestamp).toLocaleString()}</p>
         </div>
       )}
-      <button onClick={captureFingerprintSimulated} disabled={loading}>
+      <button onClick={captureFingerprint} disabled={loading}>
         {loading ? 'Capturando...' : 'Capturar Huella'}
       </button> 
       <p>{message}</p>
