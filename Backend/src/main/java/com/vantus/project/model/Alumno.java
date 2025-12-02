@@ -12,7 +12,7 @@ public class Alumno {
     @Column(name = "id_alumno")
     private Integer idAlumno;
 
-    @Column(name = "matricula", nullable = false)
+    @Column(name = "matricula", nullable = false, unique = true)
     private String matricula;
 
     @Column(name = "semestre", nullable = false)

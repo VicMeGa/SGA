@@ -42,6 +42,7 @@ import com.vantus.project.repository.InvitadoRepository;
 import com.vantus.project.repository.SalaRepository;
 import com.vantus.project.repository.UsuarioRepository;
 import com.vantus.project.service.EmailService;
+import com.vantus.project.service.HuellaService;
 import com.vantus.project.service.EncriptacionService;
 import com.vantus.project.utils.QRGenerator;
 
@@ -81,6 +82,9 @@ public class RegistroController {
     private QRGenerator qrGenerator;
 
     @Autowired
+    private HuellaService huellaserv;
+
+    @Autowired
     private ApartadoSalaRepository apartadoRepo;
 
     @Autowired
@@ -110,7 +114,11 @@ public class RegistroController {
         admin.setCargo(request.getCargo());
         admin.setUsuario(usuario);
 
-        usuario.setHuellaDactilar("Huella_" + request.getNumeroEmpleado());
+        if (request.getHuellaDactilar() != null && !request.getHuellaDactilar().isEmpty()) {
+                usuario.setHuellaDactilar(request.getHuellaDactilar());
+                byte[] template = huellaserv.generarTemplate(request.getHuellaDactilar());
+                usuario.setTemplate(template);
+            }
 
         // ✅ Generar QR después de guardar el usuario
         try {
@@ -149,13 +157,26 @@ public class RegistroController {
         usuario.setTipoUsuario(Usuario.TipoUsuario.Alumno);
         usuario.setProgramaEducativo(request.getProgramaEducativo());
 
+        if (request.getHuellaDactilar() != null && !request.getHuellaDactilar().isEmpty()) {
+        usuario.setHuellaDactilar(request.getHuellaDactilar());
+        
+        try {
+            byte[] template = huellaserv.generarTemplate(request.getHuellaDactilar());
+            usuario.setTemplate(template);
+        } catch (Exception e) {
+            System.err.println("Error al procesar huella: " + e.getMessage());
+            e.printStackTrace();
+            // Continúa sin huella si hay error
+        }
+    }
+
         Alumno alumn = new Alumno();
         alumn.setMatricula(request.getMatricula());
         alumn.setSemestre(request.getSemestre());
         alumn.setGrupo(request.getGrupo());
         alumn.setUsuario(usuario);
 
-        usuario.setHuellaDactilar("Huella_" + request.getMatricula());
+        usuario.setHuellaDactilar(request.getHuellaDactilar());
 
         // ✅ Generar QR después de guardar el usuario
         try {
@@ -242,6 +263,7 @@ public class RegistroController {
         arti.setNumeroArticulo(request.getNumeroArticulo());
         arti.setEstaPrestado(0);
         arti.setDescripcion(request.getDescripcion());
+        arti.setActivo(true);
 
         // Aquí se guarda directamente el contenido en la BD
         arti.setFoto(imagen.getBytes());

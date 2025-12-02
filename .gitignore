@@ -2,6 +2,9 @@
 node_modules/
 dist/
 .env
+Frontend/node_modules/
+Frontend/coverage/
+Frontend/html/
 
 # Java / Spring Boot
 *.class

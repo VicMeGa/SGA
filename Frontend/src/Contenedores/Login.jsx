@@ -1,7 +1,8 @@
 import { useState } from "react";
 import user from "../recursos/user.png";
 import { useNavigate } from "react-router-dom";
-import useSession  from "../hook/useSession";
+
+import useSession from "../hook/useSession";
 import { toast } from "react-toastify";
 
 const Login = () => {
@@ -9,9 +10,9 @@ const Login = () => {
     const [password, setPassword] = useState("");
     const navigate = useNavigate();
     const { saveSession } = useSession();
-  
+
     const back = import.meta.env.VITE_BACKEND_URL;
-  
+
     const logeo = async (e) => {
         e.preventDefault();
 
@@ -43,27 +44,31 @@ const Login = () => {
     };
 
     return (
-        <div className="login">
-            <form className="formulario" onSubmit={logeo}>
+        <div className="login" data-testid="login-container">
+            <form className="formulario" onSubmit={logeo} data-testid="login-form">
                 <img className="icon-login" src={user} width="25%" alt="User Icon" />
                 <br />
                 <input
+                    id="email"
                     type="email"
                     placeholder="Correo"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     required
+                    data-testid="email-input"
                 />
                 <br />
                 <input
+                    id="password"
                     type="password"
                     placeholder="Contraseña"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     required
+                    data-testid="password-input"
                 />
                 <br />
-                <button type="submit">Iniciar Sesión</button>
+                <button type="submit" id="btn-login" data-testid="login-button">Iniciar Sesión</button>
             </form>
         </div>
     );

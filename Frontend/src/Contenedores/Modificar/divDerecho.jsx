@@ -9,21 +9,34 @@ const DivDerecho = ({
   setSelectedStudent,
 }) => {
   const handleSearchChange = (e) => {
-    setSearchQuery(e.target.value);
+    const value = e.target.value;
+
+    const regex = /^[a-zA-Z0-9ÁÉÍÓÚáéíóúÑñ ]*$/;
+
+    if (!regex.test(value)) {
+      toast.warn("Solo se permiten letras, números y acentos", {
+        closeButton: false,
+      });
+      return; 
+    }
+
+    setSearchQuery(value);
+
   };
-  
+
   const back = import.meta.env.VITE_BACKEND_URL;
   const buscarEstudiantes = async () => {
     try {
       const res = await fetch(`${back}/buscar/usuarios?query=${searchQuery}`);
       const data = await res.json();
+      console.log(`${back}/buscar/usuarios?query=${searchQuery}`)
 
       if (!res.ok || !data || (Array.isArray(data) && data.length === 0)) {
         toast.warn("No se encontraron resultados.", {
           closeButton: false,
         });
         setStudents([]);
-        return;
+        return; 
       }
 
       const normalizados = Array.isArray(data) ? data : [data];
@@ -63,12 +76,13 @@ const DivDerecho = ({
       <div className="busqueda">
         <input
           type="text"
+          id="buscar-usuario"
           placeholder="Buscar por nombre o matrícula"
           className="inputBuscar"
           value={searchQuery}
           onChange={handleSearchChange}
         />
-        <button className="botonBuscar" onClick={buscarEstudiantes}>
+        <button id="btn-buscar" className="botonBuscar" onClick={buscarEstudiantes}>
           <Search size={20} />
         </button>
       </div>

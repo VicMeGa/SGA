@@ -43,6 +43,10 @@ public class Articulos_Laboratorio {
     @Column(name = "esta_prestado", nullable = false)
     private Integer estaPrestado;
 
+    @Column(name = "activo", nullable = false)
+    private Boolean activo = true;
+
+
     //Revisar esta relacion
     // @OneToMany(mappedBy = "articulo")
 
@@ -100,5 +104,13 @@ public class Articulos_Laboratorio {
 
     public void setEstaPrestado(Integer estaPrestado) {
         this.estaPrestado = estaPrestado;
+    }
+
+     public boolean getActivo() {
+        return activo;
+    }
+
+    public void setActivo(boolean activo) {
+        this.activo = activo;
     }
 }

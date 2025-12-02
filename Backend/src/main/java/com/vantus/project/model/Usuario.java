@@ -34,7 +34,7 @@ public class Usuario {
     @Enumerated(EnumType.STRING)
     private TipoUsuario tipoUsuario;
 
-    @Column(name = "huella_dactilar")
+    @Column(name = "huella_dactilar",columnDefinition = "LONGTEXT")
     private String huellaDactilar;
 
     @Column(name = "codigoQR")
@@ -42,6 +42,9 @@ public class Usuario {
 
     @Column(name = "activo")
     private Boolean activo = true;
+
+    @Column(columnDefinition = "LONGBLOB")
+    private byte[] template;
     
     // Enum personalizado para tipo_usuario
     public enum TipoUsuario {
@@ -138,5 +141,13 @@ public class Usuario {
 
     public void setActivo(Boolean activo) {
         this.activo = activo;
+    }
+
+    public byte[] getTemplate(){
+        return template;
+    }
+
+    public void setTemplate(byte[] template){
+        this.template = template;
     }
 }

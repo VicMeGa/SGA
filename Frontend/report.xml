@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuites name="vitest tests" tests="19" failures="0" errors="0" time="0.841764347">
+    <testsuite name="src/Contenedores/Login.test.jsx" timestamp="2025-09-18T05:16:03.347Z" hostname="archvic" tests="6" failures="0" errors="0" skipped="0" time="0.488547864">
+        <testcase classname="src/Contenedores/Login.test.jsx" name="Login Component &gt; renderiza correctamente todos los elementos" time="0.183234161">
+        </testcase>
+        <testcase classname="src/Contenedores/Login.test.jsx" name="Login Component &gt; actualiza el estado cuando el usuario escribe en los inputs" time="0.013565008">
+        </testcase>
+        <testcase classname="src/Contenedores/Login.test.jsx" name="Login Component &gt; maneja el login exitoso correctamente" time="0.055116025">
+        </testcase>
+        <testcase classname="src/Contenedores/Login.test.jsx" name="Login Component &gt; maneja el login fallido correctamente" time="0.081059316">
+        </testcase>
+        <testcase classname="src/Contenedores/Login.test.jsx" name="Login Component &gt; maneja errores de conexión" time="0.077682085">
+        </testcase>
+        <testcase classname="src/Contenedores/Login.test.jsx" name="Login Component &gt; llama a saveSession correctamente en login exitoso" time="0.075432624">
+        </testcase>
+    </testsuite>
+    <testsuite name="src/Contenedores/Registar/Registrar.test.jsx" timestamp="2025-09-18T05:16:03.349Z" hostname="archvic" tests="13" failures="0" errors="0" skipped="0" time="0.353216483">
+        <testcase classname="src/Contenedores/Registar/Registrar.test.jsx" name="Registrar Component &gt; renderiza correctamente todos los elementos" time="0.074082356">
+        </testcase>
+        <testcase classname="src/Contenedores/Registar/Registrar.test.jsx" name="Registrar Component &gt; actualiza los valores de los inputs cuando el usuario escribe" time="0.022582897">
+        </testcase>
+        <testcase classname="src/Contenedores/Registar/Registrar.test.jsx" name="Registrar Component &gt; muestra errores de validación para campos con formato incorrecto" time="0.037649401">
+        </testcase>
+        <testcase classname="src/Contenedores/Registar/Registrar.test.jsx" name="Registrar Component &gt; valida el formato de la matrícula" time="0.030097884">
+        </testcase>
+        <testcase classname="src/Contenedores/Registar/Registrar.test.jsx" name="Registrar Component &gt; valida el formato del correo electrónico" time="0.013286467">
+        </testcase>
+        <testcase classname="src/Contenedores/Registar/Registrar.test.jsx" name="Registrar Component &gt; valida que hay múltiples errores de formato de nombres" time="0.016948101">
+        </testcase>
+        <testcase classname="src/Contenedores/Registar/Registrar.test.jsx" name="Registrar Component &gt; valida que el grupo sea A, B o C" time="0.016804293">
+        </testcase>
+        <testcase classname="src/Contenedores/Registar/Registrar.test.jsx" name="Registrar Component &gt; maneja el registro exitoso correctamente" time="0.031064383">
+        </testcase>
+        <testcase classname="src/Contenedores/Registar/Registrar.test.jsx" name="Registrar Component &gt; maneja errores de red correctamente" time="0.068985966">
+            <system-err>
+Error al registrar alumno: Error: Network error
+    at [90m/run/media/victor/se/SGA/Frontend/[39msrc/Contenedores/Registar/Registrar.test.jsx:279:40
+    at [90mfile:///run/media/victor/se/SGA/Frontend/[39mnode_modules/[4m@vitest/runner[24m/dist/chunk-hooks.js:155:11
+    at [90mfile:///run/media/victor/se/SGA/Frontend/[39mnode_modules/[4m@vitest/runner[24m/dist/chunk-hooks.js:752:26
+    at [90mfile:///run/media/victor/se/SGA/Frontend/[39mnode_modules/[4m@vitest/runner[24m/dist/chunk-hooks.js:1897:20
+    at new Promise (&lt;anonymous&gt;)
+    at runWithTimeout [90m(file:///run/media/victor/se/SGA/Frontend/[39mnode_modules/[4m@vitest/runner[24m/dist/chunk-hooks.js:1863:10[90m)[39m
+    at runTest [90m(file:///run/media/victor/se/SGA/Frontend/[39mnode_modules/[4m@vitest/runner[24m/dist/chunk-hooks.js:1574:12[90m)[39m
+    at runSuite [90m(file:///run/media/victor/se/SGA/Frontend/[39mnode_modules/[4m@vitest/runner[24m/dist/chunk-hooks.js:1729:8[90m)[39m
+    at runSuite [90m(file:///run/media/victor/se/SGA/Frontend/[39mnode_modules/[4m@vitest/runner[24m/dist/chunk-hooks.js:1729:8[90m)[39m
+    at runFiles [90m(file:///run/media/victor/se/SGA/Frontend/[39mnode_modules/[4m@vitest/runner[24m/dist/chunk-hooks.js:1787:3[90m)[39m
+
+            </system-err>
+        </testcase>
+        <testcase classname="src/Contenedores/Registar/Registrar.test.jsx" name="Registrar Component &gt; muestra todas las opciones del programa educativo" time="0.010203071">
+        </testcase>
+        <testcase classname="src/Contenedores/Registar/Registrar.test.jsx" name="Registrar Component &gt; funciona el botón Cancelar" time="0.006440582">
+        </testcase>
+        <testcase classname="src/Contenedores/Registar/Registrar.test.jsx" name="Registrar Component &gt; valida que el semestre sea de 1 dígito" time="0.014225658">
+        </testcase>
+        <testcase classname="src/Contenedores/Registar/Registrar.test.jsx" name="Registrar Component &gt; permite campos válidos sin errores" time="0.008305831">
+        </testcase>
+    </testsuite>
+</testsuites>

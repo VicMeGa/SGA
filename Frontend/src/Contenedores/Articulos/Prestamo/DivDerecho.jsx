@@ -1,18 +1,14 @@
 import { useState, useEffect } from "react";
-import { toast, ToastContainer } from "react-toastify";
-import 'react-toastify/dist/ReactToastify.css';
-
-import useSession  from "../../../hook/useSession";
-
+import useSession from "../../../hook/useSession";
 
 const DivDerecho = ({ itemId }) => {
-  const [numeroEm, setNE] = useState("");
   const [password, setPassword] = useState("");
   const [prestamoId, setPrestamoId] = useState(null);
   const [prestado, setPrestado] = useState(false);
-
   const {session} = useSession();
- 
+  
+  const [numeroEm, setNE] = useState(session.token);
+  
   const back = import.meta.env.VITE_BACKEND_URL;
   // Obtener el estado de préstamo desde el backend
   useEffect(() => {
@@ -111,6 +107,39 @@ const DivDerecho = ({ itemId }) => {
     }
   };
 
+const handleEliminar = async () => {
+  setMensaje("");
+  setError("");
+
+  if (!itemId) {
+    setError("No se encontró ID del artículo");
+    return;
+  }
+
+  if (!confirm("¿Seguro que deseas desactivar este artículo? uwu")) {
+    return;
+  }
+
+  try {
+    const response = await fetch(`${back}/apii/articulos/desactivar/${itemId}`, {
+      method: "PUT",
+    });
+
+    if (response.ok) {
+      const result = await response.text();
+      setMensaje(result);
+    } else {
+      const errorText = await response.text();
+      setError(errorText || "Error al desactivar el artículo");
+    }
+  } catch (error) {
+    setError("Error de conexión: " + error.message);
+  }
+};
+
+
+
+
   return (
     <>
       <ToastContainer />
@@ -120,7 +149,7 @@ const DivDerecho = ({ itemId }) => {
           <input
             type="text"
             placeholder="Número de empleado"
-            value={numeroEm}
+            value={session.token}
             onChange={(e) => setNE(e.target.value)}
             disabled={prestado}
             readOnly
@@ -138,12 +167,19 @@ const DivDerecho = ({ itemId }) => {
             <button className="okButton" type="submit">
               Pedir Préstamo
             </button>
+            
           ) : (
             <button className="okButton" type="button" onClick={handleDevolver}>
               Devolver
             </button>
           )}
-          <br /><br />
+          <button className="btn-eliminar" type="button" onClick={handleEliminar}>
+              Eliminar Articulo
+          </button>
+          <br />
+          <br />
+          {mensaje && <div className="mensaje-exito">{mensaje}</div>}
+          {error && <div className="mensaje-error">{error}</div>}
         </form>
       </div>
     </>

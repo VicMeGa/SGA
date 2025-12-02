@@ -25,6 +25,8 @@ import com.vantus.project.repository.ArticulosRepository;
 import com.vantus.project.repository.PrestamoRepository;
 import com.vantus.project.service.EncriptacionService;
 
+import com.vantus.project.service.EncriptacionService;
+
 @RestController
 @RequestMapping("/sga/prestamo")
 @CrossOrigin(origins = "*")
@@ -49,10 +51,9 @@ public class PrestamoController {
         }
 
         Administrativo admin = adminOpt.get();
-
-        String contrasenaDesencriptada = EncriptacionService.desencriptar(admin.getContrasena());
+        String passEncriptada = EncriptacionService.encriptar(datos.getPassword());
         // Verificar contraseña (sin codificación)
-        if (!contrasenaDesencriptada.equals(datos.getPassword())) {
+        if (!admin.getContrasena().equals(passEncriptada)) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Contraseña incorrecta");
         }
 

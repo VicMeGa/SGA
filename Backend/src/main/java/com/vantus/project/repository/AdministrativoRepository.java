@@ -13,6 +13,8 @@ public interface AdministrativoRepository extends JpaRepository<Administrativo, 
     Optional<Administrativo> findByUsuario(Usuario usuario);
 
     Optional<Administrativo> findByNumeroEmpleado(String numeroEmpleado);
+    List<Administrativo> findByNumeroEmpleadoContaining(String num);
+
 
     @Query(value = "SELECT a.* " +
             "FROM administrativo a " +
