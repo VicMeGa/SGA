@@ -1,11 +1,16 @@
 import { useState, useEffect } from "react";
 import useSession from "../../../hook/useSession";
+import { toast, ToastContainer } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 const DivDerecho = ({ itemId }) => {
   const [password, setPassword] = useState("");
   const [prestamoId, setPrestamoId] = useState(null);
   const [prestado, setPrestado] = useState(false);
   const {session} = useSession();
+
+  const [mensaje, setMensaje] = useState("");
+  const [error, setError] = useState("");
   
   const [numeroEm, setNE] = useState(session.token);
   
@@ -43,7 +48,11 @@ const DivDerecho = ({ itemId }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    setMensaje("");
+    setError("");
+
     if (!numeroEm || !password || !itemId) {
+      setError("Por favor complete todos los campos requeridos");
       toast.error("⚠️ Por favor complete todos los campos requeridos", {
           closeButton: false,
         });
@@ -63,16 +72,19 @@ const DivDerecho = ({ itemId }) => {
 
       if (response.ok) {
         const result = await response.text();
+        setMensaje("Préstamo registrado correctamente");
         toast.success("✅ Préstamo registrado correctamente");
         setPrestamoId(result);
         setPrestado(true);
       } else {
         const errorText = await response.text();
+        setError(errorText || "Error al solicitar el préstamo");
         toast.error(errorText || "Error al solicitar el préstamo", {
           closeButton: false,
         });
       }
     } catch (error) {
+      setError("Error de conexión: " + error.message);
       toast.error("Error de conexión: " + error.message, {
           closeButton: false,
         });
@@ -80,6 +92,8 @@ const DivDerecho = ({ itemId }) => {
   };
 
   const handleDevolver = async () => {
+    setMensaje("");
+    setError("");
     try {
       const response = await fetch(`${back}/prestamo/devolver/${prestamoId}`, {
         method: "PUT",
@@ -87,6 +101,7 @@ const DivDerecho = ({ itemId }) => {
 
       if (response.ok) {
         const result = await response.text();
+        setMensaje(result);
         toast.success(result, {
           closeButton: false,
         });
@@ -96,11 +111,13 @@ const DivDerecho = ({ itemId }) => {
         setPassword("");
       } else {
         const errorText = await response.text();
+        setError(errorText || "Error al devolver el préstamo");
         toast.error(errorText || "Error al devolver el préstamo", {
           closeButton: false,
         });
       }
     } catch (error) {
+      setError("Error de conexión: " + error.message);
       toast.error("Error de conexión: " + error.message, {
           closeButton: false,
         });
